@@ -4,6 +4,10 @@ Tags:
     Tag: "&4&lOwner &8&l|&7"
     # Information that will appear in GUI
     Info: "Owner tag"
-    # Permission is not needed. It will use default permission if this isn't set.
+    # This options are not needed. Just if you want something special for one specific tag...
     # Permission: "specialperm.tag.owner"
+    # Name will be on material in GUI or will replace placeholder %tagname%
+    # Name: ""
+    # Lore: []
+    # Type: "DIAMOND"
     

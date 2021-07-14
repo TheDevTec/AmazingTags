@@ -1,0 +1,10 @@
+GUI:
+  Title: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#f74c34"
+  
+  Items:
+    Preview:
+      Name: "&5&lYour tag:"
+      Lore:
+      - "%tag% %player%"
+      PlayerHead: true
+      # Type: ""

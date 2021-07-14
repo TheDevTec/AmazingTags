@@ -1,11 +1,27 @@
 Options:
   Prefix: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#ffffff &7&l»"
+
   Command:
     Name: "tags"
     Permission: "amazingtags.command"
     Aliases:
     - "amazingtags"
     - "tag"
+
+  Tags:
+    Settings:
+      # Player will see all tags in GUI even if he does not have permission (true)
+      seeAll: true
+      
+    Default:
+      Material: "NAME_TAG"
+      Name: "&5&l» &7%tagname%"
+      Lore:
+      - "%info%"
+      - "&7&l------"
+      - "%tag%"
+      # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.default
+      Permission: "amazingtags.%tagname%"
 
 # Translation
 Translation:
