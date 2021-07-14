@@ -1,0 +1,9 @@
+Tags:
+  Owner:
+    # Tag format that it will use
+    Tag: "&4&lOwner &8&l|&7"
+    # Information that will appear in GUI
+    Info: "Owner tag"
+    # Permission is not needed. It will use default permission if this isn't set.
+    # Permission: "specialperm.tag.owner"
+    

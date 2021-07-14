@@ -1,0 +1,12 @@
+Options:
+  Prefix: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#ffffff &7&l»"
+  Command:
+    Name: "tags"
+    Permission: "amazingtags.command"
+    Aliases:
+    - "amazingtags"
+    - "tag"
+
+# Translation
+Translation:
+  noPerms: "%prefix% &cYou do not have permissions for this! &7(&5%permission%&7)"
