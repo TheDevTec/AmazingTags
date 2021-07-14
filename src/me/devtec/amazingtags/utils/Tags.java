@@ -67,6 +67,12 @@ public class Tags {
 		else
 			return Material.valueOf(Loader.config.getString("Options.Tags.Default.Material"));
 	}
+	public static String getTagHead(String tag) {
+		if(Loader.tags.exists("Tags."+tag+".Head"))
+			return Loader.tags.getString("Tags."+tag+".Head");
+		else
+			return null;
+	}
 	
 	public static List<String> getLore(String tag, Player p) {
 		List<String> lore = new ArrayList<>();
@@ -118,6 +124,15 @@ public class Tags {
 		return false;
 	}
 	
+	public static ItemStack getTagItem(Player p, String tag) {
+		if(Loader.tags.exists("Tags."+tag+".Head")) {
+			ItemCreatorAPI item = new ItemCreatorAPI(getHead(getTagHead(tag)));
+			item.setLore(getLore(tag, p));
+			item.setDisplayName(getName(tag));
+			return fixHead(item, getTagHead(tag)).create();
+		}
+		return ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p));
+	}
 	
 	public static HashMap<Player, String> players = new HashMap<>();
 	
