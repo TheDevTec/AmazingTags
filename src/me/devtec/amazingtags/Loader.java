@@ -50,7 +50,7 @@ public class Loader extends JavaPlugin{
 	
 	public static boolean has(CommandSender s, String permission) {
 		if(s.hasPermission(permission)) return true;
-		TheAPI.msg(config.getString("Translation.noPerms").replace("%permission%", permission), s);
+		TheAPI.msg(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Options.Prefix")), s);
 		return false;
 	}
 	public void loadPlaceholders() {

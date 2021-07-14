@@ -32,7 +32,7 @@ public class TagsGUI {
 			
 			for(String tag: pagination.getPage(page)) {
 				
-				a.addItem(new ItemGUI( ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p))) {
+				a.addItem(new ItemGUI(Tags.getTagItem(p, tag)) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
