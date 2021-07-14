@@ -147,8 +147,10 @@ public class Tags {
 	
 	
 	/*
-	 *     PREVIEW ITEM
+	 *     SPECIAL ITEMS
 	 */
+	
+	//PREVIEW
 	private static String getPreviewItemName(Player p) {
 		return Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(getSelected(p)) ).replace("%tagname%", getSelected(p)!=null?getSelected(p):"" );
 	}
@@ -165,14 +167,55 @@ public class Tags {
 	
 	public static ItemStack getPreviewItem(Player p) {
 		if(Loader.gui.getBoolean("GUI.Items.Preview.PlayerHead")) {
-			return ItemCreatorAPI.createHead(1, getPreviewItemName(p), p.getName(), getPreviewItemLore(p));
+			ItemCreatorAPI item = new ItemCreatorAPI(getHead(p.getName()));
+			item.setLore(getPreviewItemLore(p));
+			item.setDisplayName(getPreviewItemName(p));
+			return item.create();
 		}
-		else {
-			return ItemCreatorAPI.create(getPreviewType(), 1, getPreviewItemName(p), getPreviewItemLore(p));
+		if(Loader.gui.exists("GUI.Items.Preview.Head")){
+			ItemCreatorAPI item = new ItemCreatorAPI(getHead(Loader.gui.getString("GUI.Items.Preview.Head")));
+			item.setLore(getPreviewItemLore(p));
+			item.setDisplayName(getPreviewItemName(p));
+			return fixHead(item, Loader.gui.getString("GUI.Items.Preview.Head")).create();
+			//return fixHead(new ItemCreatorAPI(getHead(Loader.gui.getString("GUI.Items.Preview.Head"))), Loader.gui.getString("GUI.Items.Preview.Head")).create();
 		}
+		return ItemCreatorAPI.create(getPreviewType(), 1, getPreviewItemName(p), getPreviewItemLore(p));
 	}
 	
+	// NEXT AND BACK ITEM
 	
+	public static ItemStack getNextOrBackItem(Player p, String path) {
+		if(Loader.gui.exists("GUI.Items."+path+".Head")){
+			ItemCreatorAPI item = new ItemCreatorAPI(getHead(Loader.gui.getString("GUI.Items."+path+".Head")));
+			item.setLore(Loader.gui.getStringList("GUI.Items."+path+".Lore"));
+			item.setDisplayName("GUI.Items."+path+".Name");
+			return fixHead(item, Loader.gui.getString("GUI.Items."+path+".Head")).create();
+		}
+		
+		ItemCreatorAPI item = new ItemCreatorAPI( Material.valueOf(Loader.gui.getString("GUI.Items."+path+".Type")));
+		item.setLore(Loader.gui.getStringList("GUI.Items."+path+".Lore"));
+		item.setDisplayName("GUI.Items."+path+".Name");
+		return item.create();
+	}
+	
+	private static ItemStack getHead(String head) {
+		if(head.toLowerCase().startsWith("hdb:"))
+			return new ItemCreatorAPI( HDBSupport.parse(head)).create();
+		else
+		if(head.startsWith("https://")||head.startsWith("http://"))
+			return ItemCreatorAPI.createHeadByWeb(1, "&7Head from website", head);
+		else
+		if(head.length()>16) { 
+			return ItemCreatorAPI.createHeadByValues(1, "&7Head from values", head);
+		}else
+			return ItemCreatorAPI.createHead(1, "&7" + head + "'s Head", head);
+	}
+	
+	private static ItemCreatorAPI fixHead(ItemCreatorAPI item, String head) {
+		if(head.length()>16)
+			item.setOwnerFromValues(head);
+		return item;
+	}
 	
 	
 }
