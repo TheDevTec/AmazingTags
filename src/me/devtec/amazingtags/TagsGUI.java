@@ -39,7 +39,7 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
 							Tags.select(p, tag);
-							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 10, 5);
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
 						else
