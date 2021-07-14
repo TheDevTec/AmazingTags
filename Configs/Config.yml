@@ -17,11 +17,21 @@ Options:
       Material: "NAME_TAG"
       Name: "&5&l» &7%tagname%"
       Lore:
-      - "%info%"
-      - "&7&l------"
-      - "%tag%"
+      - "&7Info: &f%info%"
+      - "&7Tag: &f%tag%"
+      - ""
+      - "%tag% &7%player%"
       # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.default
       Permission: "amazingtags.%tagname%"
+      
+    # Thiw will process when you select tag!
+    Select:
+      Sound: ""
+      Commands: []
+      Messages:
+      - "&7&l----------------------------------------"
+      - "&7You have selected tag: %tag%"
+      - "&7&l----------------------------------------"
 
 # Translation
 Translation:

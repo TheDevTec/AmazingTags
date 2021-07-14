@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.Loader;
 import me.devtec.theapi.TheAPI;
+import me.devtec.theapi.TheAPI.SudoType;
 import me.devtec.theapi.apis.ItemCreatorAPI;
 import me.devtec.theapi.utils.datakeeper.User;
 
@@ -144,6 +145,8 @@ public class Tags {
 		User u = TheAPI.getUser(player);
 		u.set("amazingtags.selected", tag);
 		u.save();
+		
+		process(player, tag);
 	}
 	public static String getSelected(Player player) {
 		if(players.containsKey(player))
@@ -158,8 +161,27 @@ public class Tags {
 		}
 	}
 	
-	
-	
+	private static void process(Player player, String tag) {
+		List<String> cmds = new ArrayList<>();
+		List<String> msg = new ArrayList<>();
+		
+		if(Loader.tags.exists("Tags."+tag+".Cmds"))
+			cmds = Loader.tags.getStringList("Tags."+tag+".Cmds");
+		else
+			cmds = Loader.config.getStringList("Options.Tags.Commands");
+		
+		if(Loader.tags.exists("Tags."+tag+".Messages"))
+			msg = Loader.tags.getStringList("Tags."+tag+".Messages");
+		else
+			msg = Loader.config.getStringList("Options.Tags.Messages");
+		
+		for(String command: cmds) {
+			TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
+		}
+		for(String message: msg) {
+			TheAPI.msg(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) , player);
+		}
+	}
 	
 	/*
 	 *     SPECIAL ITEMS

@@ -3,9 +3,10 @@ GUI:
   
   Items:
     Preview:
-      Name: "&5&lYour tag:"
+      Name: "&5&lSelected tag:"
       Lore:
-      - "%tag% %player%"
+      - "&7Selected: %tagname%"
+      - "&7Tag: %tag%"
       PlayerHead: true
       # Type: ""
       # Head: ""

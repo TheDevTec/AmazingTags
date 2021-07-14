@@ -1,6 +1,8 @@
 package me.devtec.amazingtags;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.utils.Pagination;
@@ -37,8 +39,11 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
 							Tags.select(p, tag);
+							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
+						else
+							player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
 					}
 				});
 				
@@ -77,13 +82,13 @@ public class TagsGUI {
 	
 	private static GUI prepare(GUI a) {
 		for (int i=0; i<=8; i++) {
-			a.setItem(i, new ItemGUI( ItemCreatorAPI.create(Material.BLACK_STAINED_GLASS_PANE, 1, null)) {
+			a.setItem(i, new ItemGUI( ItemCreatorAPI.create(Material.BLACK_STAINED_GLASS_PANE, 1, "&7")) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
 				} });
 		}
 		for (int i=45; i<=53; i++) {
-			a.setItem(i, new ItemGUI( ItemCreatorAPI.create(Material.BLACK_STAINED_GLASS_PANE, 1, null)) {
+			a.setItem(i, new ItemGUI( ItemCreatorAPI.create(Material.BLACK_STAINED_GLASS_PANE, 1, "&7")) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
 				} });
