@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.Tags;
 import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.apis.ItemCreatorAPI;
@@ -66,7 +67,7 @@ public class Loader extends JavaPlugin{
 		           return null;
 		       }
 			   	if(identifier.startsWith("tag")) {
-			   		return Tags.getTagFormat(Tags.getSelected(player));
+			   		return Tags.getTagFormat(API.getSelected(player));
 			   	}
 		       return null;
 			}

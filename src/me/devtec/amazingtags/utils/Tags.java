@@ -1,7 +1,6 @@
 package me.devtec.amazingtags.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -10,10 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.Loader;
-import me.devtec.theapi.TheAPI;
-import me.devtec.theapi.TheAPI.SudoType;
 import me.devtec.theapi.apis.ItemCreatorAPI;
-import me.devtec.theapi.utils.datakeeper.User;
 
 public class Tags {
 
@@ -135,66 +131,18 @@ public class Tags {
 		return ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p));
 	}
 	
-	public static HashMap<Player, String> players = new HashMap<>();
-	
-	public static void select(Player player, String tag) {
-		if(players.containsKey(player))
-			players.remove(player);
-		
-		players.put(player, tag);
-		User u = TheAPI.getUser(player);
-		u.set("amazingtags.selected", tag);
-		u.save();
-		
-		process(player, tag);
-	}
-	public static String getSelected(Player player) {
-		if(players.containsKey(player))
-			return players.get(player);
-		else {
-			User u = TheAPI.getUser(player);
-			String tag = null;
-			if(u.exist("amazingtags.selected"))
-				tag = u.getString("amazingtags.selected");
-			players.put(player, tag);
-			return tag;
-		}
-	}
-	
-	private static void process(Player player, String tag) {
-		List<String> cmds = new ArrayList<>();
-		List<String> msg = new ArrayList<>();
-		
-		if(Loader.tags.exists("Tags."+tag+".Cmds"))
-			cmds = Loader.tags.getStringList("Tags."+tag+".Cmds");
-		else
-			cmds = Loader.config.getStringList("Options.Tags.Commands");
-		
-		if(Loader.tags.exists("Tags."+tag+".Messages"))
-			msg = Loader.tags.getStringList("Tags."+tag+".Messages");
-		else
-			msg = Loader.config.getStringList("Options.Tags.Messages");
-		
-		for(String command: cmds) {
-			TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
-		}
-		for(String message: msg) {
-			TheAPI.msg(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) , player);
-		}
-	}
-	
 	/*
 	 *     SPECIAL ITEMS
 	 */
 	
 	//PREVIEW
 	private static String getPreviewItemName(Player p) {
-		return Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(getSelected(p)) ).replace("%tagname%", getSelected(p)!=null?getSelected(p):"" );
+		return Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"" );
 	}
 	private static List<String> getPreviewItemLore(Player p) {
 		List<String> lore = new ArrayList<>();
 		for(String line : Loader.gui.getStringList("GUI.Items.Preview.Lore")) {
-			lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(getSelected(p)) ).replace("%tagname%", getSelected(p)!=null?getSelected(p):"") );
+			lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") );
 		}
 		return lore;
 	}

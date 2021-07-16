@@ -5,6 +5,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
+import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.Pagination;
 import me.devtec.amazingtags.utils.Tags;
 import me.devtec.theapi.apis.ItemCreatorAPI;
@@ -38,7 +39,7 @@ public class TagsGUI {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
-							Tags.select(p, tag);
+							API.select(p, tag);
 							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
