@@ -1,15 +1,23 @@
-Tags:
-  Owner:
-    # Tag format that it will use
-    Tag: "&4&lOwner &8&l|&7"
-    # Information that will appear in GUI
-    Info: "Owner tag"
-    # This options are not needed. Just if you want something special for one specific tag...
-    # Permission: "specialperm.tag.owner"
-    # Name will be on material in GUI or will replace placeholder %tagname%
-    # Name: ""
-    # Lore: []
-    # Type: "DIAMOND"
-    # Head: ""
-    # Cmds: []
-    # Messages: []
+#    EXAMPLE:
+#Tags:
+#  example:
+#    # Tag format that it will use
+#    Tag: "&4&lOwner &8&l|&7"
+#    # Information that will appear in GUI
+#    Info: "Owner tag"
+#    # This options are not needed. Just if you want something special for one specific tag...
+#    Permission: "specialperm.tag.owner"
+#    Name will be on material in GUI or will replace placeholder %tagname%
+#    Name: ""
+#    Lore: []
+#    Type: "DIAMOND"
+#    Head: ""
+#    Select:
+#      Commands: []
+#      Messages: []
+
+#Please remove "#" ->
+#Tags:
+  #Owner:
+    #Tag: "&4&lOwner &8&l|&7"
+    #Info: "Owner tag"

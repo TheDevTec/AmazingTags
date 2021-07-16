@@ -21,7 +21,7 @@ public class Loader extends JavaPlugin{
 	public static ItemStack next = ItemCreatorAPI.createHeadByValues(1, "&cNext", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="), 
 			prev = ItemCreatorAPI.createHeadByValues(1, "&cPrevious", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0=");
 
-	protected static PlaceholderRegister palceholders;
+	protected static PlaceholderRegister placeholders;
 	
 	public void onEnable() {
 		plugin=this;
@@ -37,6 +37,8 @@ public class Loader extends JavaPlugin{
 	}
 	
 	public void onDisable() {
+		if(placeholders!=null)
+			Loader.placeholders.doUnregister();
 		
 	}
 	
@@ -46,6 +48,7 @@ public class Loader extends JavaPlugin{
 		Loader.config.reload();
 		Loader.gui.reload();
 		Loader.tags.reload();
+		prefix=config.getString("Options.Prefix");
 		TheAPI.msg(prefix+" Configurations reloaded.", ss);
 	}
 	
@@ -55,7 +58,7 @@ public class Loader extends JavaPlugin{
 		return false;
 	}
 	public void loadPlaceholders() {
-		Loader.palceholders=new PlaceholderRegister("amazingtags", "DevTec", Loader.plugin.getDescription().getVersion()) {
+		Loader.placeholders=new PlaceholderRegister("amazingtags", "DevTec", Loader.plugin.getDescription().getVersion()) {
 			
 			public String onRequest(Player player, String identifier) {
 		   	
@@ -72,6 +75,6 @@ public class Loader extends JavaPlugin{
 		       return null;
 			}
 		};
-		Loader.palceholders.register();
+		Loader.placeholders.register();
 	}
 }

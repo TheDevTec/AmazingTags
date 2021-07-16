@@ -36,3 +36,4 @@ Options:
 # Translation
 Translation:
   noPerms: "%prefix% &cYou do not have permissions for this! &7(&5%permission%&7)"
+  created_new_tag: "%prefix% &7You have created new tag! &7Tag: &d%tagname% &7Format: &d%tag%"

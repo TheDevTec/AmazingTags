@@ -64,6 +64,10 @@ public class API {
 		return Tags.getTagFormat(tag);
 	}
 	
+	public static void createTag(String tagName, String tagFormat) {
+		Loader.tags.set("Tags."+tagName+".Tag", tagFormat);
+		Loader.tags.save();
+	}
 	
 	/*
 	 * Other
@@ -73,14 +77,14 @@ public class API {
 		List<String> msg = new ArrayList<>();
 		
 		if(Loader.tags.exists("Tags."+tag+".Cmds"))
-			cmds = Loader.tags.getStringList("Tags."+tag+".Cmds");
+			cmds = Loader.tags.getStringList("Tags."+tag+".Select.Commands");
 		else
-			cmds = Loader.config.getStringList("Options.Tags.Commands");
+			cmds = Loader.config.getStringList("Options.Tags.Select.Commands");
 		
 		if(Loader.tags.exists("Tags."+tag+".Messages"))
-			msg = Loader.tags.getStringList("Tags."+tag+".Messages");
+			msg = Loader.tags.getStringList("Tags."+tag+".Select.Messages");
 		else
-			msg = Loader.config.getStringList("Options.Tags.Messages");
+			msg = Loader.config.getStringList("Options.Tags.Select.Messages");
 		
 		for(String command: cmds) {
 			TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );

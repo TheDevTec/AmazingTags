@@ -32,7 +32,7 @@ public class Tags {
 		if(Loader.tags.exists("Tags."+tag+".Tag"))
 			return Loader.tags.getString("Tags."+tag+".Tag");
 		else
-			return null;
+			return "";
 	}
 	public static String getTagInfo(String tag) {
 		if(tag==null) return "";
@@ -98,6 +98,10 @@ public class Tags {
 	}
 	
 	public static boolean canSee(Player p, String tag) {
+		if(Loader.tags.exists("Tags."+tag+".Enabled")) {
+			if(!Loader.tags.getBoolean("Tags."+tag+".Enabled"))
+				return false;
+		}
 		if(Loader.config.getBoolean("Options.Tags.Settings.seeAll")) {
 			return true;
 		}
