@@ -16,8 +16,7 @@
 #      Commands: []
 #      Messages: []
 
-#Please remove "#" ->
-#Tags:
-  #Owner:
-    #Tag: "&4&lOwner &8&l|&7"
-    #Info: "Owner tag"
+Tags:
+  Owner:
+    Tag: "&4&lOwner &8&l|&7"
+    Info: "Owner tag"

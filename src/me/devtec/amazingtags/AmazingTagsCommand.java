@@ -18,6 +18,12 @@ public class AmazingTagsCommand implements CommandExecutor {
 				TagsGUI.open(Bukkit.getPlayer(s.getName()));
 				return true;
 			}
+			if(args[0].equalsIgnoreCase("help")) {
+				if(s.hasPermission(Loader.config.getString("Options.Command.Permission"))) TheAPI.msg("&7/Tags &7&l- &7Open GUI", s);
+				if(s.hasPermission("amazingtags.reload")) TheAPI.msg("&7/Tags Reload &7&l- &7Reload configs", s);
+				if(s.hasPermission("amazingtags.create")) TheAPI.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
+				return true;
+			}
 			if(args[0].equalsIgnoreCase("reload") && Loader.has(s, "amazingtags.reload")) {
 				Loader.reload(s);
 				return true;
@@ -26,14 +32,12 @@ public class AmazingTagsCommand implements CommandExecutor {
 				if(args.length>2) {
 					String name = args[1];
 					String format = StringUtils.buildString(2, args);
-					Bukkit.broadcastMessage("1");
 					API.createTag(name, format);
 					TheAPI.msg(Loader.config.getString("Translation.created_new_tag").replace("%tagname%", name).replace("%tag%", format)
 							.replace("%prefix%", Loader.prefix), s);
 					return true;
 				}
-				Bukkit.broadcastMessage("0");
-				TheAPI.msg("/Tags Create <name> <format> &7&l- &7Create new tag", s);
+				TheAPI.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
 				return true;
 				// /tag create <name> <format>
 			}

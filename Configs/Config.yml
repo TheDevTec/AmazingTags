@@ -22,7 +22,7 @@ Options:
       - ""
       - "%tag% &7%player%"
       # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.default
-      Permission: "amazingtags.%tagname%"
+      Permission: "amazingtags.tag.%tagname%"
       
     # Thiw will process when you select tag!
     Select:
