@@ -19,15 +19,25 @@ public class API {
 	 * Selecting new tag
 	 */
 	public static void selectNewTag(Player player, String tag) {
-		if(players.containsKey(player))
-			players.remove(player);
-		
-		players.put(player, tag);
-		User u = TheAPI.getUser(player);
-		u.set("amazingtags.selected", tag);
-		u.save();
-		
-		process(player, tag);
+		if(tag!=null) {
+			if(players.containsKey(player))
+				players.remove(player);
+			
+			players.put(player, tag);
+			User u = TheAPI.getUser(player);
+			u.set("amazingtags.selected", tag);
+			u.save();
+			
+			process(player, tag);
+		}
+		else {
+			if(players.containsKey(player))
+				players.remove(player);
+			
+			User u = TheAPI.getUser(player);
+			u.remove("amazingtags.selected");
+			u.save();
+		}
 	}
 	public static void select(Player player, String tag) {
 		selectNewTag(player, tag);
@@ -42,7 +52,7 @@ public class API {
 			return players.get(player);
 		else {
 			User u = TheAPI.getUser(player);
-			String tag = null;
+			String tag = Loader.config.getString("Options.Tags.Default_Tag");
 			if(u.exist("amazingtags.selected"))
 				tag = u.getString("amazingtags.selected");
 			players.put(player, tag);

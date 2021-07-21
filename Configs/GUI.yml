@@ -7,6 +7,8 @@ GUI:
       Lore:
       - "&7Selected: %tagname%"
       - "&7Tag: %tag%"
+      - "&7"
+      - "&7Rright click to reset tag"
       PlayerHead: true
       # Type: ""
       # Head: ""

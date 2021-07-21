@@ -73,7 +73,11 @@ public class TagsGUI {
 		a.setItem(4, new ItemGUI(Tags.getPreviewItem(p)) {
 			@Override
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
-				// TODO Auto-generated method stub
+				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
+					API.select(player, null);
+					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+					a.close();
+				}
 				
 			}
 		});
