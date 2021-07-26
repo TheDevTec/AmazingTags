@@ -49,6 +49,12 @@ public class SQL {
 		return Loader.config.getString("Options.MySQL.table_prefix");
 	}
 	
+	public static void createTable() {
+		try {
+			Loader.connection.createStatement().execute("CREATE TABLE IF NOT EXISTS "+getTablePrefix()+"users (name TEXT NOT NULL, tag TEXT NOT NULL)");
+		} catch (SQLException e) {	}
+	
+	}
 
 	public static void selectTag(Player player, String tag) {
 		if(tag!=null) {

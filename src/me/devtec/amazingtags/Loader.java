@@ -35,6 +35,7 @@ public class Loader extends JavaPlugin{
 		
 		if(SQL.isEnabled()) {
 			connection = SQL.connect();
+			SQL.createTable();
 		}
 		
 		if(PluginManagerAPI.getPlugin("PlaceholderAPI")!=null)
@@ -49,8 +50,6 @@ public class Loader extends JavaPlugin{
 		
 	}
 	
-	
-
 	public static void reload(CommandSender ss) {
 		Loader.config.reload();
 		Loader.gui.reload();
