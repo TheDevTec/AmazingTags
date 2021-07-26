@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devtec.amazingtags.utils.API;
+import me.devtec.amazingtags.utils.SQL;
 import me.devtec.amazingtags.utils.Tags;
 import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.apis.ItemCreatorAPI;
@@ -18,6 +19,8 @@ public class Loader extends JavaPlugin{
 	public static Loader plugin;
 	public static Config config, gui, tags;
 	static String prefix;
+	public static java.sql.Connection connection;
+	
 	public static ItemStack next = ItemCreatorAPI.createHeadByValues(1, "&cNext", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="), 
 			prev = ItemCreatorAPI.createHeadByValues(1, "&cPrevious", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0=");
 
@@ -29,6 +32,10 @@ public class Loader extends JavaPlugin{
 		Configs.load();
 		prefix=config.getString("Options.Prefix");
 		TheAPI.createAndRegisterCommand(config.getString("Options.Command.Name"),config.getString("Options.Command.Permission"), new AmazingTagsCommand(), config.getStringList("Options.Command.Aliases"));
+		
+		if(SQL.isEnabled()) {
+			connection = SQL.connect();
+		}
 		
 		if(PluginManagerAPI.getPlugin("PlaceholderAPI")!=null)
 			loadPlaceholders();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.Loader;
@@ -28,11 +29,21 @@ public class API {
 			u.set("amazingtags.selected", tag);
 			u.save();
 			
+			if(SQL.isEnabled() && Loader.connection!=null) {
+				Bukkit.broadcastMessage("Selecting wia SQL");
+				SQL.selectTag(player, tag);
+			}
+			
 			process(player, tag);
 		}
 		else {
 			if(players.containsKey(player))
 				players.remove(player);
+			
+			if(SQL.isEnabled() && Loader.connection!=null) {
+				Bukkit.broadcastMessage("Reseting tag");
+				SQL.selectTag(player, null);
+			}
 			
 			User u = TheAPI.getUser(player);
 			u.remove("amazingtags.selected");
@@ -51,10 +62,17 @@ public class API {
 		if(players.containsKey(player))
 			return players.get(player);
 		else {
-			User u = TheAPI.getUser(player);
 			String tag = Loader.config.getString("Options.Tags.Default_Tag");
-			if(u.exist("amazingtags.selected"))
-				tag = u.getString("amazingtags.selected");
+			
+			if(SQL.isEnabled()) {
+				String s = SQL.getTag(player);
+				tag = s!=null?s:tag;
+				Bukkit.broadcastMessage("SQL: "+tag+ " ; "+s);
+			} else {
+				User u = TheAPI.getUser(player);
+				if(u.exist("amazingtags.selected"))
+					tag = u.getString("amazingtags.selected");
+			}
 			players.put(player, tag);
 			return tag;
 		}

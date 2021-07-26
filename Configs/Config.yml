@@ -8,6 +8,16 @@ Options:
     - "amazingtags"
     - "tag"
 
+  # Database is only used to saving the selected tag 
+  MySQL:
+    Use: false
+    username: ""
+    password: ""
+    hostname: ""
+    port: 3306
+    database: ""
+    table_prefix: "amazingtags_"
+    
   Tags:
     # A default tag
     Default_Tag: "Owner"
