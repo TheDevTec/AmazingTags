@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.Loader;
@@ -55,9 +54,7 @@ public class SQL {
 		if(tag!=null) {
 			try {
 				ResultSet set = Loader.connection.createStatement().executeQuery("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");
-				Bukkit.broadcastMessage("1");
 				if(set!=null && set.next()) {
-					Bukkit.broadcastMessage("2");
 					Loader.connection.createStatement().execute("update "+getTablePrefix()+"users set tag='"+tag+"' where name='"+player.getName()+"'");
 				}
 				else {
@@ -81,17 +78,13 @@ public class SQL {
 	public static String getTag(Player player) {
 		try {
 			ResultSet rs = Loader.connection.createStatement().executeQuery("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");
-			Bukkit.broadcastMessage("1");
 		if(rs!=null && rs.next()) {
-			Bukkit.broadcastMessage("2");
 			//while (rs.next()) {
-				Bukkit.broadcastMessage("3");
 				return rs.getString("tag");
 			//}
 		}
 		return null;
 		} catch (SQLException e) {
-			Bukkit.broadcastMessage(e.getMessage());
 		}
 		return null;
 	}

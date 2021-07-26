@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.Loader;
@@ -30,7 +29,6 @@ public class API {
 			u.save();
 			
 			if(SQL.isEnabled() && Loader.connection!=null) {
-				Bukkit.broadcastMessage("Selecting wia SQL");
 				SQL.selectTag(player, tag);
 			}
 			
@@ -41,7 +39,6 @@ public class API {
 				players.remove(player);
 			
 			if(SQL.isEnabled() && Loader.connection!=null) {
-				Bukkit.broadcastMessage("Reseting tag");
 				SQL.selectTag(player, null);
 			}
 			
@@ -67,7 +64,6 @@ public class API {
 			if(SQL.isEnabled()) {
 				String s = SQL.getTag(player);
 				tag = s!=null?s:tag;
-				Bukkit.broadcastMessage("SQL: "+tag+ " ; "+s);
 			} else {
 				User u = TheAPI.getUser(player);
 				if(u.exist("amazingtags.selected"))
