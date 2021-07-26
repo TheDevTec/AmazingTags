@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.Loader;
 import me.devtec.theapi.apis.ItemCreatorAPI;
+import me.devtec.theapi.placeholderapi.PlaceholderAPI;
 
 public class Tags {
 
@@ -81,8 +82,12 @@ public class Tags {
 		}
 		
 		for(String line: list) {
-			lore.add(line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
-					.replace("%player%", p!=null?p.getName():""));
+			lore.add(
+			PlaceholderAPI.setPlaceholders(p, line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
+					.replace("%player%", p!=null?p.getName():""))
+			);
+			/*lore.add(line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
+					.replace("%player%", p!=null?p.getName():""));*/
 		}
 		return lore;
 	}
@@ -129,7 +134,7 @@ public class Tags {
 		if(Loader.tags.exists("Tags."+tag+".Head")) {
 			ItemCreatorAPI item = new ItemCreatorAPI(getHead(getTagHead(tag)));
 			item.setLore(getLore(tag, p));
-			item.setDisplayName(getName(tag));
+			item.setDisplayName( PlaceholderAPI.setPlaceholders(p, getName(tag) ));
 			return fixHead(item, getTagHead(tag)).create();
 		}
 		return ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p));
@@ -141,12 +146,16 @@ public class Tags {
 	
 	//PREVIEW
 	private static String getPreviewItemName(Player p) {
-		return Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"" );
+		return PlaceholderAPI.setPlaceholders(p, Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"" )
+				);
 	}
 	private static List<String> getPreviewItemLore(Player p) {
 		List<String> lore = new ArrayList<>();
 		for(String line : Loader.gui.getStringList("GUI.Items.Preview.Lore")) {
-			lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") );
+			lore.add(
+					PlaceholderAPI.setPlaceholders(p, line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") )
+					);
+			//lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") );
 		}
 		return lore;
 	}

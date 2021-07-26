@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import me.devtec.amazingtags.Loader;
 import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.TheAPI.SudoType;
+import me.devtec.theapi.placeholderapi.PlaceholderAPI;
 import me.devtec.theapi.utils.datakeeper.User;
 
 public class API {
@@ -100,21 +101,23 @@ public class API {
 		List<String> cmds = new ArrayList<>();
 		List<String> msg = new ArrayList<>();
 		
-		if(Loader.tags.exists("Tags."+tag+".Cmds"))
+		if(Loader.tags.exists("Tags."+tag+".Select.Commands"))
 			cmds = Loader.tags.getStringList("Tags."+tag+".Select.Commands");
 		else
 			cmds = Loader.config.getStringList("Options.Tags.Select.Commands");
 		
-		if(Loader.tags.exists("Tags."+tag+".Messages"))
+		if(Loader.tags.exists("Tags."+tag+".Select.Messages"))
 			msg = Loader.tags.getStringList("Tags."+tag+".Select.Messages");
 		else
 			msg = Loader.config.getStringList("Options.Tags.Select.Messages");
 		
 		for(String command: cmds) {
-			TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
+			TheAPI.sudoConsole(SudoType.COMMAND, PlaceholderAPI.setPlaceholders(player, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) ));
+			//TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
 		}
 		for(String message: msg) {
-			TheAPI.msg(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) , player);
+			TheAPI.msg( PlaceholderAPI.setPlaceholders(player, message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag))), player) ;
+			//TheAPI.msg(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) , player);
 		}
 	}
 }
