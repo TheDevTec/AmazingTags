@@ -5,14 +5,16 @@ Players can select tags from GUI (/tags)
 This plugin is very easy to set up and configure. You can easily create a new tag in-game.
 
 ## Features
-• Great colours! You can create a tag with Hex and Gradient colours (Now only for ServerControlReloaded chat)
-• Translatable and fully customizable items in GUI
-• Customizable messages, commands, and sound when you select a tag
-• Customizabĺe tag item in GUI. You can create a custom head or item with a custom name and lore. Or you can just have the default item (Config.yml)
-• Plugin supports HeadDatabase heads!
-• MySQL support for the selected tag
-• Default tag option
-• Active development
+<ul>
+  <li>Great colours! You can create a tag with Hex and Gradient colours (Now only for ServerControlReloaded chat)</li>
+  <li>Translatable and fully customizable items in GUI</li>
+  <li>Customizable messages, commands, and sound when you select a tag</li>
+  <li>Customizabĺe tag item in GUI. You can create a custom head or item with a custom name and lore. Or you can just have the default item (Config.yml)</li>
+  <li>Plugin supports HeadDatabase heads!</li>
+  <li>MySQL support for the selected tag</li>
+  <li>Default tag option</li>
+  <li>Active development</li>
+</ul>  
 
 <details>
   <summary>Examples</summary>
