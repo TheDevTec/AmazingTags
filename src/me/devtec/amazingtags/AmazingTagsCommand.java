@@ -27,7 +27,12 @@ public class AmazingTagsCommand implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("reload") && Loader.has(s, "amazingtags.reload")) {
 				Loader.reload(s);
 				return true;
-			}
+			}//také mi nešlo nic posílat na git :( ani nově vytvořený... vůbec.. prostě eclipse chcípla
+			//a dával sis třeba update eclipse? právě on to posral xd
+			// já nemám update :D tak
+			// tuto verzi mám tak měsíc -2 starou.. tak nevím :( Asi nějaký bug.... 
+			//eee :(
+			//ale jinak co se týče source codu co tu máš, neboj se! stačí otevřít složku a vložit do nového repa (AF) a ono to najde co jsi udělal za tměnay :P
 			
 			
 			
