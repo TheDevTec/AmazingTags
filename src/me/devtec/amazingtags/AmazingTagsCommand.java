@@ -28,6 +28,8 @@ public class AmazingTagsCommand implements CommandExecutor {
 				Loader.reload(s);
 				return true;
 			}
+			
+			
 			if(args[0].equalsIgnoreCase("create") && Loader.has(s, "amazingtags.create")) {
 				if(args.length>2) {
 					String name = args[1];
