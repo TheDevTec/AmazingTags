@@ -30,6 +30,10 @@ public class AmazingTagsCommand implements CommandExecutor {
 			}
 			
 			
+			
+			//ADasdasd
+			// Ty tagy jsem dal znovu... pořád t ochce login a pak nič
+			
 			if(args[0].equalsIgnoreCase("create") && Loader.has(s, "amazingtags.create")) {
 				if(args.length>2) {
 					String name = args[1];
