@@ -36,6 +36,10 @@ public class AmazingTagsCommand implements CommandExecutor {
 			
 			
 			
+			
+			
+			
+			
 			//ADasdasd
 			// Ty tagy jsem dal znovu... pořád t ochce login a pak nič
 			
