@@ -23,7 +23,7 @@ public class TagsGUI {
 	private static void openTags(Player p, int page) {
 		GUI a = prepare( new GUI(Loader.gui.getString("GUI.Title"), 54) );
 		
-		Pagination<String> pagination = new Pagination<String>(37);
+		Pagination<String> pagination = new Pagination<String>(36);
 		
 		for(String tag: Loader.tags.getKeys("Tags")) {
 			if(Tags.isTag(tag))
