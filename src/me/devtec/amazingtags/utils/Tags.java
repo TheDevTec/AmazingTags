@@ -27,7 +27,10 @@ public class Tags {
 		}
 	}
 	
-
+    public static boolean exist(final String tag) {
+        return Loader.tags.exists("Tags." + tag + ".Tag");
+    }
+    
 	public static String getTagFormat(String tag) {
 		if(tag==null) return "";
 		if(Loader.tags.exists("Tags."+tag+".Tag"))
