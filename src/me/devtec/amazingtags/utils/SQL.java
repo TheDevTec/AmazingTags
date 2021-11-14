@@ -70,8 +70,8 @@ public class SQL {
 					preparedStmt.execute();
 				}
 			
-			} catch (Exception e) {
-		}
+			} catch (Exception e) {}
+			//Bukkit.broadcastMessage("tag uložen");
 		}else {
 			try {
 				Loader.connection.createStatement().execute("delete from "+getTablePrefix()+"users where name='"+player.getName()+"'");

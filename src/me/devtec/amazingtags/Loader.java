@@ -1,5 +1,6 @@
 package me.devtec.amazingtags;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -10,7 +11,6 @@ import me.devtec.amazingtags.utils.SQL;
 import me.devtec.amazingtags.utils.Tags;
 import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.apis.ItemCreatorAPI;
-import me.devtec.theapi.apis.PluginManagerAPI;
 import me.devtec.theapi.configapi.Config;
 import me.devtec.theapi.placeholderapi.PlaceholderRegister;
 
@@ -38,7 +38,7 @@ public class Loader extends JavaPlugin{
 			SQL.createTable();
 		}
 		
-		if(PluginManagerAPI.getPlugin("PlaceholderAPI")!=null)
+		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!=null)
 			loadPlaceholders();
 
 		plugin=this;

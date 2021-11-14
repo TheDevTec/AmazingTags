@@ -25,12 +25,13 @@ public class API {
 				players.remove(player);
 			
 			players.put(player, tag);
-			User u = TheAPI.getUser(player);
-			u.set("amazingtags.selected", tag);
-			u.save();
 			
 			if(SQL.isEnabled() && Loader.connection!=null) {
 				SQL.selectTag(player, tag);
+			}else {
+				User u = TheAPI.getUser(player);
+				u.set("amazingtags.selected", tag);
+				u.save();
 			}
 			
 			process(player, tag);
@@ -65,12 +66,14 @@ public class API {
 			if(SQL.isEnabled()) {
 				String s = SQL.getTag(player);
 				tag = s!=null?s:tag;
+				//Bukkit.broadcastMessage("načten tag z databáze: "+tag);
 			} else {
 				User u = TheAPI.getUser(player);
 				if(u.exist("amazingtags.selected"))
 					tag = u.getString("amazingtags.selected");
 			}
 			players.put(player, tag);
+			//Bukkit.broadcastMessage("načten tag: "+tag);
 			return tag;
 		}
 	}
@@ -106,11 +109,13 @@ public class API {
 		else
 			cmds = Loader.config.getStringList("Options.Tags.Select.Commands");
 		
-		if(Loader.tags.exists("Tags."+tag+".Select.Messages"))
+		if(Loader.tags.exists("Tags."+tag+".Select.Messages")) {
 			msg = Loader.tags.getStringList("Tags."+tag+".Select.Messages");
-		else
+		}
+		else {
 			msg = Loader.config.getStringList("Options.Tags.Select.Messages");
-		
+		}
+
 		for(String command: cmds) {
 			TheAPI.sudoConsole(SudoType.COMMAND, PlaceholderAPI.setPlaceholders(player, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) ));
 			//TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
