@@ -20,6 +20,8 @@ public class AmazingTagsCommand implements CommandExecutor {
 				TagsGUI.open(Bukkit.getPlayer(s.getName()));
 				return true;
 			}
+			
+			
 			if(args[0].equalsIgnoreCase("help")) {
 				if(s.hasPermission(Loader.config.getString("Options.Command.Permission"))) TheAPI.msg("&7/Tags &7&l- &7Open GUI", s);
 				if(s.hasPermission("amazingtags.reload")) TheAPI.msg("&7/Tags Reload &7&l- &7Reload configs", s);
