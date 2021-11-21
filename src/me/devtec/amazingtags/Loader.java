@@ -13,13 +13,16 @@ import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.apis.ItemCreatorAPI;
 import me.devtec.theapi.configapi.Config;
 import me.devtec.theapi.placeholderapi.PlaceholderRegister;
+import me.devtec.theapi.scheduler.Tasker;
+import me.devtec.theapi.sqlapi.SQLAPI;
 
 public class Loader extends JavaPlugin{
 	
 	public static Loader plugin;
 	public static Config config, gui, tags;
 	static String prefix;
-	public static java.sql.Connection connection;
+	public static SQLAPI connection;
+	public int task;
 	
 	public static ItemStack next = ItemCreatorAPI.createHeadByValues(1, "&cNext", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="), 
 			prev = ItemCreatorAPI.createHeadByValues(1, "&cPrevious", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0=");
@@ -35,6 +38,14 @@ public class Loader extends JavaPlugin{
 		
 		if(SQL.isEnabled()) {
 			connection = SQL.connect();
+			task=new Tasker() {
+				public void run() {
+					try{
+						connection.close();
+					}catch (Exception e){}
+					connection.reconnect();
+				}
+			}.runRepeating(20*60*15, 20*60*15);
 			SQL.createTable();
 		}
 		
@@ -47,6 +58,7 @@ public class Loader extends JavaPlugin{
 	public void onDisable() {
 		if(placeholders!=null)
 			Loader.placeholders.doUnregister();
+		connection.close();
 		
 	}
 	
