@@ -44,9 +44,9 @@ public class Loader extends JavaPlugin{
 						connection.close();
 					}catch (Exception e){}
 					connection.reconnect();
+					SQL.createTable();
 				}
 			}.runRepeating(20*60*15, 20*60*15);
-			SQL.createTable();
 		}
 		
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!=null)

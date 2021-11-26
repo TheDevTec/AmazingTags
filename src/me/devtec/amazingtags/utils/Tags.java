@@ -59,9 +59,6 @@ public class Tags {
 			return null;
 	}
 	
-	
-	
-	
 	public static Material getType(String tag) {
 		if(Loader.tags.exists("Tags."+tag+".Type"))
 			return Material.valueOf(Loader.tags.getString("Tags."+tag+".Type"));
@@ -86,15 +83,19 @@ public class Tags {
 		
 		for(String line: list) {
 			lore.add(
-			PlaceholderAPI.setPlaceholders(p, line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
-					.replace("%player%", p!=null?p.getName():""))
+			PlaceholderAPI.setPlaceholders(p, line.replace("%info%", getTagInfo(tag) )
+					.replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" )
+					.replace("%tagname%", getTagName(tag))
+					.replace("%player%", p!=null?p.getName():"")
+					.replace("%status%", getStatus(tag, p))
+					)
 			);
 			/*lore.add(line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
 					.replace("%player%", p!=null?p.getName():""));*/
 		}
 		return lore;
 	}
-	
+
 	public static String getName(String tag) {
 		if(Loader.tags.exists("Tags."+tag+".Name"))
 			return Loader.tags.getString("Tags."+tag+".Name");
@@ -141,6 +142,16 @@ public class Tags {
 			return fixHead(item, getTagHead(tag)).create();
 		}
 		return ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p));
+	}
+	
+	private static String getStatus(String tag, Player p) {
+		if(hasPermission(p, tag)) {
+			if(API.getSelected(p).equals(tag))
+				return Loader.config.getString("Options.Status.Active");
+			else
+				return Loader.config.getString("Options.Status.Availible");
+		}
+		return Loader.config.getString("Options.Status.NoPerm");
 	}
 	
 	/*

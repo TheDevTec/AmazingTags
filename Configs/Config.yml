@@ -45,6 +45,10 @@ Options:
       - "&7&l----------------------------------------"
       - "&7You have selected tag: %tag%"
       - "&7&l----------------------------------------"
+  Status:
+    NoPerm: "&c&lUnavailable"
+    Availible: "&e&lAvailible"
+    Active: "&a&lActive"
 
 # Translation
 Translation:

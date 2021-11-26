@@ -22,3 +22,20 @@ Tags:
     Tag: "&4&lOwner &8&l|&7"
     Info: "Owner tag"
     Enabled: true
+
+#categories:
+#  test:
+#    content:
+#    - "common"
+#    - "quest_2"
+#    name: ""
+#    #Icom: MATERIAL
+#    icon: ""
+#    head: ""
+#    description:
+#    permission: []
+#    slot: 5
+#    Special options: ALL, PERM,
+#    ALL - will show all tags (not needed to add tags in content)
+#    PERM - just tags you have perms on
+#    special:
