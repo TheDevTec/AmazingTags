@@ -36,7 +36,7 @@ Options:
       # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.default
       Permission: "amazingtags.tag.%tagname%"
       
-    # Thiw will process when you select tag!
+    # This will process when you select tag!
     Select:
       Sound: "ENTITY_PLAYER_LEVELUP"
       Default_select_sound: "ENTITY_PLAYER_LEVELUP"
