@@ -1,6 +1,6 @@
 name: AmazingTags
 main: me.devtec.amazingtags.Loader
-version: 1.2
+version: 1.3
 author: DevTec
 depend: [TheAPI]
 api-version: 1.13
