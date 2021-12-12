@@ -7,7 +7,6 @@ import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.apis.ItemCreatorAPI;
 
-@SuppressWarnings("deprecation")
 public class HDBSupport {
 	static Object api;
 	static {
