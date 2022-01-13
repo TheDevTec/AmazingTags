@@ -1,6 +1,5 @@
 package me.devtec.amazingtags.utils;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -55,7 +54,7 @@ public class SQL {
 		//Loader.connection.createStatement().execute("CREATE TABLE IF NOT EXISTS "+getTablePrefix()+"users (name TEXT NOT NULL, tag TEXT NOT NULL)");
 	}
 
-	public static void selectTag(Player player, String tag) {
+	/*public static void selectTag(Player player, String tag) {
 		if(tag!=null) {
 			try {
 				ResultSet set = Loader.connection.query("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");
@@ -65,11 +64,14 @@ public class SQL {
 					//Loader.connection.createStatement().execute("update "+getTablePrefix()+"users set tag='"+tag+"' where name='"+player.getName()+"'");
 				}
 				else {
-					PreparedStatement preparedStmt = Loader.connection.getPreparedStatement("insert into "+getTablePrefix()+"users (name, tag)"+ " values (?, ?)");
+					//PreparedStatement preparedStmt = Loader.connection.getPreparedStatement("insert into "+getTablePrefix()+"users (name, tag)"+ " values (?, ?)");
 					//PreparedStatement preparedStmt = Loader.connection.prepareStatement("insert into "+getTablePrefix()+"users (name, tag)"+ " values (?, ?)");
-					preparedStmt.setString(1, player.getName());
-					preparedStmt.setString(2, tag);
-					preparedStmt.execute();
+
+					//preparedStmt.setString(1, player.getName());
+					//preparedStmt.setString(2, tag);
+					//preparedStmt.execute();
+					
+					Loader.connection.execute("insert into "+getTablePrefix()+"users (name, tag)"+ " values ("+ player.getName()+", "+tag+")");
 				}
 			
 			} catch (Exception e) {}
@@ -78,8 +80,8 @@ public class SQL {
 			Loader.connection.execute("delete from "+getTablePrefix()+"users where name='"+player.getName()+"'");
 			//Loader.connection.createStatement().execute("delete from "+getTablePrefix()+"users where name='"+player.getName()+"'");
 		}
-	}
-	/*  TODO - NOVÝ THEAPI IMPORT
+	}*/
+	 // TODO - NOVÝ THEAPI IMPORT
 	 public static void selectTag(Player player, String tag) {
         if(tag!=null) {
             try {
@@ -88,17 +90,20 @@ public class SQL {
                     Loader.connection.execute("update "+getTablePrefix()+"users set tag='"+tag+"' where name='"+player.getName()+"'");
                 }
                 else {
-                    Loader.connection.execute("insert into "+getTablePrefix()+"users (name, tag)"+ " values ("+player.getName()+", "+tag+")");
-                }
+                    Loader.connection.execute("insert into "+getTablePrefix()+"users values ('"+player.getName()+"', '"+tag+"')");
+                    //Loader.connection.execute("insert into "+getTablePrefix()+"users (name, tag)"+ " values ("+player.getName()+", "+tag+")");
+                    }
             
             } catch (Exception e) {}
         }else {
             Loader.connection.execute("delete from "+getTablePrefix()+"users where name='"+player.getName()+"'");
         }
     }
-	 */
+	 
 	
 	public static String getTag(Player player) {
+		if(Loader.connection==null || !Loader.connection.isConnected())
+			return null;
 		try {
 			ResultSet rs = Loader.connection.query("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");
 			//ResultSet rs = Loader.connection.createStatement().executeQuery("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");

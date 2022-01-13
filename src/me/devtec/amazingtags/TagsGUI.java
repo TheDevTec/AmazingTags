@@ -18,7 +18,7 @@ import me.devtec.theapi.guiapi.ItemGUI;
 public class TagsGUI {
 
 	public static void open(Player p) {
-		if(Loader.tags.exists("categories") && p.getName().equalsIgnoreCase("Houska02"))
+		if(Loader.tags.exists("categories"))
 			openCategories(p, 0);
 		else
 			openTags(p, 0);
@@ -172,19 +172,26 @@ public class TagsGUI {
 		
 		String special = category.getSpecial();
 		
-		for(String tag: category.getContent()) {
-			if(Tags.isTag(tag))
-				if(special!=null) {
-					if(special.equalsIgnoreCase("ALL"))
+		if(special.equalsIgnoreCase("ALL"))
+			for(String tag: Loader.tags.getKeys("Tags")) {
+				if(Tags.isTag(tag))
+					if(Tags.canSee(p, tag))
 						pagination.add(tag);
-					if(special.equalsIgnoreCase("PERM"))
-						if(Tags.hasPermission(p, tag))
+			}
+		else
+			for(String tag: category.getContent()) {
+				if(Tags.isTag(tag))
+					if(special!=null) {
+						if(special.equalsIgnoreCase("ALL_CONTENT"))
 							pagination.add(tag);
-					continue;
-				}
-				if(Tags.canSee(p, tag))
-					pagination.add(tag);
-		}
+						if(special.equalsIgnoreCase("PERM"))
+							if(Tags.hasPermission(p, tag))
+								pagination.add(tag);
+						continue;
+					}
+					if(Tags.canSee(p, tag))
+						pagination.add(tag);
+			}
 
 		if(pagination!=null && !pagination.isEmpty()) {
 			

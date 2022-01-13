@@ -4,8 +4,8 @@ import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import me.devtec.theapi.TheAPI;
 import me.devtec.theapi.apis.ItemCreatorAPI;
-import me.devtec.theapi.utils.nms.NMSAPI;
 
 @SuppressWarnings("deprecation")
 public class HDBSupport {
@@ -25,6 +25,7 @@ public class HDBSupport {
 	public static ItemStack parse(String text, String nbt) {
 		ItemStack head = parse(text);
 		if(head==null)head=ItemCreatorAPI.createHead(1, null, SkullType.PLAYER);
-		return NMSAPI.setNBT(head, nbt);
+		//return NMSAPI.setNBT(head, nbt);
+		return TheAPI.getNmsProvider().setNBT(head, nbt);
 	}
 }

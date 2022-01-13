@@ -37,16 +37,17 @@ public class Loader extends JavaPlugin{
 		TheAPI.createAndRegisterCommand(config.getString("Options.Command.Name"),config.getString("Options.Command.Permission"), new AmazingTagsCommand(), config.getStringList("Options.Command.Aliases"));
 		
 		if(SQL.isEnabled()) {
-			connection = SQL.connect();
+			Loader.connection = SQL.connect();
 			task=new Tasker() {
 				public void run() {
 					try{
-						connection.close();
+						if(Loader.connection!=null)
+							Loader.connection.close();
 					}catch (Exception e){}
-					connection.reconnect();
+					Loader.connection.reconnect();
 					SQL.createTable();
 				}
-			}.runRepeating(20*60*15, 20*60*15);
+			}.runRepeating(0, 20*60*15);
 		}
 		
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!=null)
@@ -58,8 +59,8 @@ public class Loader extends JavaPlugin{
 	public void onDisable() {
 		if(placeholders!=null)
 			Loader.placeholders.doUnregister();
-		connection.close();
-		
+		if(connection!=null)
+			connection.close();
 	}
 	
 	public static void reload(CommandSender ss) {

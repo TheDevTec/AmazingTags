@@ -41,8 +41,8 @@ public class Category {
 			return -1;
 	}
 	public String getSpecial() {
-		if(Loader.tags.exists("categories."+name+"special"))
-			return Loader.tags.getString("categories."+name+".slot");
+		if(Loader.tags.exists("categories."+name+".special"))
+			return Loader.tags.getString("categories."+name+".special");
 		else
 			return null;
 	}

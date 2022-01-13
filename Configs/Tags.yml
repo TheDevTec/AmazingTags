@@ -37,5 +37,7 @@ Tags:
 #    slot: 5
 #    Special options: ALL, PERM,
 #    ALL - will show all tags (not needed to add tags in content)
+#    ALL_CONTENT - will show all tags (you need to add tags in content but it will not check permission)
 #    PERM - just tags you have perms on
+
 #    special:

@@ -63,7 +63,7 @@ public class API {
 		else {
 			String tag = Loader.config.getString("Options.Tags.Default_Tag");
 			
-			if(SQL.isEnabled()) {
+			if(SQL.isEnabled() && Loader.connection!=null) {
 				String s = SQL.getTag(player);
 				tag = s!=null?s:tag;
 				//Bukkit.broadcastMessage("načten tag z databáze: "+tag);
