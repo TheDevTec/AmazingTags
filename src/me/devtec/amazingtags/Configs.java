@@ -4,15 +4,14 @@ import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
-import me.devtec.theapi.configapi.Config;
-import me.devtec.theapi.utils.StreamUtils;
-import me.devtec.theapi.utils.datakeeper.Data;
+import me.devtec.shared.dataholder.Config;
+import me.devtec.shared.utility.StreamUtils;
 
 public class Configs {
 	static List<String> datas = Arrays.asList("Config.yml","GUI.yml","Tags.yml");
 	
 	public static void load() {
-		Data data = new Data();
+		Config data = new Config();
     	boolean change = false;
 		for(String s : datas) {
 			data.reset();
@@ -36,7 +35,7 @@ public class Configs {
     		u.setUseCaches(false);
     		data.reload(StreamUtils.fromStream(u.getInputStream()));
     		}catch(Exception e) {e.printStackTrace();}
-	    	change = c.getData().merge(data, true, true);
+	    	change = c.merge(data, true, true);
 	    	if(change)
 	    	c.save();
 	    	switch(s) {

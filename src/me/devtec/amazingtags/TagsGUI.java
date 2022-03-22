@@ -7,13 +7,13 @@ import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.Category;
+import me.devtec.amazingtags.utils.ItemCreatorAPI;
 import me.devtec.amazingtags.utils.Pagination;
 import me.devtec.amazingtags.utils.Tags;
-import me.devtec.theapi.apis.ItemCreatorAPI;
-import me.devtec.theapi.guiapi.GUI;
-import me.devtec.theapi.guiapi.GUI.ClickType;
-import me.devtec.theapi.guiapi.HolderGUI;
-import me.devtec.theapi.guiapi.ItemGUI;
+import me.devtec.theapi.bukkit.gui.GUI;
+import me.devtec.theapi.bukkit.gui.GUI.ClickType;
+import me.devtec.theapi.bukkit.gui.HolderGUI;
+import me.devtec.theapi.bukkit.gui.ItemGUI;
 
 public class TagsGUI {
 

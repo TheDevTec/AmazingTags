@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.Loader;
-import me.devtec.theapi.TheAPI;
-import me.devtec.theapi.TheAPI.SudoType;
-import me.devtec.theapi.placeholderapi.PlaceholderAPI;
-import me.devtec.theapi.utils.datakeeper.User;
+import me.devtec.shared.dataholder.Config;
+import me.devtec.shared.placeholders.PlaceholderAPI;
+import me.devtec.shared.utility.StringUtils;
 
 public class API {
 
@@ -29,7 +29,7 @@ public class API {
 			if(SQL.isEnabled() && Loader.connection!=null) {
 				SQL.selectTag(player, tag);
 			}else {
-				User u = TheAPI.getUser(player);
+				Config u = me.devtec.shared.API.getUser(player.getUniqueId());
 				u.set("amazingtags.selected", tag);
 				u.save();
 			}
@@ -44,7 +44,7 @@ public class API {
 				SQL.selectTag(player, null);
 			}
 			
-			User u = TheAPI.getUser(player);
+			Config u = me.devtec.shared.API.getUser(player.getUniqueId());
 			u.remove("amazingtags.selected");
 			u.save();
 		}
@@ -68,8 +68,8 @@ public class API {
 				tag = s!=null?s:tag;
 				//Bukkit.broadcastMessage("načten tag z databáze: "+tag);
 			} else {
-				User u = TheAPI.getUser(player);
-				if(u.exist("amazingtags.selected"))
+				Config u = me.devtec.shared.API.getUser(player.getUniqueId());
+				if(u.exists("amazingtags.selected"))
 					tag = u.getString("amazingtags.selected");
 			}
 			players.put(player, tag);
@@ -117,11 +117,11 @@ public class API {
 		}
 
 		for(String command: cmds) {
-			TheAPI.sudoConsole(SudoType.COMMAND, PlaceholderAPI.setPlaceholders(player, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) ));
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.apply(command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId() ));
 			//TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
 		}
 		for(String message: msg) {
-			TheAPI.msg( PlaceholderAPI.setPlaceholders(player, message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag))), player) ;
+			player.sendMessage(StringUtils.colorize(PlaceholderAPI.apply(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId())));
 			//TheAPI.msg(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) , player);
 		}
 	}

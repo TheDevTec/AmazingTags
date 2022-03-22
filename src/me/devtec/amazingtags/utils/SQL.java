@@ -1,12 +1,20 @@
 package me.devtec.amazingtags.utils;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.Loader;
-import me.devtec.theapi.sqlapi.SQLAPI;
+import me.devtec.shared.database.DatabaseAPI;
+import me.devtec.shared.database.DatabaseAPI.DatabaseType;
+import me.devtec.shared.database.DatabaseAPI.SqlDatabaseSettings;
+import me.devtec.shared.database.DatabaseHandler;
+import me.devtec.shared.database.DatabaseHandler.InsertQuery;
+import me.devtec.shared.database.DatabaseHandler.RemoveQuery;
+import me.devtec.shared.database.DatabaseHandler.Result;
+import me.devtec.shared.database.DatabaseHandler.Row;
+import me.devtec.shared.database.DatabaseHandler.SelectQuery;
+import me.devtec.shared.database.DatabaseHandler.UpdateQuery;
 
 public class SQL {
 
@@ -14,16 +22,14 @@ public class SQL {
 		return Loader.config.getBoolean("Options.MySQL.Use");
 	}
 	
-	public static SQLAPI connect() {
+	public static DatabaseHandler connect() {
 		return Database(getHost(), getPort(), getDatabase(), getUser(), getPassword());
 	}
 	
-	private static SQLAPI Database(String host, int port, String db, String usr, String psw){
+	private static DatabaseHandler Database(String host, int port, String db, String usr, String psw){
 		synchronized (Loader.plugin){
 			try{
-				//Class.forName("com.mysql.jdbc.Driver");
-				//return java.sql.DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db,usr,psw);
-				return new SQLAPI(host, db, usr, psw, port);
+				return DatabaseAPI.openConnection(DatabaseType.MYSQL, new SqlDatabaseSettings(DatabaseType.MYSQL, host, port, db, usr, psw));
  			} catch (Exception e){e.printStackTrace();}
 		}
 
@@ -50,31 +56,37 @@ public class SQL {
 	}
 	
 	public static void createTable() {
-		Loader.connection.execute("CREATE TABLE IF NOT EXISTS "+getTablePrefix()+"users (name TEXT NOT NULL, tag TEXT NOT NULL)");
+		try {
+			Loader.connection.createTable(getTablePrefix()+"users", new Row[]{new Row("name", "TEXT", false, "", "", ""), new Row("tag", "TEXT", false, "", "", "")});
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	 public static void selectTag(Player player, String tag) {
        if(tag!=null) {
            try {
-               ResultSet set = Loader.connection.query("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");
-               if(set!=null && set.next()) {
-                   Loader.connection.execute("update "+getTablePrefix()+"users set tag='"+tag+"' where name='"+player.getName()+"'");
+               if(Loader.connection.exists(SelectQuery.table(getTablePrefix()+"users").where("name", player.getName()))) {
+                   Loader.connection.update(UpdateQuery.table(getTablePrefix()+"users").value("tag", tag).where("name", player.getName()));
                }
                else {
-                   Loader.connection.execute("insert into "+getTablePrefix()+"users (name, tag)"+ " values ("+player.getName()+", "+tag+")");
+                   Loader.connection.insert(InsertQuery.table(getTablePrefix()+"users", player.getName(), tag));
                }
-           
            } catch (Exception e) {}
        }else {
-           Loader.connection.execute("delete from "+getTablePrefix()+"users where name='"+player.getName()+"'");
+           try {
+			Loader.connection.remove(RemoveQuery.table(getTablePrefix()+"users").where("name", player.getName()).limit(0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
        }
    }
 	
 	public static String getTag(Player player) {
 		try {
-			ResultSet rs = Loader.connection.query("select * from "+getTablePrefix()+"users where name='"+player.getName()+"'");
-		if(rs!=null && rs.next())
-			return rs.getString("tag");
+			Result rs = Loader.connection.get(SelectQuery.table(getTablePrefix()+"users", "tag").where("name", player.getName()));
+		if(rs.getValue()!=null)
+			return rs.getValue()[0];
 		return null;
 		} catch (SQLException e) {
 		}

@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.Loader;
-import me.devtec.theapi.apis.ItemCreatorAPI;
 
 public class Category {
 	
@@ -69,7 +68,7 @@ public class Category {
 	
 	private static ItemStack createHead(String head) {
 		if(head.toLowerCase().startsWith("hdb:"))
-			return new ItemCreatorAPI( HDBSupport.parse(head)).create();
+			return ItemCreatorAPI.createHeadByValues(1, "&7Head from values", HDBSupport.parse(head));
 		else
 		if(head.startsWith("https://")||head.startsWith("http://"))
 			return ItemCreatorAPI.createHeadByWeb(1, "&7Head from website", head);

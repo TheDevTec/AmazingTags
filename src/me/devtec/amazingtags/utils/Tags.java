@@ -9,8 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.Loader;
-import me.devtec.theapi.apis.ItemCreatorAPI;
-import me.devtec.theapi.placeholderapi.PlaceholderAPI;
+import me.devtec.shared.placeholders.PlaceholderAPI;
 
 public class Tags {
 
@@ -83,11 +82,11 @@ public class Tags {
 		
 		for(String line: list) {
 			lore.add(
-			PlaceholderAPI.setPlaceholders(p, line.replace("%info%", getTagInfo(tag) )
+			PlaceholderAPI.apply(line.replace("%info%", getTagInfo(tag) )
 					.replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" )
 					.replace("%tagname%", getTagName(tag))
 					.replace("%player%", p!=null?p.getName():"")
-					.replace("%status%", getStatus(tag, p))
+					.replace("%status%", getStatus(tag, p)), p.getUniqueId()
 					)
 			);
 			/*lore.add(line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
@@ -138,7 +137,7 @@ public class Tags {
 		if(Loader.tags.exists("Tags."+tag+".Head")) {
 			ItemCreatorAPI item = new ItemCreatorAPI(getHead(getTagHead(tag)));
 			item.setLore(getLore(tag, p));
-			item.setDisplayName( PlaceholderAPI.setPlaceholders(p, getName(tag) ));
+			item.setDisplayName( PlaceholderAPI.apply(getName(tag), p.getUniqueId() ));
 			return fixHead(item, getTagHead(tag)).create();
 		}
 		return ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p));
@@ -160,14 +159,14 @@ public class Tags {
 	
 	//PREVIEW
 	private static String getPreviewItemName(Player p) {
-		return PlaceholderAPI.setPlaceholders(p, Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"" )
+		return PlaceholderAPI.apply(Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"" ), p.getUniqueId()
 				);
 	}
 	private static List<String> getPreviewItemLore(Player p) {
 		List<String> lore = new ArrayList<>();
 		for(String line : Loader.gui.getStringList("GUI.Items.Preview.Lore")) {
 			lore.add(
-					PlaceholderAPI.setPlaceholders(p, line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") )
+					PlaceholderAPI.apply(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):""), p.getUniqueId() )
 					);
 			//lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") );
 		}
@@ -212,7 +211,7 @@ public class Tags {
 	
 	private static ItemStack getHead(String head) {
 		if(head.toLowerCase().startsWith("hdb:"))
-			return new ItemCreatorAPI( HDBSupport.parse(head)).create();
+			return ItemCreatorAPI.createHeadByValues(1, "&7Head from values", HDBSupport.parse(head));
 		else
 		if(head.startsWith("https://")||head.startsWith("http://"))
 			return ItemCreatorAPI.createHeadByWeb(1, "&7Head from website", head);
