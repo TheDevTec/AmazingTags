@@ -1,8 +1,8 @@
 package me.devtec.amazingtags.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import me.devtec.shared.utility.StringUtils;
 
 public class API {
 
-	public static HashMap<Player, String> players = new HashMap<>();
+	public static ConcurrentHashMap<Player, String> players = new ConcurrentHashMap<>();
 	
 	/*
 	 * Selecting new tag

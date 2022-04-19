@@ -7,7 +7,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/EclipseUtils/HeadDatabase.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/HeadDatabase-4.16.0.jar"/>
 	<classpathentry kind="lib" path="D:/Build/TheAPI.jar" sourcepath="/TheAPI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
