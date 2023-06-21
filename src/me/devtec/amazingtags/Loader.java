@@ -87,7 +87,7 @@ public class Loader extends JavaPlugin{
 			           return null;
 			       }
 				   	if(identifier.equalsIgnoreCase("tag")) {
-				   		return Tags.getTagFormat(API.getSelected(Bukkit.getPlayer(player)));
+				   		return Tags.getTagFormat(API.getSelectedTag(Bukkit.getPlayer(player)));
 				   	}
 			       return null;
 			}

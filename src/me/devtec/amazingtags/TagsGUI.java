@@ -19,7 +19,7 @@ public class TagsGUI {
 
 	public static void open(Player p) {
 		if(Loader.tags.exists("categories") && p.getName().equalsIgnoreCase("Houska02"))
-			openCategories(p, 0);
+			openCategories(p, 0); //TODO Uvést kategorie do funkční fáze
 		else
 			openTags(p, 0);
 	}
@@ -43,7 +43,7 @@ public class TagsGUI {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
-							API.select(p, tag);
+							API.selectTag(p, tag);
 							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
@@ -78,7 +78,7 @@ public class TagsGUI {
 			@Override
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.select(player, null);
+					API.selectTag(player, null);
 					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 					a.close();
 				}
@@ -154,7 +154,7 @@ public class TagsGUI {
 			@Override
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.select(player, null);
+					API.selectTag(player, null);
 					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 					a.close();
 				}
@@ -193,7 +193,7 @@ public class TagsGUI {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
-							API.select(p, tag);
+							API.selectTag(p, tag);
 							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
@@ -228,7 +228,7 @@ public class TagsGUI {
 			@Override
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.select(player, null);
+					API.selectTag(player, null);
 					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
 					a.close();
 				}

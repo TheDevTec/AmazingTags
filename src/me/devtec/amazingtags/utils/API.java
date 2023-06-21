@@ -17,8 +17,9 @@ public class API {
 
 	public static ConcurrentHashMap<Player, String> players = new ConcurrentHashMap<>();
 	
-	/*
-	 * Selecting new tag
+	/** Selecting new tag
+	 * @param player - online player on server
+	 * @param tag - some existing tag from Tags.yml
 	 */
 	public static void selectNewTag(Player player, String tag) {
 		if(tag!=null) {
@@ -50,13 +51,17 @@ public class API {
 			u.save();
 		}
 	}
-	public static void select(Player player, String tag) {
+	/** Selecting tag
+	 * @param player - online player on server
+	 * @param tag - some existing tag from Tags.yml
+	 */
+	public static void selectTag(Player player, String tag) {
 		selectNewTag(player, tag);
 	}
 	
-	
-	/*
-	 * Getting tag
+	/** Getting player's selected tag
+	 * @param player - online player on server
+	 * @return Selected tag from Tags.yml
 	 */
 	public static String getSelectedTag(Player player) {
 		if(players.containsKey(player))
@@ -78,21 +83,27 @@ public class API {
 			return tag;
 		}
 	}
-	public static String getSelected(Player player) {
-		return getSelectedTag(player);
-	}
+	/** Getting player's tag format
+	 * @param player - online player on server
+	 * @return Selected tag format from Tags.yml
+	 */
 	public static String getSelectedTagFormat(Player player) {
 		return getTagFormat(getSelectedTag(player));
 	}
 	
-	/*
-	 * TAG
+	/** Getting tag's format
+	 * @param player - online player on server
+	 * @return Selected tag from Tags.yml
 	 */
 	public static String getTagFormat(String tag) {
 		if(tag==null) return "";
 		return Tags.getTagFormat(tag);
 	}
 	
+	/** Create new tag
+	 * @param tagName - used as identificator
+	 * @param tagFormat - colors, symbols, etc...
+	 */
 	public static void createTag(String tagName, String tagFormat) {
 		Loader.tags.set("Tags."+tagName+".Tag", tagFormat);
 		Loader.tags.save();

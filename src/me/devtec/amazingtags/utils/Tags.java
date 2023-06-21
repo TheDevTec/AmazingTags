@@ -13,7 +13,6 @@ import me.devtec.shared.placeholders.PlaceholderAPI;
 
 public class Tags {
 
-	
 	public static boolean isTag(String tag) {
 		if(Loader.tags.exists("Tags."+tag+".Tag"))
 			return true;
@@ -145,7 +144,7 @@ public class Tags {
 	
 	private static String getStatus(String tag, Player p) {
 		if(hasPermission(p, tag)) {
-			if(API.getSelected(p).equals(tag))
+			if(API.getSelectedTag(p).equals(tag))
 				return Loader.config.getString("Options.Status.Active");
 			else
 				return Loader.config.getString("Options.Status.Availible");
@@ -159,14 +158,14 @@ public class Tags {
 	
 	//PREVIEW
 	private static String getPreviewItemName(Player p) {
-		return PlaceholderAPI.apply(Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"" ), p.getUniqueId()
+		return PlaceholderAPI.apply(Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelectedTag(p)) ).replace("%tagname%", API.getSelectedTag(p)!=null?API.getSelectedTag(p):"" ), p.getUniqueId()
 				);
 	}
 	private static List<String> getPreviewItemLore(Player p) {
 		List<String> lore = new ArrayList<>();
 		for(String line : Loader.gui.getStringList("GUI.Items.Preview.Lore")) {
 			lore.add(
-					PlaceholderAPI.apply(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):""), p.getUniqueId() )
+					PlaceholderAPI.apply(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelectedTag(p)) ).replace("%tagname%", API.getSelectedTag(p)!=null?API.getSelectedTag(p):""), p.getUniqueId() )
 					);
 			//lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") );
 		}
