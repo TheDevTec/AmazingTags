@@ -35,7 +35,7 @@ public class Configs {
     		u.setUseCaches(false);
     		data.reload(StreamUtils.fromStream(u.getInputStream()));
     		}catch(Exception e) {e.printStackTrace();}
-	    	change = c.merge(data, true, true);
+	    	change = c.merge(data);
 	    	if(change)
 	    	c.save();
 	    	switch(s) {
