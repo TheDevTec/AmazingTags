@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.Loader;
+import me.devtec.amazingtags.utils.sql.SQL;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderAPI;
 import me.devtec.shared.utility.StringUtils;
@@ -26,7 +27,7 @@ public class API {
 			
 			players.put(player, tag);
 			
-			if(SQL.isEnabled() && Loader.connection!=null) {
+			if(SQL.isEnabled() && Loader.sql.connection!=null) {
 				SQL.selectTag(player, tag);
 			}else {
 				Config u = me.devtec.shared.API.getUser(player.getUniqueId());
@@ -40,7 +41,7 @@ public class API {
 			if(players.containsKey(player))
 				players.remove(player);
 			
-			if(SQL.isEnabled() && Loader.connection!=null) {
+			if(SQL.isEnabled() && Loader.sql.connection!=null) {
 				SQL.selectTag(player, null);
 			}
 			
