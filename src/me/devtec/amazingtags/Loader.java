@@ -1,6 +1,5 @@
 package me.devtec.amazingtags;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -11,9 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.ItemCreatorAPI;
-import me.devtec.amazingtags.utils.SQL;
 import me.devtec.amazingtags.utils.Tags;
-import me.devtec.shared.database.DatabaseHandler;
+import me.devtec.amazingtags.utils.sql.MySQL;
+import me.devtec.amazingtags.utils.sql.SQL;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderExpansion;
 import me.devtec.shared.utility.StringUtils;
@@ -24,7 +23,7 @@ public class Loader extends JavaPlugin{
 	public static Loader plugin;
 	public static Config config, gui, tags;
 	static String prefix;
-	public static DatabaseHandler connection;
+	public static MySQL sql;
 	
 	public static ItemStack next = ItemCreatorAPI.createHeadByValues(1, "&cNext", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="), 
 			prev = ItemCreatorAPI.createHeadByValues(1, "&cPrevious", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0=");
@@ -45,8 +44,7 @@ public class Loader extends JavaPlugin{
 		BukkitCommandManager.registerCommand(cmd);
 		
 		if(SQL.isEnabled()) {
-			connection = SQL.connect();
-			SQL.createTable();
+			sql = new MySQL().prepare();
 		}
 		
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!=null)
@@ -58,12 +56,8 @@ public class Loader extends JavaPlugin{
 	public void onDisable() {
 		if(placeholders!=null)
 			Loader.placeholders.unregister();
-		if(connection!=null)
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		if(sql!=null)
+			sql.close();
 	}
 	
 	public static void reload(CommandSender ss) {

@@ -12,6 +12,9 @@ public class Configs {
 	private static Config temp_data = new Config();
 	static List<String> datas = Arrays.asList("Config.yml","GUI.yml","Tags.yml");
 	
+	/**
+	 * Creates and loads all config files
+	 */
 	public static void load() {
 		Loader.config = loadAndMerge("Config.yml", "Config.yml");
 		Loader.config = loadAndMerge("Tags.yml", "Tags.yml");
@@ -20,7 +23,13 @@ public class Configs {
 		convertTags();
 	}
 	
-	
+	/**
+	 * This method will copy and load all content in file
+	 * 
+	 * @param sourcePath - path to .yml (source file)
+	 * @param filePath - path to .yml in plugins/AmazingTags directory (server file)
+	 * @return {@link Config}
+	 */
 	private static Config loadAndMerge(String sourcePath, String filePath) {
 		temp_data.reload(StreamUtils.fromStream(Loader.plugin.getResource("Configs/" + sourcePath)));
 		Config result = new Config("plugins/AmazingTags/" + filePath);
