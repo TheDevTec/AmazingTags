@@ -1,57 +1,33 @@
 package me.devtec.amazingtags;
 
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
 import me.devtec.shared.dataholder.Config;
+import me.devtec.shared.dataholder.DataType;
 import me.devtec.shared.utility.StreamUtils;
 
 public class Configs {
+	
+	private static Config temp_data = new Config();
 	static List<String> datas = Arrays.asList("Config.yml","GUI.yml","Tags.yml");
 	
 	public static void load() {
-		Config data = new Config();
-    	boolean change = false;
-		for(String s : datas) {
-			data.reset();
-			Config c = null;
-	    	switch(s) {
-	    	case "Config.yml":
-	    		c=Loader.config;
-	    		break;
-	    	case "Tags.yml":
-	    		c=Loader.tags;
-	    		break;
-	    	case "GUI.yml":
-	    		c=Loader.gui;
-	    		break;
-	    	}
-	    	if(c!=null) {
-	    		c.reload();
-	    	}else c=new Config("AmazingTags/"+s);
-    		try {
-    		URLConnection u = Loader.plugin.getClass().getClassLoader().getResource("Configs/"+s).openConnection();
-    		u.setUseCaches(false);
-    		data.reload(StreamUtils.fromStream(u.getInputStream()));
-    		}catch(Exception e) {e.printStackTrace();}
-	    	change = c.merge(data);
-	    	if(change)
-	    	c.save();
-	    	switch(s) {
-	    	case "Config.yml":
-	    		Loader.config=c;
-	    		break;
-	    	case "Tags.yml":
-	    		Loader.tags=c;
-	    		break;
-	    	case "GUI.yml":
-	    		Loader.gui=c;
-	    		break;
-	    	}
-		}
-		data.reset();
+		Loader.config = loadAndMerge("Config.yml", "Config.yml");
+		Loader.config = loadAndMerge("Tags.yml", "Tags.yml");
+		Loader.config = loadAndMerge("GUI.yml", "GUI.yml");
+		
 		convertTags();
+	}
+	
+	
+	private static Config loadAndMerge(String sourcePath, String filePath) {
+		temp_data.reload(StreamUtils.fromStream(Loader.plugin.getResource("Configs/" + sourcePath)));
+		Config result = new Config("plugins/AmazingTags/" + filePath);
+		if (result.merge(temp_data))
+			result.save(DataType.YAML);
+		temp_data.clear();
+		return result;
 	}
 	
 	private static void convertTags() { //TODO - dokončit
