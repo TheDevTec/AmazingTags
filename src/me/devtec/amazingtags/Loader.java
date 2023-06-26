@@ -10,12 +10,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.ItemCreatorAPI;
+import me.devtec.amazingtags.utils.MessageUtils;
+import me.devtec.amazingtags.utils.MessageUtils.Placeholders;
 import me.devtec.amazingtags.utils.Tags;
 import me.devtec.amazingtags.utils.sql.MySQL;
 import me.devtec.amazingtags.utils.sql.SQL;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderExpansion;
-import me.devtec.shared.utility.StringUtils;
+import me.devtec.shared.utility.ColorUtils;
 import me.devtec.theapi.bukkit.commands.hooker.BukkitCommandManager;
 
 public class Loader extends JavaPlugin{
@@ -65,21 +67,22 @@ public class Loader extends JavaPlugin{
 		Loader.gui.reload();
 		Loader.tags.reload();
 		prefix=config.getString("Options.Prefix");
-		ss.sendMessage(StringUtils.colorize(prefix+" Configurations reloaded."));
+		ss.sendMessage(ColorUtils.colorize(prefix+" Configurations reloaded."));
 	}
 	
 	public static boolean has(CommandSender s, String permission) {
 		if(s.hasPermission(permission)) return true;
-		s.sendMessage(StringUtils.colorize(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Options.Prefix"))));
+		MessageUtils.message(s, "Translation.noPerms", Placeholders.c().replace("%permission%", permission));
+		//s.sendMessage(ColorUtils.colorize(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Options.Prefix"))));
 		return false;
 	}
 	
 	public static void msg(String msg, CommandSender s) {
-		s.sendMessage(StringUtils.colorize(msg.replace("%prefix%", Loader.config.getString("Options.Prefix"))));
+		s.sendMessage(ColorUtils.colorize(msg.replace("%prefix%", Loader.config.getString("Options.Prefix"))));
 	}
 	
 	public void loadPlaceholders() {
-		Loader.placeholders=new PlaceholderExpansion("amazingtags") {
+		Loader.placeholders = new PlaceholderExpansion("amazingtags") {
 
 			@Override
 			public String apply(String identifier, UUID player) {
