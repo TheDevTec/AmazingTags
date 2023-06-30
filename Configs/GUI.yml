@@ -1,9 +1,9 @@
-GUI:
-  Title: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#f74c34"
-  CategoryTitle: "!#c148f3&lTags!#f74c34 &7&l- &3%category%"
+gui:
+  title: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#f74c34"
+  categoryTitle: "!#c148f3&lTags!#f74c34 &7&l- &3%category%"
   
-  Items:
-    Preview:
+  items:
+    preview:
       type: "PLAYER_HEAD"
       displayName: "&5&lSelected tag:"
       lore:
@@ -14,7 +14,7 @@ GUI:
       head:
         type: "PLAYER"
         owner: "%player%"
-    Default:
+    default:
       type: "NAME_TAG"
       displayName: "&5&l» &7%tag_name%"
       lore:
@@ -22,14 +22,14 @@ GUI:
       - "&7Tag: &f%tag%"
       - ""
       - "%tag% &7%player%"
-    Next:
+    next:
       displayName: "&cNext"
       type: "PLAYER_HEAD"
       head:
         type: "VALUES"
         owner: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="
       lore: []
-    Previous:
+    previous:
       displayName: "&cPrevious"
       type: "PLAYER_HEAD"
       head:

@@ -39,11 +39,11 @@ public class Tags {
 	 * @return True if tag exists
 	 */
 	public static boolean isTag(String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Tag"))
+		if(Loader.tags.exists("tags."+tag+".tag"))
 			return true;
 		else {
 			Bukkit.getLogger().severe("[MISTAKE] Missing Tags format!!");
-			Bukkit.getLogger().severe("[MISTAKE] Tags."+tag+".Tag");
+			Bukkit.getLogger().severe("[MISTAKE] tags."+tag+".tag");
 			Bukkit.getLogger().severe("[MISTAKE] In file Tags.yml");
 			Bukkit.getLogger().severe("[BUG] This is not plugin bug!");
 			return false;
@@ -55,7 +55,7 @@ public class Tags {
 	 * @return True if tag exists
 	 */
     public static boolean exist(String tag) {
-        return Loader.tags.exists("Tags." + tag + ".Tag");
+        return Loader.tags.exists("tags." + tag + ".tag");
     }
     /** Gets Tag format from Tags.yml
      * @param tag - The name used in the config to access the tag data
@@ -63,8 +63,8 @@ public class Tags {
      */
 	public static String getTagFormat(String tag) {
 		if(tag==null) return "";
-		if(Loader.tags.exists("Tags."+tag+".Tag"))
-			return Loader.tags.getString("Tags."+tag+".Tag");
+		if(Loader.tags.exists("tags."+tag+".tag"))
+			return Loader.tags.getString("tags."+tag+".tag");
 		else
 			return "";
 	}
@@ -74,8 +74,8 @@ public class Tags {
 	 */
 	public static String getTagInfo(String tag) {
 		if(tag==null) return "";
-		if(Loader.tags.exists("Tags."+tag+".Info"))
-			return Loader.tags.getString("Tags."+tag+".Info");
+		if(Loader.tags.exists("tags."+tag+".info"))
+			return Loader.tags.getString("tags."+tag+".info");
 		else
 			return "";
 	}
@@ -86,8 +86,8 @@ public class Tags {
 	 */
 	public static String getTagName(String tag) {
 		if(tag==null || tag.isEmpty()) return "";
-		if(Loader.tags.exists("Tags."+tag+".Name"))
-			return Loader.tags.getString("Tags."+tag+".Name");
+		if(Loader.tags.exists("tags."+tag+".name"))
+			return Loader.tags.getString("tags."+tag+".name");
 		else
 			return tag;
 	}
@@ -96,8 +96,8 @@ public class Tags {
 	 * @return Returns special tag permission from Tags.yml. If not used, returns default permission from Config.yml
 	 */
 	public static String getTagPermission(String tag) { //Get special or default tag permission
-		if(Loader.tags.exists("Tags."+tag+".Permission"))
-			return Loader.tags.getString("Tags."+tag+".Permission").replace("%tagname%", tag);
+		if(Loader.tags.exists("tags."+tag+".permission"))
+			return Loader.tags.getString("tags."+tag+".permission").replace("%tagname%", tag);
 		else
 			return null;
 	}
@@ -107,12 +107,12 @@ public class Tags {
 	 * @return True if player can see tag in menu
 	 */
 	public static boolean canSee(Player player, String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Enabled")) { //If tag is enabled in Tags.yml
-			if(!Loader.tags.getBoolean("Tags."+tag+".Enabled"))
+		if(Loader.tags.exists("tags."+tag+".enabled")) { //If tag is enabled in Tags.yml
+			if(!Loader.tags.getBoolean("tags."+tag+".enabled"))
 				return false;
 		}
 		//If ALL players can see ALL tags in menu regardless of permission
-		if(Loader.config.getBoolean("Options.Tags.Settings.seeAll")) {
+		if(Loader.config.getBoolean("options.tags.settings.seeAll")) {
 			return true;
 		}
 		return hasPermission(player, tag); //If permission... :D
@@ -135,7 +135,7 @@ public class Tags {
 	//Default permission of all tags
 	//Default permission value is amazingtags.tag.%tagname%
 	public static String getDefaultPermission(String tag) {
-		return Loader.config.getString("Options.Tags.Default.Permission").replace("%tagname%", tag);
+		return Loader.config.getString("options.tags.default.permission").replace("%tagname%", tag);
 	}
 	/** Gets status of tag. If player can use tag, is using tag or does not have permission to use tag.
 	 * @param tag - The name used in the file to access the tag data
@@ -146,11 +146,11 @@ public class Tags {
 	private static String getStatus(String tag, Player player) {
 		if(hasPermission(player, tag)) {
 			if(API.getSelectedTag(player).equals(tag))
-				return Loader.config.getString("Options.Status.Active");
+				return Loader.config.getString("options.status.active");
 			else
-				return Loader.config.getString("Options.Status.Available");
+				return Loader.config.getString("options.status.available");
 		}
-		return Loader.config.getString("Options.Status.NoPerm");
+		return Loader.config.getString("options.status.noPerm");
 	}
 	
 
@@ -160,7 +160,7 @@ public class Tags {
 	 * @return {@link ItemStack}
 	 */
 	public static ItemStack getTagItem(Player player, String tag) {
-		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.tags, "Tags."+tag+".item"));
+		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.tags, "tags."+tag+".item"));
 
 		/*
 		 * %amazingtags_...%
@@ -190,7 +190,7 @@ public class Tags {
 	 * @return {@link ItemStack}
 	 */
 	public static ItemStack getPreviewItem(Player player) {
-		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.gui, "GUI.Items.Preview"));
+		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.gui, "gui.items.preview"));
 
 		/*
 		 * %amazingtags_...%

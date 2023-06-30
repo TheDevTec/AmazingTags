@@ -25,11 +25,11 @@ public class TagsGUI {
 	}
 	
 	private static void openTags(Player p, int page) {
-		GUI a = prepare( new GUI(Loader.gui.getString("GUI.Title"), 54) );
+		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		
 		Pagination<String> pagination = new Pagination<String>(36);
 		
-		for(String tag: Loader.tags.getKeys("Tags")) {
+		for(String tag: Loader.tags.getKeys("tags")) {
 			if(Tags.isTag(tag))
 				if(Tags.canSee(p, tag))
 					pagination.add(tag);
@@ -44,7 +44,7 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
 							API.selectTag(p, tag);
-							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
 						else
@@ -79,7 +79,7 @@ public class TagsGUI {
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
 					API.selectTag(player, null);
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 					a.close();
 				}
 				
@@ -90,7 +90,7 @@ public class TagsGUI {
 	}
 	
 	private static void openCategories(Player p, int page) {
-		GUI a = prepare( new GUI(Loader.gui.getString("GUI.Title"), 54) );
+		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		
 		Pagination<String> pagination = new Pagination<String>(36);
 		
@@ -108,7 +108,7 @@ public class TagsGUI {
 						public void onClick(Player player, HolderGUI gui, ClickType click) {
 							if(category.hasPermission(player)) {
 								
-								player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+								player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 								openCategory(p, 0, category);
 							}else
 								player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
@@ -121,7 +121,7 @@ public class TagsGUI {
 						public void onClick(Player player, HolderGUI gui, ClickType click) {
 							if(category.hasPermission(player)) {
 								
-								player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+								player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 								openCategory(p, 0, category);
 							}else
 								player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
@@ -155,7 +155,7 @@ public class TagsGUI {
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
 					API.selectTag(player, null);
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 					a.close();
 				}
 			}
@@ -166,7 +166,7 @@ public class TagsGUI {
 
 
 	private static void openCategory(Player p, int page, Category category) {
-		GUI a = prepare( new GUI(Loader.gui.getString("GUI.Title"), 54) );
+		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		
 		Pagination<String> pagination = new Pagination<String>(36);
 		
@@ -194,7 +194,7 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(p, tag)) {
 							API.selectTag(p, tag);
-							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
 						else
@@ -229,7 +229,7 @@ public class TagsGUI {
 			public void onClick(Player player, HolderGUI gui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
 					API.selectTag(player, null);
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("Options.Tags.Select.Sound")), SoundCategory.MASTER, 10, 5);
+					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 					a.close();
 				}
 				

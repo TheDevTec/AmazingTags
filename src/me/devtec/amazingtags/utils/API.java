@@ -67,7 +67,7 @@ public class API {
 		if(players.containsKey(player))
 			return players.get(player);
 		else {
-			String tag = Loader.config.getString("Options.Tags.Default_Tag");
+			String tag = Loader.config.getString("options.tags.default_Tag");
 			
 			if(SQL.isEnabled()) {
 				String s = SQL.getTag(player);
@@ -105,7 +105,7 @@ public class API {
 	 * @param tagFormat - colors, symbols, etc...
 	 */
 	public static void createTag(String tagName, String tagFormat) {
-		Loader.tags.set("Tags."+tagName+".Tag", tagFormat);
+		Loader.tags.set("tags."+tagName+".tag", tagFormat);
 		Loader.tags.save();
 	}
 	
@@ -116,16 +116,16 @@ public class API {
 		List<String> cmds = new ArrayList<>();
 		List<String> msg = new ArrayList<>();
 		
-		if(Loader.tags.exists("Tags."+tag+".Select.Commands"))
-			cmds = Loader.tags.getStringList("Tags."+tag+".Select.Commands");
+		if(Loader.tags.exists("tags."+tag+".select.commands"))
+			cmds = Loader.tags.getStringList("tags."+tag+".select.commands");
 		else
-			cmds = Loader.config.getStringList("Options.Tags.Select.Commands");
+			cmds = Loader.config.getStringList("options.tags.select.commands");
 		
-		if(Loader.tags.exists("Tags."+tag+".Select.Messages")) {
-			msg = Loader.tags.getStringList("Tags."+tag+".Select.Messages");
+		if(Loader.tags.exists("tags."+tag+".select.messages")) {
+			msg = Loader.tags.getStringList("tags."+tag+".select.messages");
 		}
 		else {
-			msg = Loader.config.getStringList("Options.Tags.Select.Messages");
+			msg = Loader.config.getStringList("options.tags.select.messages");
 		}
 
 		for(String command: cmds) {

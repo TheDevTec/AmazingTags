@@ -1,16 +1,16 @@
-Options:
-  Prefix: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#ffffff &7&l»"
+options:
+  prefix: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#ffffff &7&l»"
 
-  Command:
-    Name: "tags"
-    Permission: "amazingtags.command"
-    Aliases:
+  command:
+    name: "tags"
+    permission: "amazingtags.command"
+    aliases:
     - "amazingtags"
     - "tag"
 
   # Database is only used to saving the selected tag 
-  MySQL:
-    Use: false
+  mySQL:
+    use: false
     username: ""
     password: ""
     hostname: ""
@@ -18,33 +18,33 @@ Options:
     database: ""
     table_prefix: "amazingtags_"
     
-  Tags:
+  tags:
     # A default tag
-    Default_Tag: "Owner"
-    Settings:
+    default_Tag: "Owner"
+    settings:
       # Player will see all tags in GUI even if he does not have permission (true)
       seeAll: true
       
-    Default:
+    default:
       # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.example
-      Permission: "amazingtags.tag.%tagname%"
+      permission: "amazingtags.tag.%tagname%"
       
     # Thiw will process when you select tag!
-    Select:
-      Sound: "ENTITY_PLAYER_LEVELUP"
-      Default_select_sound: "ENTITY_PLAYER_LEVELUP"
-      Commands: []
-      Messages:
+    select:
+      sound: "ENTITY_PLAYER_LEVELUP"
+      default_select_sound: "ENTITY_PLAYER_LEVELUP"
+      commands: []
+      messages:
       - "&7&l----------------------------------------"
       - "&7You have selected tag: %tag%"
       - "&7&l----------------------------------------"
-  Status:
-    NoPerm: "&c&lUnavailable"
-    Available: "&e&lAvailable"
-    Active: "&a&lActive"
+  status:
+    noPerm: "&c&lUnavailable"
+    available: "&e&lAvailable"
+    active: "&a&lActive"
 
 # Translation
-Translation:
+translation:
   noPerms: "%prefix% &cYou do not have permissions for this! &7(&5%permission%&7)"
   created_new_tag: "%prefix% &7You have created new tag! &7Tag: &d%tagname% &7Format: &d%tag%"
   offline: "%prefix% &cThis player is offline!"

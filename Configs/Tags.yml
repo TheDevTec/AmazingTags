@@ -1,22 +1,22 @@
 #    EXAMPLE:
-#Tags:
+#tags:
 #  example:
 #    # Tag format that it will use
-#    Tag: "&4&lOwner &8&l|&7"
+#    tag: "&4&lOwner &8&l|&7"
 #    # Information that will appear in GUI
-#    Info: "Owner tag"
-#    Enabled: true
+#    info: "Owner tag"
+#    enabled: true
 
 #    # These options are not needed. Just if you want something special for one specific tag...
-#    Permission: "specialperm.tag.owner"
+#    permission: "specialperm.tag.owner"
 #    # Special Name, used instead of path name. 
 #    # Example: official name is superTag05, but you do not want player to see this, so you can use this.
-#    Name: "SuperExample"
+#    name: "SuperExample"
 
 #    # Special actions when tag is selected
-#    Select:
-#      Commands: []
-#      Messages: []
+#    select:
+#      commands: []
+#      messages: []
 #    
 #    # You can find all item options here: https://github.com/TheDevTec/TheAPI/wiki/ItemMaker
 #    item:
@@ -36,26 +36,24 @@ Tags:
     Info: "Owner tag"
     Enabled: true
 
-
-
-
-
-
-
-##### UPRAVIT ITEM ####
 #categories:
 #  test:
+#    # Add here all the tags you want to put in the category
 #    content:
-#    - "common"
+#    - "Owner"
 #    - "quest_2"
-#    name: ""
+#
+#    # Special option: ALL, PERM,
+#    # ALL - will show all tags (not needed to add tags in content)
+#    # PERM - just tags you have perms on
+#    special: "ALL"
+#    item:
+#      type:
+#      displayName:
+#    name: "Test category"
 #    #Icom: MATERIAL
 #    icon: ""
 #    head: ""
 #    description:
 #    permission: []
 #    slot: 5
-#    Special options: ALL, PERM,
-#    ALL - will show all tags (not needed to add tags in content)
-#    PERM - just tags you have perms on
-#    special:

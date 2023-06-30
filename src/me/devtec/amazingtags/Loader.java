@@ -27,8 +27,8 @@ public class Loader extends JavaPlugin{
 	static String prefix;
 	public static MySQL sql;
 	
-	public static ItemStack next = ItemMaker.loadFromConfig(gui, "GUI.Items.Next"), 
-			prev = ItemMaker.loadFromConfig(gui, "GUI.Items.Previous");
+	public static ItemStack next = ItemMaker.loadFromConfig(gui, "gui.items.next"), 
+			prev = ItemMaker.loadFromConfig(gui, "gui.items.previous");
 
 	protected static PlaceholderExpansion placeholders;
 	
@@ -37,11 +37,11 @@ public class Loader extends JavaPlugin{
 		
 		Configs.load();
 		prefix=config.getString("Options.Prefix");
-		PluginCommand cmd = BukkitCommandManager.createCommand(config.getString("Options.Command.Name"),this);
-		cmd.setPermission(config.getString("Options.Command.Permission"));
+		PluginCommand cmd = BukkitCommandManager.createCommand(config.getString("options.command.name"),this);
+		cmd.setPermission(config.getString("options.command.permission"));
 		AmazingTagsCommand amf = new AmazingTagsCommand();
 		cmd.setExecutor(amf);
-		cmd.setAliases(config.getStringList("Options.Command.Aliases"));
+		cmd.setAliases(config.getStringList("options.command.aliases"));
 		//cmd.setTabCompleter(amf);
 		BukkitCommandManager.registerCommand(cmd);
 		
@@ -66,19 +66,19 @@ public class Loader extends JavaPlugin{
 		Loader.config.reload();
 		Loader.gui.reload();
 		Loader.tags.reload();
-		prefix=config.getString("Options.Prefix");
+		prefix=config.getString("options.prefix");
 		ss.sendMessage(ColorUtils.colorize(prefix+" Configurations reloaded."));
 	}
 	
 	public static boolean has(CommandSender s, String permission) {
 		if(s.hasPermission(permission)) return true;
-		MessageUtils.message(s, "Translation.noPerms", Placeholders.c().replace("%permission%", permission));
+		MessageUtils.message(s, "translation.noPerms", Placeholders.c().replace("%permission%", permission));
 		//s.sendMessage(ColorUtils.colorize(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Options.Prefix"))));
 		return false;
 	}
 	
 	public static void msg(String msg, CommandSender s) {
-		s.sendMessage(ColorUtils.colorize(msg.replace("%prefix%", Loader.config.getString("Options.Prefix"))));
+		s.sendMessage(ColorUtils.colorize(msg.replace("%prefix%", Loader.config.getString("options.prefix"))));
 	}
 	
 	public void loadPlaceholders() {
