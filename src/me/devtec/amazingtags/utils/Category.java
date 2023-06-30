@@ -59,7 +59,7 @@ public class Category {
 		if(Loader.tags.exists("categories."+name+".special"))
 			return Loader.tags.getString("categories."+name+".special");
 		else
-			return null;
+			return "NONE";
 	}
 	public ItemStack getItem() {
 		return ItemMaker.loadFromConfig(Loader.tags, "categories."+getName()+".item");

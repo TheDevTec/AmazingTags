@@ -5,7 +5,7 @@
 #    tag: "&4&lOwner &8&l|&7"
 #    # Information that will appear in GUI
 #    info: "Owner tag"
-#    enabled: true
+#    enabled: true # ALL TAGS WITHOUT THIS SETTING ARE ENABLED IN DEFAULT 
 
 #    # These options are not needed. Just if you want something special for one specific tag...
 #    permission: "specialperm.tag.owner"
@@ -30,11 +30,11 @@
 #        type: ""
 #        owner: ""
 
-Tags:
-  Owner:
-    Tag: "&4&lOwner &8&l|&7"
-    Info: "Owner tag"
-    Enabled: true
+tags:
+  owner:
+    tag: "&4&lOwner &8&l|&7"
+    info: "Owner tag"
+    enabled: true
 
 #categories:
 #  test:
@@ -45,8 +45,8 @@ Tags:
 #
 #    ## Special option:
 #    # This option can show special group of tags, ALL or PERM
-#    #   ALL - will show all tags (not needed to add tags in content)
-#    #   PERM - just tags you have perms on
+#    #   ALL - will show all tags
+#    #   PERM - just tags that player can use (if player can see tag and can't use it, it won't show in this category)
 #    special: "ALL"
 #    ## Permissions:
 #    # Special permission to OPEN this category in menu (not needed)

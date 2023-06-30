@@ -107,15 +107,24 @@ public class Tags {
 	 * @return True if player can see tag in menu
 	 */
 	public static boolean canSee(Player player, String tag) {
-		if(Loader.tags.exists("tags."+tag+".enabled")) { //If tag is enabled in Tags.yml
-			if(!Loader.tags.getBoolean("tags."+tag+".enabled"))
-				return false;
+		if(!isEnabled(tag)) { //If tag is enabled in Tags.yml
+			return false;
 		}
 		//If ALL players can see ALL tags in menu regardless of permission
 		if(Loader.config.getBoolean("options.tags.settings.seeAll")) {
 			return true;
 		}
 		return hasPermission(player, tag); //If permission... :D
+	}
+	/** If tag is enabled
+	 * @param tag - The name used in the file to access the tag data
+	 * @return true/false - all tags enabled in default
+	 */
+	public static boolean isEnabled(String tag) {
+		if(Loader.tags.exists("tags."+tag+".enabled")) { //If tag is enabled in Tags.yml
+			return Loader.tags.getBoolean("tags."+tag+".enabled");
+		}
+		return true;
 	}
 	/** If player can use or see tag in gui
 	 * @param player Player
