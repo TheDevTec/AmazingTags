@@ -90,52 +90,45 @@ public class TagsGUI {
 	}
 	
 	private static void openCategories(Player p, int page) {
+		//GUI preparation
 		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		
-		Pagination<String> pagination = new Pagination<String>(36);
+		Pagination<Category> pagination = new Pagination<Category>(36); //Loading pagination, 36 slots available
 		
+		//Adding categories into pagination
 		for(String category: Loader.tags.getKeys("categories")) {
-			pagination.add(category);
+			if(Category.canSee(p, category)) //if player can SEE category in GUI
+				pagination.add(new Category(category));
 		}
 
 		if(pagination!=null && !pagination.isEmpty()) {
 			
-			for(String cat: pagination.getPage(page)) {
-				Category category = new Category(cat);
-				if(category.getSlot()==-1) {
-					a.addItem(new ItemGUI( category.getItem()) {
-						@Override
-						public void onClick(Player player, HolderGUI gui, ClickType click) {
-							if(category.hasPermission(player)) {
-								
-								player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-								openCategory(p, 0, category);
-							}else
-								player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
-						}
-					});
-				}
-				else {
-					a.setItem(category.getSlot(), new ItemGUI( category.getItem()) {
-						@Override
-						public void onClick(Player player, HolderGUI gui, ClickType click) {
-							if(category.hasPermission(player)) {
-								
-								player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-								openCategory(p, 0, category);
-							}else
-								player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
-						}
-					});
-				}
+			for(Category category: pagination.getPage(page)) {
+				//Loading item
+				ItemGUI item = new ItemGUI(category.getItem()) {
+					@Override
+					public void onClick(Player player, HolderGUI gui, ClickType click) {
+						if(category.hasPermission(player)) { //If player can OPEN category
+							
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
+							openCategory(p, 0, category);
+						}else
+							player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
+					}
+				};
+			
+				//Adding item
+				if(category.getSlot()==-1)
+					a.addItem(item);
+				else
+					a.setItem(category.getSlot(), item); //Setting item on the exact position
 			}
-		
+			
 			if(pagination.totalPages()>page+1) {
 				a.setItem(51, new ItemGUI(Loader.next) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
-						openTags(player, page+1);
-						
+						openCategories(player, page+1);
 					}
 				});
 			}
@@ -143,8 +136,7 @@ public class TagsGUI {
 				a.setItem(47, new ItemGUI(Loader.prev) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
-						openTags(player, page-1);
-						
+						openCategories(player, page-1);
 					}
 				});
 			}

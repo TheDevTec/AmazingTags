@@ -43,17 +43,22 @@ Tags:
 #    - "Owner"
 #    - "quest_2"
 #
-#    # Special option: ALL, PERM,
-#    # ALL - will show all tags (not needed to add tags in content)
-#    # PERM - just tags you have perms on
+#    ## Special option:
+#    # This option can show special group of tags, ALL or PERM
+#    #   ALL - will show all tags (not needed to add tags in content)
+#    #   PERM - just tags you have perms on
 #    special: "ALL"
+#    ## Permissions:
+#    # Special permission to OPEN this category in menu (not needed)
+#    permission: ""
+#    # Special permission to SEE this category in menu (not needed) (menu could look bit ugly)
+#    see_permission:
+#    ## Item options:
+#    # All item settings here: https://github.com/TheDevTec/TheAPI/wiki/ItemMaker
 #    item:
-#      type:
-#      displayName:
-#    name: "Test category"
-#    #Icom: MATERIAL
-#    icon: ""
-#    head: ""
-#    description:
-#    permission: []
-#    slot: 5
+#      type: "PAPER"
+#      displayName: "Test category"
+#      lore:
+#      - "amazing category, CLICK!!"
+#      # If slot is -1, GUI will automatically add items in order (like tags)
+#      slot: 5
