@@ -17,14 +17,22 @@ import me.devtec.theapi.bukkit.gui.ItemGUI;
 
 public class TagsGUI {
 
-	public static void open(Player p) {
+	/** Only option to open Tags menu
+	 * @param player - Player that is opening menu
+	 * @apiNote If there are any created categories, this will open categories menu
+	 */
+	public static void open(Player player) {
 		if(Loader.tags.exists("categories"))
-			openCategories(p, 0);
+			openCategories(player, 0);
 		else
-			openTags(p, 0);
+			openTags(player, 0);
 	}
 	
-	private static void openTags(Player p, int page) {
+	/** Opening all tags menu
+	 * @param player - Player that is opening menu
+	 * @param page - current page (0 is first page; if you do not know use 0)
+	 */
+	private static void openTags(Player player, int page) {
 		//GUI preparation (title, size, frame
 		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		//Loading pagination, 36 slots available
@@ -32,7 +40,7 @@ public class TagsGUI {
 		//Loading all available tags (that player can see) into pagination
 		for(String tag: Loader.tags.getKeys("tags")) {
 			if(Tags.isTag(tag))
-				if(Tags.canSee(p, tag))
+				if(Tags.canSee(player, tag))
 					pagination.add(tag);
 		}
 		//If there are some tags available
@@ -40,13 +48,13 @@ public class TagsGUI {
 			//Looping all tags (page) and adding them into GUI
 			for(String tag: pagination.getPage(page)) {
 				
-				a.addItem(new ItemGUI(Tags.getTagItem(p, tag)) {
+				a.addItem(new ItemGUI(Tags.getTagItem(player, tag)) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
-						if(Tags.hasPermission(p, tag)) {
-							API.selectTag(p, tag);
+						if(Tags.hasPermission(player, tag)) { //if player can click (have Permission)
+							API.selectTag(player, tag); //select this tag
 							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-							a.close();
+							a.close(); //closing menu
 						}
 						else
 							player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
@@ -59,7 +67,7 @@ public class TagsGUI {
 				a.setItem(51, new ItemGUI(Loader.next) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
-						openTags(player, page+1);
+						openTags(player, page+1); //page+1 -> next page
 						
 					}
 				});
@@ -68,37 +76,31 @@ public class TagsGUI {
 				a.setItem(47, new ItemGUI(Loader.prev) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
-						openTags(player, page-1);
+						openTags(player, page-1); //page-1 -> previous page
 						
 					}
 				});
 			}
 		}
 		//PREVIEW ITEM
-		addPreviewButton(p, a);
-		/*a.setItem(4, new ItemGUI(Tags.getPreviewItem(p)) {
-			@Override
-			public void onClick(Player player, HolderGUI gui, ClickType click) {
-				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.selectTag(player, null);
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-					a.close();
-				}
-				
-			}
-		});*/
+		addPreviewButton(player, a);
 	
-		a.open(p);
+		a.open(player);
 	}
 	
-	private static void openCategories(Player p, int page) {
+	/** Opening list of categories available
+	 * @param player - Player that is opening menu
+	 * @param page - current page (0 is first page; if you do not know use 0)
+	 * @apiNote Player can select category and open exact category
+	 */
+	private static void openCategories(Player player, int page) {
 		//GUI preparation (title, size, frame
 		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		//Loading pagination, 36 slots available
 		Pagination<Category> pagination = new Pagination<Category>(36);
 		//Adding categories into pagination
 		for(String category: Loader.tags.getKeys("categories")) {
-			if(Category.canSee(p, category)) //if player can SEE category in GUI
+			if(Category.canSee(player, category)) //if player can SEE category in GUI
 				pagination.add(new Category(category));
 		}
 		//If there are some categories that player acn see
@@ -112,7 +114,7 @@ public class TagsGUI {
 						if(category.hasPermission(player)) { //If player can OPEN category
 							
 							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-							openCategory(p, 0, category);
+							openCategory(player, 0, category);
 						}else
 							player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
 					}
@@ -144,24 +146,19 @@ public class TagsGUI {
 			}
 		}
 		//PREWIEW ITEM
-		addPreviewButton(p, a);
-		/*a.setItem(4, new ItemGUI(Tags.getPreviewItem(p)) {
-			@Override
-			public void onClick(Player player, HolderGUI gui, ClickType click) {
-				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.selectTag(player, null);
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-					a.close();
-				}
-			}
-		});*/
+		addPreviewButton(player, a);
 		
 		//Open GUI
-		a.open(p);
+		a.open(player);
 	}
 
 
-	private static void openCategory(Player p, int page, Category category) {
+	/** Opening selected category
+	 * @param player - player that is opening this category
+	 * @param page - current page (0 is first page; if you do not know use 0)
+	 * @param category - category you want to be opened
+	 */
+	private static void openCategory(Player player, int page, Category category) {
 		//GUI preparation (title, size, frame
 		GUI a = prepare( new GUI(Loader.gui.getString("gui.title"), 54) );
 		//Loading pagination, 36 slots available
@@ -189,7 +186,7 @@ public class TagsGUI {
 					if(special.equalsIgnoreCase("ALL")) //EMPTY+ALL - ALL tags
 						pagination.add(tag);
 					if(special.equalsIgnoreCase("PERM")) //EMPTY+PERM - selecting from ALL tags only which one can use
-						if(Tags.hasPermission(p, tag))
+						if(Tags.hasPermission(player, tag))
 							pagination.add(tag);
 					
 				}
@@ -202,24 +199,24 @@ public class TagsGUI {
 						if(special.equalsIgnoreCase("ALL")) //CONTENT+ALL - Adding ALL tags from list (bypassing perm check)
 							pagination.add(tag);
 						if(special.equalsIgnoreCase("PERM")) //CONTENT+PERN - Adding tags from the list to which the player has the permission
-							if(Tags.hasPermission(p, tag))
+							if(Tags.hasPermission(player, tag))
 								pagination.add(tag);
 						continue;
 					} else //If ther is none special setting
-						if(Tags.canSee(p, tag)) //If player can see tag in GUI
+						if(Tags.canSee(player, tag)) //If player can see tag in GUI
 							pagination.add(tag);
 			}
 		}
 		
-		
+		//if there is any tag available in list
 		if(pagination!=null && !pagination.isEmpty()) {
-			
+			//looping all tags from pagination list
 			for(String tag: pagination.getPage(page)) {
-				a.addItem(new ItemGUI(Tags.getTagItem(p, tag)) {
+				a.addItem(new ItemGUI(Tags.getTagItem(player, tag)) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
-						if(Tags.hasPermission(p, tag)) {
-							API.selectTag(p, tag);
+						if(Tags.hasPermission(player, tag)) { //if player can click (have Permission)
+							API.selectTag(player, tag); //select this tag
 							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
@@ -248,30 +245,21 @@ public class TagsGUI {
 				});
 			}
 		}
-		
 		//PREVIEW BUTTON
-		/*a.setItem(4, new ItemGUI(Tags.getPreviewItem(p)) {
-			@Override
-			public void onClick(Player player, HolderGUI gui, ClickType click) {
-				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.selectTag(player, null);
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
-					a.close();
-				}
-				
-			}
-		});*/
-		addPreviewButton(p, a);
+		addPreviewButton(player, a);
 	
-		a.open(p);
+		a.open(player); //opens GUI
 	}
 	
+	/**
+	 * Adding preview button to GUI
+	 */
 	private static void addPreviewButton(Player player, GUI gui) {
 		gui.setItem(4, new ItemGUI(Tags.getPreviewItem(player)) {
 			@Override
 			public void onClick(Player player, HolderGUI hgui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
-					API.selectTag(player, null);
+					API.selectTag(player, null); // select none tag, will delete player data from database
 					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
 					gui.close();
 				}
@@ -279,19 +267,23 @@ public class TagsGUI {
 		});
 	}
 	
-	private static GUI prepare(GUI a) {
+	/** GUI preparation
+	 * @param gui -> {@link GUI}
+	 * @return {@link GUI}
+	 */
+	private static GUI prepare(GUI gui) {
 		for (int i=0; i<=8; i++) {
-			a.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
+			gui.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
 				} });
 		}
 		for (int i=45; i<=53; i++) {
-			a.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
+			gui.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
 				} });
 		}
-		return a;
+		return gui;
 	}
 }
