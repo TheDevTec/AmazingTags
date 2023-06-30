@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.Category;
-import me.devtec.amazingtags.utils.ItemCreatorAPI;
 import me.devtec.amazingtags.utils.Pagination;
 import me.devtec.amazingtags.utils.Tags;
+import me.devtec.theapi.bukkit.game.ItemMaker;
 import me.devtec.theapi.bukkit.gui.GUI;
 import me.devtec.theapi.bukkit.gui.GUI.ClickType;
 import me.devtec.theapi.bukkit.gui.HolderGUI;
@@ -241,13 +241,13 @@ public class TagsGUI {
 	
 	private static GUI prepare(GUI a) {
 		for (int i=0; i<=8; i++) {
-			a.setItem(i, new ItemGUI( ItemCreatorAPI.create(Material.BLACK_STAINED_GLASS_PANE, 1, "&7")) {
+			a.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
 				} });
 		}
 		for (int i=45; i<=53; i++) {
-			a.setItem(i, new ItemGUI( ItemCreatorAPI.create(Material.BLACK_STAINED_GLASS_PANE, 1, "&7")) {
+			a.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
 				} });

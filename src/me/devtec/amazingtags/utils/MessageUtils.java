@@ -94,9 +94,47 @@ public class MessageUtils {
 		public Placeholders replace(String placeholder, Object replace) {
 			return add(placeholder, replace);
 		}
-	}
+		
+		/**Method used to apply placeholders in message
+		 * @param sender - The player to whom you are sending the message
+		 * @param text - Message where you want to replace placeholders
+		 * @param placeholders 
+		 * @return Returning edited text
+		 */
+		@SuppressWarnings("deprecation")
+		public String apply(String text) {
+			if (!player_set.isEmpty())
+				for (Entry<String, Player> players : player_set.entrySet()) {
+					/*
+					 * %player%, %target%, etc... 
+					 * 		%player% - Real or Nickname (used in our different plugin, sorry :D)
+					 * 		%player_name% - Just Real name 
+					 * 		%player_displayname% %player_customname%
+					 */
+					if (text.contains("%" + players.getKey() + "_name%")) {
+						text = text.replace("%" + players.getKey() + "_name%", players.getValue().getName());
+						continue;
+					}
+					if (text.contains("%" + players.getKey() + "_displayname%")) {
+						text = text.replace("%" + players.getKey() + "_displayname%", players.getValue().getDisplayName());
+						continue;
+					}
+					if (text.contains("%" + players.getKey() + "_customname%")) {
+						text = text.replace("%" + players.getKey() + "_customname%", players.getValue().getCustomName());
+						continue;
+					}
+					text = text.replace("%" + players.getKey() + "%", players.getValue().getName());
+				}
+			
+			for (Entry<String, String> placeholder : set.entrySet())
+				text = text.replace("%" + placeholder.getKey() + "%", placeholder.getValue() + "");
+		
+			return text;
+		}
+	} //END OF CLASS PLACEHOLDERS
 
-	/** Gets prefix from translation file
+	/**
+	 * Gets prefix from translation file
 	 */
 	public static String getPrefix() {
 		return Loader.config.getString("Options.Prefix");
@@ -120,6 +158,7 @@ public class MessageUtils {
 	 * @param placeholders 
 	 * @return Returning edited message
 	 */
+	@SuppressWarnings("deprecation")
 	public static String placeholder(CommandSender sender, String message, Placeholders placeholders) {
 		if (getPrefix() != null)
 			message = message.replace("%prefix%", getPrefix());

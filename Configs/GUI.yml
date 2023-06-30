@@ -4,20 +4,35 @@ GUI:
   
   Items:
     Preview:
-      Name: "&5&lSelected tag:"
-      Lore:
+      type: "PLAYER_HEAD"
+      displayName: "&5&lSelected tag:"
+      lore:
       - "&7Selected: %tagname%"
       - "&7Tag: %tag%"
       - "&7"
       - "&7Rright click to reset tag"
-      PlayerHead: true
-      # Type: ""
-      # Head: ""
+      head:
+        type: "PLAYER"
+        owner: "%player%"
+    Default:
+      type: "NAME_TAG"
+      displayName: "&5&l» &7%tag_name%"
+      lore:
+      - "&7Info: &f%info%"
+      - "&7Tag: &f%tag%"
+      - ""
+      - "%tag% &7%player%"
     Next:
-      Name: "&cNext"
-      Head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="
-      Lore: []
+      displayName: "&cNext"
+      type: "PLAYER_HEAD"
+      head:
+        type: "VALUES"
+        owner: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="
+      lore: []
     Previous:
-      Name: "&cPrevious"
-      Head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0="
-      Lore: []
+      displayName: "&cPrevious"
+      type: "PLAYER_HEAD"
+      head:
+        type: "VALUES"
+        owner: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0="
+      lore: []

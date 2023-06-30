@@ -4,15 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.Loader;
-import me.devtec.shared.placeholders.PlaceholderAPI;
+import me.devtec.amazingtags.utils.MessageUtils.Placeholders;
+import me.devtec.theapi.bukkit.game.ItemMaker;
+import me.devtec.theapi.bukkit.game.ItemMaker.HeadItemMaker;
 
 public class Tags {
 
+	/* Tags.yml paths
+	 * path:
+	 *   <tag>:
+	 *     Tag - tag formát
+	 *     Info - info o tagu
+	 *     Enabled - jestli je tag zapnutý
+	 *     Permission - speciální permise
+	 *     Name - Speciální jméno tagu (kdyby mělo být jméno jiné od formátu tagu)
+	 *     item:... ItemMaker thingies
+	 */
+	
+	/* Placeholders
+	 * %amazingtags_...%
+	 * 
+	 * tag/tag_format - tagformát z Tags.yml
+	 * info/tag_info - informace o tagu
+	 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
+	 * status/tag_status - status tagu
+	 */
+	
+	/** If Tag exist
+	 * @param tag - The name used in the config to access the tag data
+	 * @return True if tag exists
+	 */
 	public static boolean isTag(String tag) {
 		if(Loader.tags.exists("Tags."+tag+".Tag"))
 			return true;
@@ -25,10 +50,17 @@ public class Tags {
 		}
 	}
 	
-    public static boolean exist(final String tag) {
+	/** If Tag exist
+	 * @param tag - The name used in the config to access the tag data
+	 * @return True if tag exists
+	 */
+    public static boolean exist(String tag) {
         return Loader.tags.exists("Tags." + tag + ".Tag");
     }
-    
+    /** Gets Tag format from Tags.yml
+     * @param tag - The name used in the config to access the tag data
+     * @return Returns tags format
+     */
 	public static String getTagFormat(String tag) {
 		if(tag==null) return "";
 		if(Loader.tags.exists("Tags."+tag+".Tag"))
@@ -36,6 +68,10 @@ public class Tags {
 		else
 			return "";
 	}
+	/** Gets Tag info from Tags.yml if exists
+	 * @param tag - The name used in the config to access the tag data
+	 * @return Returns "" if tag info does not exists in Tags.yml
+	 */
 	public static String getTagInfo(String tag) {
 		if(tag==null) return "";
 		if(Loader.tags.exists("Tags."+tag+".Info"))
@@ -43,189 +79,162 @@ public class Tags {
 		else
 			return "";
 	}
+	/** Gets Tag name from Tags.yml if exists. Is used instead of path name.
+	 * Example: official name is superTag05, but you do not want player to see this, you use this.
+	 * @param tag - The name used in the file to access the tag data
+	 * @return Returns input parameter if is not used
+	 */
 	public static String getTagName(String tag) {
-		if(tag==null) return "";
+		if(tag==null || tag.isEmpty()) return "";
 		if(Loader.tags.exists("Tags."+tag+".Name"))
 			return Loader.tags.getString("Tags."+tag+".Name");
 		else
 			return tag;
 	}
-	public static String getTagPermission(String tag) {
+	/** Gets Tags permission.
+	 * @param tag - The name used in the file to access the tag data
+	 * @return Returns special tag permission from Tags.yml. If not used, returns default permission from Config.yml
+	 */
+	public static String getTagPermission(String tag) { //Get special or default tag permission
 		if(Loader.tags.exists("Tags."+tag+".Permission"))
 			return Loader.tags.getString("Tags."+tag+".Permission").replace("%tagname%", tag);
 		else
 			return null;
 	}
-	
-	public static Material getType(String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Type"))
-			return Material.valueOf(Loader.tags.getString("Tags."+tag+".Type"));
-		else
-			return Material.valueOf(Loader.config.getString("Options.Tags.Default.Material"));
-	}
-	public static String getTagHead(String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Head"))
-			return Loader.tags.getString("Tags."+tag+".Head");
-		else
-			return null;
-	}
-	
-	public static List<String> getLore(String tag, Player p) {
-		List<String> lore = new ArrayList<>();
-		List<String> list = new ArrayList<>();
-		if(Loader.tags.exists("Tags."+tag+".Lore")) {
-			list = Loader.tags.getStringList("Tags."+tag+".Lore");
-		} else {
-			list =  Loader.config.getStringList("Options.Tags.Default.Lore");
-		}
-		
-		for(String line: list) {
-			lore.add(
-			PlaceholderAPI.apply(line.replace("%info%", getTagInfo(tag) )
-					.replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" )
-					.replace("%tagname%", getTagName(tag))
-					.replace("%player%", p!=null?p.getName():"")
-					.replace("%status%", getStatus(tag, p)), p.getUniqueId()
-					)
-			);
-			/*lore.add(line.replace("%info%", getTagInfo(tag) ).replace("%tag%", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("%tagname%", getTagName(tag))
-					.replace("%player%", p!=null?p.getName():""));*/
-		}
-		return lore;
-	}
-
-	public static String getName(String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Name"))
-			return Loader.tags.getString("Tags."+tag+".Name");
-		else
-			return Loader.config.getString("Options.Tags.Default.Name").replace("%tagname%", tag);
-	}
-	public static String getDefaultPermission(String tag) {
-		return Loader.config.getString("Options.Tags.Default.Permission").replace("%tagname%", tag);
-	}
-	
-	public static boolean canSee(Player p, String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Enabled")) {
+	/** Is used to check if player can see tag in GUI menu.
+	 * @param player - Player
+	 * @param tag - The name used in the file to access the tag data
+	 * @return True if player can see tag in menu
+	 */
+	public static boolean canSee(Player player, String tag) {
+		if(Loader.tags.exists("Tags."+tag+".Enabled")) { //If tag is enabled in Tags.yml
 			if(!Loader.tags.getBoolean("Tags."+tag+".Enabled"))
 				return false;
 		}
+		//If ALL players can see ALL tags in menu regardless of permission
 		if(Loader.config.getBoolean("Options.Tags.Settings.seeAll")) {
 			return true;
 		}
+		return hasPermission(player, tag); //If permission... :D
+	}
+	/** If player can use or see tag in gui
+	 * @param player Player
+	 * @param tag - The name used in the file to access the tag data
+	 * @return a
+	 */
+	public static boolean hasPermission(Player player, String tag) {
 		if(getTagPermission(tag)!=null && !getTagPermission(tag).isEmpty()) {
-			if(p.hasPermission(getTagPermission(tag)))
+			if(player.hasPermission(getTagPermission(tag)))
 				return true;
 			else return false;
 		}
-		if(p.hasPermission(getDefaultPermission(tag)))
+		if(player.hasPermission(getDefaultPermission(tag)))
 			return true;
 		return false;
 	}
-	public static boolean hasPermission(Player p, String tag) {
-		if(getTagPermission(tag)!=null && !getTagPermission(tag).isEmpty()) {
-			if(p.hasPermission(getTagPermission(tag)))
-				return true;
-			else return false;
-		}
-		if(p.hasPermission(getDefaultPermission(tag)))
-			return true;
-		return false;
+	//Default permission of all tags
+	//Default permission value is amazingtags.tag.%tagname%
+	public static String getDefaultPermission(String tag) {
+		return Loader.config.getString("Options.Tags.Default.Permission").replace("%tagname%", tag);
 	}
-	
-	public static ItemStack getTagItem(Player p, String tag) {
-		if(Loader.tags.exists("Tags."+tag+".Head")) {
-			ItemCreatorAPI item = new ItemCreatorAPI(getHead(getTagHead(tag)));
-			item.setLore(getLore(tag, p));
-			item.setDisplayName( PlaceholderAPI.apply(getName(tag), p.getUniqueId() ));
-			return fixHead(item, getTagHead(tag)).create();
-		}
-		return ItemCreatorAPI.create(Tags.getType(tag), 1, Tags.getName(tag), Tags.getLore(tag, p));
-	}
-	
-	private static String getStatus(String tag, Player p) {
-		if(hasPermission(p, tag)) {
-			if(API.getSelectedTag(p).equals(tag))
+	/** Gets status of tag. If player can use tag, is using tag or does not have permission to use tag.
+	 * @param tag - The name used in the file to access the tag data
+	 * @param player - Player
+	 * @return Returns status in form of String. Active - tag is selected. Available - if tag can be selected. NoPerm - you can't use this tag.
+	 * You can change these Strings in Config.yml 
+	 */
+	private static String getStatus(String tag, Player player) {
+		if(hasPermission(player, tag)) {
+			if(API.getSelectedTag(player).equals(tag))
 				return Loader.config.getString("Options.Status.Active");
 			else
-				return Loader.config.getString("Options.Status.Availible");
+				return Loader.config.getString("Options.Status.Available");
 		}
 		return Loader.config.getString("Options.Status.NoPerm");
 	}
 	
-	/*
-	 *     SPECIAL ITEMS
+
+	/** Returns tag item. Admins can edit items in Tags.yml or the default one in GUI.yml
+	 * @param player The player opening menu
+	 * @param tag The tag path name from Tags.yml
+	 * @return {@link ItemStack}
 	 */
-	
-	//PREVIEW
-	private static String getPreviewItemName(Player p) {
-		return PlaceholderAPI.apply(Loader.gui.getString("GUI.Items.Preview.Name").replace( "%tag%", getTagFormat(API.getSelectedTag(p)) ).replace("%tagname%", API.getSelectedTag(p)!=null?API.getSelectedTag(p):"" ), p.getUniqueId()
-				);
-	}
-	private static List<String> getPreviewItemLore(Player p) {
-		List<String> lore = new ArrayList<>();
-		for(String line : Loader.gui.getStringList("GUI.Items.Preview.Lore")) {
-			lore.add(
-					PlaceholderAPI.apply(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelectedTag(p)) ).replace("%tagname%", API.getSelectedTag(p)!=null?API.getSelectedTag(p):""), p.getUniqueId() )
-					);
-			//lore.add(line.replace("%player%", p.getName()).replace( "%tag%", getTagFormat(API.getSelected(p)) ).replace("%tagname%", API.getSelected(p)!=null?API.getSelected(p):"") );
-		}
-		return lore;
-	}
-	private static Material getPreviewType() {
-		return Material.valueOf(Loader.gui.getString("GUI.Items.Preview.Type") );
-	}
-	
-	public static ItemStack getPreviewItem(Player p) {
-		if(Loader.gui.getBoolean("GUI.Items.Preview.PlayerHead")) {
-			ItemCreatorAPI item = new ItemCreatorAPI(getHead(p.getName()));
-			item.setLore(getPreviewItemLore(p));
-			item.setDisplayName(getPreviewItemName(p));
-			return item.create();
-		}
-		if(Loader.gui.exists("GUI.Items.Preview.Head")){
-			ItemCreatorAPI item = new ItemCreatorAPI(getHead(Loader.gui.getString("GUI.Items.Preview.Head")));
-			item.setLore(getPreviewItemLore(p));
-			item.setDisplayName(getPreviewItemName(p));
-			return fixHead(item, Loader.gui.getString("GUI.Items.Preview.Head")).create();
-			//return fixHead(new ItemCreatorAPI(getHead(Loader.gui.getString("GUI.Items.Preview.Head"))), Loader.gui.getString("GUI.Items.Preview.Head")).create();
-		}
-		return ItemCreatorAPI.create(getPreviewType(), 1, getPreviewItemName(p), getPreviewItemLore(p));
-	}
-	
-	// NEXT AND BACK ITEM
-	
-	public static ItemStack getNextOrBackItem(Player p, String path) {
-		if(Loader.gui.exists("GUI.Items."+path+".Head")){
-			ItemCreatorAPI item = new ItemCreatorAPI(getHead(Loader.gui.getString("GUI.Items."+path+".Head")));
-			item.setLore(Loader.gui.getStringList("GUI.Items."+path+".Lore"));
-			item.setDisplayName("GUI.Items."+path+".Name");
-			return fixHead(item, Loader.gui.getString("GUI.Items."+path+".Head")).create();
+	public static ItemStack getTagItem(Player player, String tag) {
+		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.tags, "Tags."+tag+".item"));
+
+		/*
+		 * %amazingtags_...%
+		 * 
+		 * tag/tag_format - tagformát z Tags.yml
+		 * info/tag_info - informace o tagu
+		 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
+		 * status/tag_status - status tagu
+		 */
+		Placeholders placeholders = new Placeholders();
+		placeholders.addPlayer("player", player)
+			.replace("tag", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("tag_format", getTagFormat(tag)!=null?getTagFormat(tag):"" )
+			.replace("tag_name", getTagName(tag)).replace("name", getTagName(tag))
+			.replace("info", getTagInfo(tag)).replace("tag_info", getTagInfo(tag))
+			.replace("status", getStatus(tag, player)).replace("tag_status", getStatus(tag, player))
+			;
+		
+		if(item instanceof HeadItemMaker &&	((HeadItemMaker)item).getHeadOwnerType()==0 ) {
+				((HeadItemMaker)item).skinName(player.getName());
 		}
 		
-		ItemCreatorAPI item = new ItemCreatorAPI( Material.valueOf(Loader.gui.getString("GUI.Items."+path+".Type")));
-		item.setLore(Loader.gui.getStringList("GUI.Items."+path+".Lore"));
-		item.setDisplayName("GUI.Items."+path+".Name");
-		return item.create();
+		return applyPlaceholders(item, placeholders).build();
 	}
 	
-	private static ItemStack getHead(String head) {
-		if(head.toLowerCase().startsWith("hdb:"))
-			return ItemCreatorAPI.createHeadByValues(1, "&7Head from values", HDBSupport.parse(head));
-		else
-		if(head.startsWith("https://")||head.startsWith("http://"))
-			return ItemCreatorAPI.createHeadByWeb(1, "&7Head from website", head);
-		else
-		if(head.length()>16) { 
-			return ItemCreatorAPI.createHeadByValues(1, "&7Head from values", head);
-		}else
-			return ItemCreatorAPI.createHead(1, "&7" + head + "'s Head", head);
+	/** Returns preview item used to inform player which tag he has selected
+	 * @param player The player opening menu
+	 * @return {@link ItemStack}
+	 */
+	public static ItemStack getPreviewItem(Player player) {
+		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.gui, "GUI.Items.Preview"));
+
+		/*
+		 * %amazingtags_...%
+		 * 
+		 * tag/tag_format - tagformát z Tags.yml
+		 * info/tag_info - informace o tagu
+		 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
+		 * status/tag_status - status tagu
+		 */
+		String tag = API.getSelectedTag(player);
+		Placeholders placeholders = new Placeholders();
+		placeholders.addPlayer("player", player)
+			.replace("tag", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("tag_format", getTagFormat(tag)!=null?getTagFormat(tag):"" )
+			.replace("tag_name", getTagName(tag)).replace("name", getTagName(tag))
+			.replace("info", getTagInfo(tag)).replace("tag_info", getTagInfo(tag))
+			.replace("status", getStatus(tag, player)).replace("tag_status", getStatus(tag, player))
+			;
+		
+		if(item instanceof HeadItemMaker &&	((HeadItemMaker)item).getHeadOwnerType()==0 ) {
+				((HeadItemMaker)item).skinName(player.getName());
+		}
+		
+		return applyPlaceholders(item, placeholders).build();
 	}
 	
-	private static ItemCreatorAPI fixHead(ItemCreatorAPI item, String head) {
-		if(head.length()>16)
-			item.setOwnerFromValues(head);
+	/** This method will replace all possible placeholders from item's name and lore
+	 * @param item the item, where placeholders should be replaced
+	 * @param placeholders all placeholders you want to be replaced 
+	 * @return {@link ItemMaker}
+	 * @see {@link Placeholders}
+	 */
+	private static ItemMaker applyPlaceholders(ItemMaker item, Placeholders placeholders) {
+		item.displayName(placeholders.apply(item.getDisplayName()));
+		
+		List<String> lore = item.getLore();
+		if(lore.isEmpty()) {
+			List<String> newLore = new ArrayList<String>();
+			
+			for(String line : lore)
+				newLore.add(placeholders.apply(line));
+			
+			item.lore(newLore);
+		}
 		return item;
 	}
-	
 	
 }

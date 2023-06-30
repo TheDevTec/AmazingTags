@@ -6,16 +6,29 @@
 #    # Information that will appear in GUI
 #    Info: "Owner tag"
 #    Enabled: true
-#    # This options are not needed. Just if you want something special for one specific tag...
+
+#    # These options are not needed. Just if you want something special for one specific tag...
 #    Permission: "specialperm.tag.owner"
-#    Name will be on material in GUI or will replace placeholder %tagname%
-#    Name: ""
-#    Lore: []
-#    Type: "DIAMOND"
-#    Head: ""
+#    # Special Name, used instead of path name. 
+#    # Example: official name is superTag05, but you do not want player to see this, so you can use this.
+#    Name: "SuperExample"
+
+#    # Special actions when tag is selected
 #    Select:
 #      Commands: []
 #      Messages: []
+#    
+#    # You can find all item options here: https://github.com/TheDevTec/TheAPI/wiki/ItemMaker
+#    item:
+#      # displayName will be on material in GUI
+#      displayName: "&7&l» %tag_name%"
+#      lore: []
+#      type: "DIAMOND"
+#      # If you want to have HEAD as item, you need to set type to "PLAYER_HEAD"¨
+#      # and use these settings:
+#      head: 
+#        type: ""
+#        owner: ""
 
 Tags:
   Owner:
@@ -23,6 +36,13 @@ Tags:
     Info: "Owner tag"
     Enabled: true
 
+
+
+
+
+
+
+##### UPRAVIT ITEM ####
 #categories:
 #  test:
 #    content:

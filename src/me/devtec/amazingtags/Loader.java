@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devtec.amazingtags.utils.API;
-import me.devtec.amazingtags.utils.ItemCreatorAPI;
 import me.devtec.amazingtags.utils.MessageUtils;
 import me.devtec.amazingtags.utils.MessageUtils.Placeholders;
 import me.devtec.amazingtags.utils.Tags;
@@ -19,6 +18,7 @@ import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderExpansion;
 import me.devtec.shared.utility.ColorUtils;
 import me.devtec.theapi.bukkit.commands.hooker.BukkitCommandManager;
+import me.devtec.theapi.bukkit.game.ItemMaker;
 
 public class Loader extends JavaPlugin{
 	
@@ -27,8 +27,8 @@ public class Loader extends JavaPlugin{
 	static String prefix;
 	public static MySQL sql;
 	
-	public static ItemStack next = ItemCreatorAPI.createHeadByValues(1, "&cNext", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmZmNTVmMWIzMmMzNDM1YWMxYWIzZTVlNTM1YzUwYjUyNzI4NWRhNzE2ZTU0ZmU3MDFjOWI1OTM1MmFmYzFjIn19fQ=="), 
-			prev = ItemCreatorAPI.createHeadByValues(1, "&cPrevious", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc2OGVkYzI4ODUzYzQyNDRkYmM2ZWViNjNiZDQ5ZWQ1NjhjYTIyYTg1MmEwYTU3OGIyZjJmOWZhYmU3MCJ9fX0=");
+	public static ItemStack next = ItemMaker.loadFromConfig(gui, "GUI.Items.Next"), 
+			prev = ItemMaker.loadFromConfig(gui, "GUI.Items.Previous");
 
 	protected static PlaceholderExpansion placeholders;
 	

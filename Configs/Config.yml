@@ -26,14 +26,7 @@ Options:
       seeAll: true
       
     Default:
-      Material: "NAME_TAG"
-      Name: "&5&l» &7%tagname%"
-      Lore:
-      - "&7Info: &f%info%"
-      - "&7Tag: &f%tag%"
-      - ""
-      - "%tag% &7%player%"
-      # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.default
+      # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.example
       Permission: "amazingtags.tag.%tagname%"
       
     # Thiw will process when you select tag!
@@ -47,7 +40,7 @@ Options:
       - "&7&l----------------------------------------"
   Status:
     NoPerm: "&c&lUnavailable"
-    Availible: "&e&lAvailible"
+    Available: "&e&lAvailable"
     Active: "&a&lActive"
 
 # Translation
