@@ -1,9 +1,9 @@
 package me.devtec.amazingtags.utils;
 
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
+//import me.arcaniax.hdb.api.HeadDatabaseAPI;
 
 public class HDBSupport {
-	static Object api;
+/*	static Object api;
 	static {
 		try {
 			api = new HeadDatabaseAPI();
@@ -14,5 +14,5 @@ public class HDBSupport {
 		if(api!=null && text.toLowerCase().startsWith("hdb:"))
 		return ((HeadDatabaseAPI)api).getBase64(text.substring(4));
 		return null;
-	}
+	}*/
 }
