@@ -12,6 +12,7 @@ import me.devtec.amazingtags.utils.sql.SQL;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderAPI;
 import me.devtec.shared.utility.StringUtils;
+import me.devtec.theapi.bukkit.BukkitLoader;
 
 public class API {
 
@@ -112,6 +113,7 @@ public class API {
 	/*
 	 * Other
 	 */
+	@SuppressWarnings("deprecation")
 	private static void process(Player player, String tag) {
 		List<String> cmds = new ArrayList<>();
 		List<String> msg = new ArrayList<>();
@@ -129,12 +131,13 @@ public class API {
 		}
 
 		for(String command: cmds) {
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.apply(command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId() ));
-			//TheAPI.sudoConsole(SudoType.COMMAND, command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) );
+			
+			BukkitLoader.getNmsProvider().postToMainThread(() -> {
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.apply(command.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId() ));
+			});
 		}
 		for(String message: msg) {
 			player.sendMessage(StringUtils.colorize(PlaceholderAPI.apply(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId())));
-			//TheAPI.msg(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)) , player);
 		}
 	}
 }
