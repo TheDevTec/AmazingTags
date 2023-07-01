@@ -162,14 +162,33 @@ public class Tags {
 		return Loader.config.getString("options.status.noPerm");
 	}
 	
-
+	/** Loads and prepare item. </br>
+	 * If there is custom item in Tags.yml that do not have lore or displayName, this will replace it with default ones.
+	 * @param tag - The name used in the file to access the tag data
+	 * @return {@link ItemMaker}
+	 */
+	private static ItemMaker getTagItemFromConfig(String tag) {
+		//Default item preparation
+		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.gui, "gui.items.default"));
+		//if there is custom item in Tags.yml -> Then we try and use that item
+		if(Loader.tags.exists("tags."+tag+".item"))
+			item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.tags, "tags."+tag+".item"));
+		//displayName and lore check
+		if(item.getDisplayName() == null || item.getDisplayName().isEmpty())
+			item.displayName(Loader.gui.getString("gui.items.default.displayName"));
+		if(item.getLore()==null)
+			item.lore(Loader.gui.getStringList("gui.items.default.lore"));
+			
+		return item;
+		
+	}
 	/** Returns tag item. Admins can edit items in Tags.yml or the default one in GUI.yml
-	 * @param player The player opening menu
-	 * @param tag The tag path name from Tags.yml
+	 * @param player - The player opening menu
+	 * @param tag - The name used in the file to access the tag data
 	 * @return {@link ItemStack}
 	 */
 	public static ItemStack getTagItem(Player player, String tag) {
-		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.tags, "tags."+tag+".item"));
+		ItemMaker item = getTagItemFromConfig(tag);
 
 		/*
 		 * %amazingtags_...%
@@ -187,8 +206,14 @@ public class Tags {
 			.replace("status", getStatus(tag, player)).replace("tag_status", getStatus(tag, player))
 			;
 		
-		if(item instanceof HeadItemMaker &&	((HeadItemMaker)item).getHeadOwnerType()==0 ) {
+		if(item instanceof HeadItemMaker /*&&	((HeadItemMaker)item).getHeadOwnerType()==0*/) {
+			//this player head
+			if(Loader.tags.getString("tags."+tag+".item.head.type").equalsIgnoreCase("PLAYER") &&
+					Loader.tags.getString("tags."+tag+".item.head.owner").equalsIgnoreCase("%player%"))
 				((HeadItemMaker)item).skinName(player.getName());
+			//values - because of some minecraft shenanigans we need to fix values heads like this
+			if(Loader.tags.getString("tags."+tag+".item.head.type").equalsIgnoreCase("VALUES"))
+				((HeadItemMaker)item).skinValues(Loader.tags.getString("tags."+tag+".item.head.owner"));
 		}
 		
 		return applyPlaceholders(item, placeholders).build();
@@ -218,8 +243,14 @@ public class Tags {
 			.replace("status", getStatus(tag, player)).replace("tag_status", getStatus(tag, player))
 			;
 		
-		if(item instanceof HeadItemMaker &&	((HeadItemMaker)item).getHeadOwnerType()==0 ) {
+		if(item instanceof HeadItemMaker /*&&	((HeadItemMaker)item).getHeadOwnerType()==0*/) {
+			//this player head
+			if(Loader.gui.getString("gui.items.preview.head.type").equalsIgnoreCase("PLAYER") &&
+					Loader.gui.getString("gui.items.preview.head.owner").equalsIgnoreCase("%player%"))
 				((HeadItemMaker)item).skinName(player.getName());
+			//values - because of some minecraft shenanigans we need to fix values heads like this
+			if(Loader.gui.getString("gui.items.preview.head.type").equalsIgnoreCase("VALUES"))
+				((HeadItemMaker)item).skinValues(Loader.tags.getString("gui.items.preview.head.owner"));
 		}
 		
 		return applyPlaceholders(item, placeholders).build();
@@ -232,10 +263,14 @@ public class Tags {
 	 * @see {@link Placeholders}
 	 */
 	private static ItemMaker applyPlaceholders(ItemMaker item, Placeholders placeholders) {
-		item.displayName(placeholders.apply(item.getDisplayName()));
 		
+		if(item==null || placeholders == null) return item;
+		//replacing diplayName
+		item.displayName(placeholders.apply(item.getDisplayName()));
+
+		//replacing lore
 		List<String> lore = item.getLore();
-		if(lore.isEmpty()) {
+		if(lore!=null && !lore.isEmpty()) {
 			List<String> newLore = new ArrayList<String>();
 			
 			for(String line : lore)
@@ -243,6 +278,7 @@ public class Tags {
 			
 			item.lore(newLore);
 		}
+		
 		return item;
 	}
 	

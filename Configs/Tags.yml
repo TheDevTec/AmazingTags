@@ -31,10 +31,10 @@
 #        owner: ""
 
 tags:
-  owner:
-    tag: "&4&lOwner &8&l|&7"
-    info: "Owner tag"
-    enabled: true
+  default:
+    tag: "&7&lPlayer &8&l|&7"
+    info: "Default tag"
+    enabled: true # ALL tags enabled unless specified otherwise
 
 #categories:
 #  test:

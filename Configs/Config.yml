@@ -20,7 +20,7 @@ options:
     
   tags:
     # A default tag
-    default_Tag: "Owner"
+    default_Tag: "default"
     settings:
       # Player will see all tags in GUI even if he does not have permission (true)
       seeAll: true

@@ -7,8 +7,8 @@ gui:
       type: "PLAYER_HEAD"
       displayName: "&5&lSelected tag:"
       lore:
-      - "&7Selected: %tagname%"
-      - "&7Tag: %tag%"
+      - "&7Selected: %tag_name%"
+      - "&7Tag: %tag_format%"
       - "&7"
       - "&7Rright click to reset tag"
       head:
@@ -18,10 +18,12 @@ gui:
       type: "NAME_TAG"
       displayName: "&5&l» &7%tag_name%"
       lore:
-      - "&7Info: &f%info%"
-      - "&7Tag: &f%tag%"
+      - "&7Info: &f%tag_info%"
+      - "&7Tag: &f%tag_format%"
       - ""
-      - "%tag% &7%player%"
+      - "%tag_format% &7%player%"
+      - ""
+      - "%tag_status%"
     next:
       displayName: "&cNext"
       type: "PLAYER_HEAD"
