@@ -63,8 +63,8 @@ public class AmazingTagsCommand implements CommandExecutor {
 					String name = args[1];
 					String format = StringUtils.buildString(2, args);
 					API.createTag(name, format);
-					MessageUtils.message(s, "translation.created_new_tag", Placeholders.c().add("%tagname%", name)
-							.add("%tag%", format));
+					MessageUtils.message(s, "translation.created_new_tag", Placeholders.c().add("tagname", name)
+							.add("tag", format));
 					return true;
 				}
 				Loader.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
