@@ -126,8 +126,9 @@ public class MessageUtils {
 					text = text.replace("%" + players.getKey() + "%", players.getValue().getName());
 				}
 			
-			for (Entry<String, String> placeholder : set.entrySet())
-				text = text.replace("%" + placeholder.getKey() + "%", placeholder.getValue() + "");
+			for (Entry<String, String> placeholder : set.entrySet()) {
+					text = text.replace("%" + placeholder.getKey() + "%", placeholder.getValue());
+			}
 		
 			return text;
 		}
@@ -137,7 +138,7 @@ public class MessageUtils {
 	 * Gets prefix from translation file
 	 */
 	public static String getPrefix() {
-		return Loader.config.getString("Options.Prefix");
+		return Loader.config.getString("options.prefix");
 	}
 	
 	/**Method used to replace placeholders in messages

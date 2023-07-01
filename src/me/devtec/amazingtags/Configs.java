@@ -6,6 +6,7 @@ import java.util.List;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.dataholder.DataType;
 import me.devtec.shared.utility.StreamUtils;
+import me.devtec.theapi.bukkit.game.ItemMaker;
 
 public class Configs {
 	
@@ -13,14 +14,18 @@ public class Configs {
 	static List<String> datas = Arrays.asList("Config.yml","GUI.yml","Tags.yml");
 	
 	/**
-	 * Creates and loads all config files
+	 * Creates and loads all config files. </br>
+	 * Also loading next and previous button.
 	 */
 	public static void load() {
 		Loader.config = loadAndMerge("Config.yml", "Config.yml");
-		Loader.config = loadAndMerge("Tags.yml", "Tags.yml");
-		Loader.config = loadAndMerge("GUI.yml", "GUI.yml");
+		Loader.tags = loadAndMerge("Tags.yml", "Tags.yml");
+		Loader.gui = loadAndMerge("GUI.yml", "GUI.yml");
 		
 		convertTags();
+		
+		Loader.next = ItemMaker.loadFromConfig(Loader.gui, "gui.items.next");
+		Loader.prev = ItemMaker.loadFromConfig(Loader.gui, "gui.items.previous");
 	}
 	
 	/**

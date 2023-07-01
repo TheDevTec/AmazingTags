@@ -18,7 +18,6 @@ import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderExpansion;
 import me.devtec.shared.utility.ColorUtils;
 import me.devtec.theapi.bukkit.commands.hooker.BukkitCommandManager;
-import me.devtec.theapi.bukkit.game.ItemMaker;
 
 public class Loader extends JavaPlugin{
 	
@@ -27,16 +26,16 @@ public class Loader extends JavaPlugin{
 	static String prefix;
 	public static MySQL sql;
 	
-	public static ItemStack next = ItemMaker.loadFromConfig(gui, "gui.items.next"), 
-			prev = ItemMaker.loadFromConfig(gui, "gui.items.previous");
+	public static ItemStack next, prev;
 
 	protected static PlaceholderExpansion placeholders;
 	
 	public void onEnable() {
 		plugin=this;
-		
+		//Loading files and next+prev button
 		Configs.load();
 		prefix=config.getString("Options.Prefix");
+		//Loading command
 		PluginCommand cmd = BukkitCommandManager.createCommand(config.getString("options.command.name"),this);
 		cmd.setPermission(config.getString("options.command.permission"));
 		AmazingTagsCommand amf = new AmazingTagsCommand();
@@ -45,10 +44,11 @@ public class Loader extends JavaPlugin{
 		//cmd.setTabCompleter(amf);
 		BukkitCommandManager.registerCommand(cmd);
 		
+		//Checking if MyQL options is enabled and loading database connection
 		if(SQL.isEnabled()) {
 			sql = new MySQL().prepare();
 		}
-		
+		//Loading placeholders
 		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI")!=null)
 			loadPlaceholders();
 
