@@ -23,7 +23,6 @@ public class Loader extends JavaPlugin{
 	
 	public static Loader plugin;
 	public static Config config, gui, tags;
-	static String prefix;
 	public static MySQL sql;
 	
 	public static ItemStack next, prev;
@@ -34,13 +33,12 @@ public class Loader extends JavaPlugin{
 		plugin=this;
 		//Loading files and next+prev button
 		Configs.load();
-		prefix=config.getString("Options.Prefix");
 		//Loading command
-		PluginCommand cmd = BukkitCommandManager.createCommand(config.getString("options.command.name"),this);
-		cmd.setPermission(config.getString("options.command.permission"));
+		PluginCommand cmd = BukkitCommandManager.createCommand(config.getString("command.name"),this);
+		cmd.setPermission(config.getString("command.permission"));
 		AmazingTagsCommand amf = new AmazingTagsCommand();
 		cmd.setExecutor(amf);
-		cmd.setAliases(config.getStringList("options.command.aliases"));
+		cmd.setAliases(config.getStringList("command.aliases"));
 		//cmd.setTabCompleter(amf);
 		BukkitCommandManager.registerCommand(cmd);
 		
@@ -66,19 +64,18 @@ public class Loader extends JavaPlugin{
 		Loader.config.reload();
 		Loader.gui.reload();
 		Loader.tags.reload();
-		prefix=config.getString("options.prefix");
-		ss.sendMessage(ColorUtils.colorize(prefix+" Configurations reloaded."));
+		ss.sendMessage(ColorUtils.colorize(MessageUtils.getPrefix()+" Configurations reloaded."));
 	}
 	
 	public static boolean has(CommandSender s, String permission) {
 		if(s.hasPermission(permission)) return true;
 		MessageUtils.message(s, "translation.noPerms", Placeholders.c().replace("%permission%", permission));
-		//s.sendMessage(ColorUtils.colorize(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Options.Prefix"))));
+		//s.sendMessage(ColorUtils.colorize(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Prefix"))));
 		return false;
 	}
 	
 	public static void msg(String msg, CommandSender s) {
-		s.sendMessage(ColorUtils.colorize(msg.replace("%prefix%", Loader.config.getString("options.prefix"))));
+		s.sendMessage(ColorUtils.colorize(msg.replace("%prefix%", Loader.config.getString("prefix"))));
 	}
 	
 	public void loadPlaceholders() {

@@ -16,14 +16,14 @@ public class AmazingTagsCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender s, Command cmd, String arg2, String[] args) {
-		if(Loader.has(s, Loader.config.getString("options.command.permission")) ) { //if player can use command
+		if(Loader.has(s, Loader.config.getString("command.permission")) ) { //if player can use command
 			if(args.length==0) { // /tag -> opens GUI
 				TagsGUI.open(Bukkit.getPlayer(s.getName()));
 				return true;
 			}
 			// /tag help
 			if(args[0].equalsIgnoreCase("help")) {
-				if(s.hasPermission(Loader.config.getString("options.command.permission"))) Loader.msg("&7/Tags &7&l- &7Open GUI", s);
+				if(s.hasPermission(Loader.config.getString("command.permission"))) Loader.msg("&7/Tags &7&l- &7Open GUI", s);
 				if(s.hasPermission("amazingtags.reload")) Loader.msg("&7/Tags Reload &7&l- &7Reload configs", s);
 				if(s.hasPermission("amazingtags.create")) Loader.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
 				if(s.hasPermission("amazingtags.set")) Loader.msg("&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", s);

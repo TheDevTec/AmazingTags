@@ -1,48 +1,54 @@
-options:
-  prefix: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#ffffff &7&l»"
+###############
+### COMMAND ###
+###############
+command:
+  name: "tags"
+  permission: "amazingtags.command"
+  aliases:
+  - "amazingtags"
+  - "tag"
 
-  command:
-    name: "tags"
-    permission: "amazingtags.command"
-    aliases:
-    - "amazingtags"
-    - "tag"
-
-  # Database is only used to saving the selected tag 
-  mySQL:
-    use: false
-    username: ""
-    password: ""
-    hostname: ""
-    port: 3306
-    database: ""
-    table_prefix: "amazingtags_"
+# Database is only used to saving the selected tag 
+mySQL:
+  use: false
+  username: ""
+  password: ""
+  hostname: ""
+  port: 3306
+  database: ""
+  table_prefix: "amazingtags_"
+  
+# Tag settings
+tags:
+  # A default tag
+  default_Tag: "default"
+  settings:
+    # Player will see all tags in GUI even if he does not have permission (true)
+    seeAll: true
     
-  tags:
-    # A default tag
-    default_Tag: "default"
-    settings:
-      # Player will see all tags in GUI even if he does not have permission (true)
-      seeAll: true
-      
-    default:
-      # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.example
-      permission: "amazingtags.tag.%tagname%"
-      
-    # Thiw will process when you select tag!
-    select:
-      sound: "ENTITY_PLAYER_LEVELUP"
-      default_select_sound: "ENTITY_PLAYER_LEVELUP"
-      commands: []
-      messages:
-      - "&7&l----------------------------------------"
-      - "&7You have selected tag: %tag%"
-      - "&7&l----------------------------------------"
-  status:
-    noPerm: "&c&lUnavailable"
-    available: "&e&lAvailable"
-    active: "&a&lActive"
-
+  default:
+    # Permission example: amazingtags.%tagname% -> amazingtags.owner or amazingtags.example
+    permission: "amazingtags.tag.%tagname%"
+    
+  # Thiw will process when you select tag!
+  select:
+    sound: "ENTITY_PLAYER_LEVELUP"
+    default_select_sound: "ENTITY_PLAYER_LEVELUP"
+    commands: []
+    messages:
+    - "&7&l----------------------------------------"
+    - "&7You have selected tag: %tag%"
+    - "&7&l----------------------------------------"
+status:
+  noPerm: "&c&lUnavailable"
+  available: "&e&lAvailable"
+  active: "&a&lActive"
+  
+####################
+### TRANSLATIONS ###
+####################
+# Prefix used in front of messages, use %prefix% in messages if you want to use this
+prefix: "!#8602e1&lAmazing!#c148f3!#c148f3&lTags!#ffffff &7&l»"
 # Translation
 translation:
   noPerms: "%prefix% &cYou do not have permissions for this! &7(&5%permission%&7)"
@@ -50,3 +56,6 @@ translation:
   offline: "%prefix% &cThis player is offline!"
   wrong_tag: "%prefix% &cThis tag does not exist!"
   set_tag: "%prefix% &7You have set tag (&d%tag_name%&7) for player &d%player%!"
+
+# DO NOT CHANGE THIS
+file_version: 1

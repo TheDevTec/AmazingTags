@@ -68,7 +68,7 @@ public class API {
 		if(players.containsKey(player))
 			return players.get(player);
 		else {
-			String tag = Loader.config.getString("options.tags.default_Tag");
+			String tag = Loader.config.getString("tags.default_Tag");
 			
 			if(SQL.isEnabled()) {
 				String s = SQL.getTag(player);
@@ -121,13 +121,13 @@ public class API {
 		if(Loader.tags.exists("tags."+tag+".select.commands"))
 			cmds = Loader.tags.getStringList("tags."+tag+".select.commands");
 		else
-			cmds = Loader.config.getStringList("options.tags.select.commands");
+			cmds = Loader.config.getStringList("tags.select.commands");
 		
 		if(Loader.tags.exists("tags."+tag+".select.messages")) {
 			msg = Loader.tags.getStringList("tags."+tag+".select.messages");
 		}
 		else {
-			msg = Loader.config.getStringList("options.tags.select.messages");
+			msg = Loader.config.getStringList("tags.select.messages");
 		}
 
 		for(String command: cmds) {

@@ -111,7 +111,7 @@ public class Tags {
 			return false;
 		}
 		//If ALL players can see ALL tags in menu regardless of permission
-		if(Loader.config.getBoolean("options.tags.settings.seeAll")) {
+		if(Loader.config.getBoolean("tags.settings.seeAll")) {
 			return true;
 		}
 		return hasPermission(player, tag); //If permission... :D
@@ -144,7 +144,7 @@ public class Tags {
 	//Default permission of all tags
 	//Default permission value is amazingtags.tag.%tagname%
 	public static String getDefaultPermission(String tag) {
-		return Loader.config.getString("options.tags.default.permission").replace("%tagname%", tag);
+		return Loader.config.getString("tags.default.permission").replace("%tagname%", tag);
 	}
 	/** Gets status of tag. If player can use tag, is using tag or does not have permission to use tag.
 	 * @param tag - The name used in the file to access the tag data
@@ -155,11 +155,11 @@ public class Tags {
 	private static String getStatus(String tag, Player player) {
 		if(hasPermission(player, tag)) {
 			if(API.getSelectedTag(player).equals(tag))
-				return Loader.config.getString("options.status.active");
+				return Loader.config.getString("status.active");
 			else
-				return Loader.config.getString("options.status.available");
+				return Loader.config.getString("status.available");
 		}
-		return Loader.config.getString("options.status.noPerm");
+		return Loader.config.getString("status.noPerm");
 	}
 	
 	/** Loads and prepare item. </br>

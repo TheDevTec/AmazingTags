@@ -15,13 +15,13 @@ public class MySQL {
 	
 	public DatabaseHandler connection;
 	
-	public static String enabled_path = "Options.MySQL.Use";
-	private String hostname_path = "Options.MySQL.hostname";
-	private String port_path = "Options.MySQL.port";
-	private String username_path = "Options.MySQL.username";
-	private String password_path = "Options.MySQL.password";
-	private String database_path = "Options.MySQL.database";
-	private String tablePrefix_path = "Options.MySQL.table_prefix";
+	public static String enabled_path = "MySQL.Use";
+	private String hostname_path = "MySQL.hostname";
+	private String port_path = "MySQL.port";
+	private String username_path = "MySQL.username";
+	private String password_path = "MySQL.password";
+	private String database_path = "MySQL.database";
+	private String tablePrefix_path = "MySQL.table_prefix";
 	
 	/**
 	 * Creates all connections

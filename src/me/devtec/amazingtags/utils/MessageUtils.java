@@ -138,7 +138,7 @@ public class MessageUtils {
 	 * Gets prefix from translation file
 	 */
 	public static String getPrefix() {
-		return Loader.config.getString("options.prefix");
+		return Loader.config.getString("prefix");
 	}
 	
 	/**Method used to replace placeholders in messages

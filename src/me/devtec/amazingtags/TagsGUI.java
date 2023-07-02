@@ -53,7 +53,7 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(player, tag)) { //if player can click (have Permission)
 							API.selectTag(player, tag); //select this tag
-							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("tags.select.sound")), SoundCategory.MASTER, 10, 5);
 							a.close(); //closing menu
 						}
 						else
@@ -113,7 +113,7 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(category.hasPermission(player)) { //If player can OPEN category
 							
-							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("tags.select.sound")), SoundCategory.MASTER, 10, 5);
 							openCategory(player, 0, category);
 						}else
 							player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_BUTTON_CLICK_OFF, SoundCategory.MASTER, 10, 5);
@@ -217,7 +217,7 @@ public class TagsGUI {
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						if(Tags.hasPermission(player, tag)) { //if player can click (have Permission)
 							API.selectTag(player, tag); //select this tag
-							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
+							player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("tags.select.sound")), SoundCategory.MASTER, 10, 5);
 							a.close();
 						}
 						else
@@ -260,7 +260,7 @@ public class TagsGUI {
 			public void onClick(Player player, HolderGUI hgui, ClickType click) {
 				if(click==ClickType.RIGHT_PICKUP||click==ClickType.RIGHT_DROP) {
 					API.selectTag(player, null); // select none tag, will delete player data from database
-					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("options.tags.select.sound")), SoundCategory.MASTER, 10, 5);
+					player.playSound(player.getLocation(), Sound.valueOf(Loader.config.getString("tags.select.sound")), SoundCategory.MASTER, 10, 5);
 					gui.close();
 				}
 			}
