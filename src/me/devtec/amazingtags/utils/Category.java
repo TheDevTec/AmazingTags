@@ -32,7 +32,7 @@ public class Category {
 	}
 	
 	public static boolean canSee(Player p, String category) {
-		if(getSeePermission(category) != null || !getSeePermission(category).isEmpty())
+		if(getSeePermission(category) != null && !getSeePermission(category).isEmpty())
 			return p.hasPermission(getSeePermission(category));
 		return true;
 	}
@@ -43,7 +43,7 @@ public class Category {
 	}
 	
 	public boolean hasPermission(Player p) {
-		if(getPermission() != null || !getPermission().isEmpty())
+		if(getPermission() != null && !getPermission().isEmpty())
 			return p.hasPermission(getPermission());
 		return true;
 	}

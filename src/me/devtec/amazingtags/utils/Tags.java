@@ -169,10 +169,13 @@ public class Tags {
 	 */
 	private static ItemMaker getTagItemFromConfig(String tag) {
 		//Default item preparation
-		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.gui, "gui.items.default"));
-		//if there is custom item in Tags.yml -> Then we try and use that item
+		ItemMaker item = ItemMaker.loadMakerFromConfig(Loader.gui, "gui.items.default");
+		//if there is custom item in Tags.yml -> Then we try and use that item 
 		if(Loader.tags.exists("tags."+tag+".item"))
-			item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.tags, "tags."+tag+".item"));
+			item = ItemMaker.loadMakerFromConfig(Loader.tags, "tags."+tag+".item");
+		if(item==null) //if there is missing type -> then back to default item (sorry folks :D)
+			item = ItemMaker.loadMakerFromConfig(Loader.gui, "gui.items.default");
+		
 		//displayName and lore check
 		if(item.getDisplayName() == null || item.getDisplayName().isEmpty())
 			item.displayName(Loader.gui.getString("gui.items.default.displayName"));

@@ -1,16 +1,16 @@
 #    EXAMPLE:
 #tags:
 #  example:
-#    # Tag format that it will use
+#    # The format you want the tag to have
 #    tag: "&4&lOwner &8&l|&7"
-#    # Information that will appear in GUI
+#    # Information that will appear instead of %tag_info% in gui
 #    info: "Owner tag"
-#    enabled: true # ALL TAGS WITHOUT THIS SETTING ARE ENABLED IN DEFAULT 
+#    enabled: true # ALL TAGS WITHOUT THIS SETTING ARE ENABLED
 
 #    # These options are not needed. Just if you want something special for one specific tag...
 #    permission: "specialperm.tag.owner"
 #    # Special Name, used instead of path name. 
-#    # Example: official name is superTag05, but you do not want player to see this, so you can use this.
+#    # Example: official name is superTag05 but you don't want player to see this. So you can use this.
 #    name: "SuperExample"
 
 #    # Special actions when tag is selected
@@ -20,10 +20,10 @@
 #    
 #    # You can find all item options here: https://github.com/TheDevTec/TheAPI/wiki/ItemMaker
 #    item:
+#      type: "DIAMOND"
 #      # displayName will be on material in GUI
 #      displayName: "&7&l» %tag_name%"
 #      lore: []
-#      type: "DIAMOND"
 #      # If you want to have HEAD as item, you need to set type to "PLAYER_HEAD"¨
 #      # and use these settings:
 #      head: 

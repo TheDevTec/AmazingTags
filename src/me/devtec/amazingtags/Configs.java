@@ -1,8 +1,11 @@
 package me.devtec.amazingtags;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import me.devtec.amazingtags.utils.MessageUtils;
+import me.devtec.amazingtags.utils.MessageUtils.Placeholders;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.dataholder.DataType;
 import me.devtec.shared.utility.StreamUtils;
@@ -44,7 +47,57 @@ public class Configs {
 		return result;
 	}
 	
-	private static void convertTags() { //TODO - dokončit
+	private static void convertTags() {
+		if(Loader.config.getInt("file_version")==1) {
+			int converted = 0;
+			
+			for(String tag: Loader.tags.getKeys("Tags")) {
+				
+				List<String> list = new ArrayList<String>(Arrays.asList("Tag", "Info", "Enabled", 
+						"Permission", "Name"));
+				for(String path: list)
+					if(Loader.tags.exists("Tags."+tag+"."+path))
+						Loader.tags.set("tags."+tag+"."+path.toLowerCase(), 
+							Loader.tags.get("Tags."+tag+"."+path));
+
+				if(Loader.tags.exists("Tags."+tag+".Select.Commands") )
+						Loader.tags.set("tags."+tag+".select.commands", Loader.tags.get("Tags."+tag+".Select.Commands") );
+				if(Loader.tags.exists("Tags."+tag+".Select.Messages") )
+						Loader.tags.set("tags."+tag+".select.messages", Loader.tags.get("Tags."+tag+".Select.Messages") );
+				
+				if(Loader.tags.exists("Tags."+tag+".Type") )
+						Loader.tags.set("tags."+tag+".item.type", Loader.tags.get("Tags."+tag+".Type") );
+				if(Loader.tags.exists("Tags."+tag+".Type") )
+					Loader.tags.set("tags."+tag+".item.type", Loader.tags.get("Tags."+tag+".Type") );
+				if(Loader.tags.exists("Tags."+tag+".Lore") )
+					Loader.tags.set("tags."+tag+".item.lore", Loader.tags.get("Tags."+tag+".Lore") );
+
+				Loader.tags.save();
+				converted++;	
+			}
+			Loader.tags.remove("Tags");
+			Loader.tags.save();
+			
+			MessageUtils.msgConsole("[AmazinggTags] &4Converted &c&l%c% &4tags to new format!", Placeholders.c().add("c", converted));
+			
+			Loader.config.set("file_version", 2);
+		}
 		
 	}
+	/*
+	private static void keys(Config config, String path, String newpath) {
+		boolean looped = false;
+		for(String keypath: config.getKeys(path)) {
+			if(keypath == null || keypath.isEmpty())
+				break;
+			keys(config, path+"."+keypath, newpath+"."+keypath);
+			looped = true;
+			continue;
+		}
+		if(!looped) {
+			config.set(newpath,config.get(path));
+			config.save();
+		}
+	}
+	*/
 }
