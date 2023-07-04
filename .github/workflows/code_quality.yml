@@ -5,11 +5,9 @@ on:
   push:
     branches:
       - main
-      - 'releases/*'
 
 jobs:
   qodana:
-    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,3 +17,6 @@ jobs:
         uses: JetBrains/qodana-action@main
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+        with:
+          args: '-b,qodana.sarif.json,--fail-threshold,3'
+          use-caches: false
