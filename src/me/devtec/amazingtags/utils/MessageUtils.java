@@ -350,6 +350,7 @@ public class MessageUtils {
 	}
 
 	//Replacing placeholders from JSON message
+	 
 	@SuppressWarnings("unchecked")
 	private static void replaceJson(CommandSender s, Map<String, Object> map, Placeholders placeholders) {
 		for (Entry<String, Object> entry : map.entrySet()) {
