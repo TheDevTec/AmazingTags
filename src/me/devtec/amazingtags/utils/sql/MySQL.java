@@ -45,9 +45,7 @@ public class MySQL {
 	
 	/**
 	 * Ends connection
-	 * @return true - if succesfull
-	 * 
-	 * false - if not
+	 * @return true - if succesfull </br> false - if not
 	 */
 	public boolean close() {
 		try {

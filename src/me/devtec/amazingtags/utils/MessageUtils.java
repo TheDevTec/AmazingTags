@@ -20,6 +20,9 @@ import me.devtec.shared.utility.ColorUtils;
 import me.devtec.theapi.bukkit.BukkitLoader;
 import me.devtec.theapi.bukkit.nms.NmsProvider.ChatType;
 
+/**
+ * 
+ */
 public class MessageUtils {
 	
 	/**
@@ -35,8 +38,8 @@ public class MessageUtils {
 		}
 		
 		/**Method used to add new replaceable placeholder
-		 * @param placeholder - Placeholder in the message (example: %player% as player)
-		 * @param replace - What the placeholder should be replaced with
+		 * @param placeholder Placeholder in the message (example: %player% as player)
+		 * @param replace What the placeholder should be replaced with
 		 * @return Method returns this instance
 		 */
 		public Placeholders add(String placeholder, Object replace) {
@@ -46,8 +49,8 @@ public class MessageUtils {
 
 		/**Method used to add new replaceable player placeholder.
 		 * Placeholder %player_...% is replaced automatically!
-		 * @param placeholder - Placeholder in the message (example: %target% as some other player)
-		 * @param replace - Which player the placeholder should be replaced with
+		 * @param placeholder Placeholder in the message (example: %target% as some other player)
+		 * @param replace Which player the placeholder should be replaced with
 		 * @return Method returns this instance
 		 */
 		public Placeholders addPlayer(String placeholder, Player player) {
@@ -58,8 +61,8 @@ public class MessageUtils {
 
 		/**Method used to add new replaceable player placeholder.
 		 * Placeholder %player_...% is replaced automatically!
-		 * @param placeholder - Placeholder in the message (example: %target% as some other player)
-		 * @param replace - Which player the placeholder should be replaced with
+		 * @param placeholder Placeholder in the message (example: %target% as some other player)
+		 * @param replace Which player the placeholder should be replaced with
 		 * @return Method returns this instance
 		 */
 		public Placeholders addPlayer(String placeholder, CommandSender player) {
@@ -74,8 +77,8 @@ public class MessageUtils {
 
 		/**Method used to add new replaceable offline player placeholder.
 		 * Placeholder %player_...% is replaced automatically!
-		 * @param placeholder - Placeholder in the message (example: %target% as some other player)
-		 * @param replace - Which player the placeholder should be replaced with
+		 * @param placeholder Placeholder in the message (example: %target% as some other player)
+		 * @param replace Which player the placeholder should be replaced with
 		 * @return Method returns this instance
 		 */
 		public Placeholders addOffline(String palceholder, String player) {
@@ -87,8 +90,8 @@ public class MessageUtils {
 		}
 
 		/**Method used to add new replaceable placeholder
-		 * @param placeholder - Placeholder in the message (example: %player% as player)
-		 * @param replace - What the placeholder should be replaced with
+		 * @param placeholder Placeholder in the message (example: %player% as player)
+		 * @param replace What the placeholder should be replaced with
 		 * @return Method returns this instance
 		 */
 		public Placeholders replace(String placeholder, Object replace) {
@@ -96,8 +99,8 @@ public class MessageUtils {
 		}
 		
 		/**Method used to apply placeholders in message
-		 * @param sender - The player to whom you are sending the message
-		 * @param text - Message where you want to replace placeholders
+		 * @param sender The player to whom you are sending the message
+		 * @param text Message where you want to replace placeholders
 		 * @param placeholders 
 		 * @return Returning edited text
 		 */
@@ -142,9 +145,9 @@ public class MessageUtils {
 	}
 	
 	/**Method used to replace placeholders in messages
-	 * @param sender - The player to whom you are sending the message
-	 * @param message - Message where you want to replace placeholders
-	 * @param placeholders 
+	 * @param sender The player to whom you are sending the message
+	 * @param message Message where you want to replace placeholders
+	 * @param placeholders {@link Placeholders}
 	 * @return Returning edited message
 	 */
 	public static List<String> placeholder(CommandSender sender, List<String> string, Placeholders placeholders) {
@@ -154,9 +157,9 @@ public class MessageUtils {
 	}
 
 	/**Method used to replace placeholders in message.
-	 * @param sender - The player to whom you are sending the message
-	 * @param message - Message where you want to replace placeholders
-	 * @param placeholders 
+	 * @param sender The player to whom you are sending the message
+	 * @param message Message where you want to replace placeholders
+	 * @param placeholders {@link Placeholders}
 	 * @return Returning edited message
 	 * 
 	 * @apiNote This is modified method, default method is in {@link Placeholders} class!!
@@ -207,63 +210,143 @@ public class MessageUtils {
 		return message;
 	}
 
-	// Translation messages
-	//IF YOU WANT TO USE THIS CLASS, CHANGE Loader.config TO YOUR TRANSLATION FILE!!
+	/*
+	 * SENDING MESSAGES FROM TRANSLATION FILE
+	 * 
+	 * Note: If you want to use this class in your project, replace 'Loader.config' as your translation Config.
+	 * 			You can also add default translation file.
+	 */
+	
+	/** Sending message from translation {@link Config}.
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param placeholders {@link Placeholders}
+	 */
 	public static void message(CommandSender player, String path, Placeholders placeholders) {
-		if (Loader.config.exists(path))
+		if (Loader.config.exists(path))  // If path exists in file -> Seding message
 			msgConfig(player, Loader.config, path, placeholders, true, player);
 		else {
 			Loader.plugin.getLogger().warning("Path " + path + " not found in config " + Loader.config.getFile().getName() + ", please complete your translation.");
+			// Sending message from default translation file
 			//msgConfig(player, Loader.engtrans, path, placeholders, true, player);
 		}
 	}
+	/** Sending message from translation {@link Config}.
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param placeholders {@link Placeholders}
+	 * @param split If plugin should search for /n characters to split message into multiple lines
+	 */
 	public static void message(CommandSender player, String path, Placeholders placeholders, boolean split) {
-		if (Loader.config.exists(path))
+		if (Loader.config.exists(path))  // If path exists in file -> Seding message
 			msgConfig(player, Loader.config, path, placeholders, split, player);
 		else {
 			Loader.plugin.getLogger().warning("Path " + path + " not found in config " + Loader.config.getFile().getName() + ", please complete your translation.");
+			// Sending message from default translation file
 			//msgConfig(player, Loader.engtrans, path, placeholders, split, player);
 		}
 	}
+	/** Sending message from translation {@link Config}.
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param placeholders {@link Placeholders}
+	 * @param targets More targets <strong>(THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
 	public static void message(CommandSender player, String path, Placeholders placeholders, CommandSender... targets) {
-		if (Loader.config.exists(path))
+		if (Loader.config.exists(path))  // If path exists in file -> Seding message
 			msgConfig(player, Loader.config, path, placeholders, true, targets);
 		else {
 			Loader.plugin.getLogger().warning("Path " + path + " not found in config " + Loader.config.getFile().getName() + ", please complete your translation.");
+			// Sending message from default translation file
 			//msgConfig(player, Loader.engtrans, path, placeholders, true, targets);
 		}
 	}
+	/** Sending message from translation {@link Config}.
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param placeholders {@link Placeholders}
+	 * @param split If plugin should search for /n characters to split message into multiple lines
+	 * @param targets More targets <strong>(THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
 	public static void message(CommandSender player, String path, Placeholders placeholders, boolean split, CommandSender... targets) {
-		if (Loader.config.exists(path))
+		if (Loader.config.exists(path)) // If path exists in file -> Seding message
 			msgConfig(player, Loader.config, path, placeholders, split, targets);
 		else {
 			Loader.plugin.getLogger().warning("Path " + path + " not found in config " + Loader.config.getFile().getName() + ", please complete your translation.");
+			// Sending message from default translation file
 			//msgConfig(player, Loader.engtrans, path, placeholders, split, targets);
 		}
 	}
+	
+	/*
+	 * SENDING MESSAGES FROM SPECIFIC FILE
+	 * 
+	 */
 
-	// Specific config messages
+	/** Sending message from specific {@link Config} file
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param config File where the message is located ({@link Config})
+	 * @param placeholders {@link Placeholders}
+	 */
 	public static void msgConfig(CommandSender player, String path, Config config, Placeholders placeholders) {
 		msgConfig(player, config, path, placeholders, true, player);
 	}
+	/** Sending message from specific {@link Config} file
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param config File where the message is located ({@link Config})
+	 * @param placeholders {@link Placeholders}
+	 * @param split If plugin should search for /n characters to split message into multiple lines
+	 */
 	public static void msgConfig(CommandSender player, String path, Config config, Placeholders placeholders, boolean split) {
 		msgConfig(player, config, path, placeholders, split, player);
 	}
+	/** Sending message from specific {@link Config} file
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param config File where the message is located ({@link Config})
+	 * @param placeholders {@link Placeholders}
+	 * @param targets More targets <strong>(THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
 	public static void msgConfig(CommandSender player, String path, Config config, Placeholders placeholders, CommandSender... targets) {
 		msgConfig(player, config, path, placeholders, true, targets);
 	}
+	/** Sending message from specific {@link Config} file
+	 * @param player Original message receiver
+	 * @param path Path to that message in the file
+	 * @param config File where the message is located ({@link Config})
+	 * @param placeholders {@link Placeholders}
+	 * @param split If plugin should search for /n characters to split message into multiple lines
+	 * @param targets More targets <strong>(THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
 	public static void msgConfig(CommandSender player, String path, Config config, Placeholders placeholders, boolean split, CommandSender... targets) {
 		msgConfig(player, config, path, placeholders, split, targets);
 	}
 
-	// Other
+	/*
+	 * SPECIAL METHODS
+	 */
+	
+	/** No permission message...
+	 * @param player message recipient
+	 * @param permission what permission is player missing
+	 */
+	public static void noPerm(CommandSender player, String permission) {
+		message(player, "noPerms", Placeholders.c().replace("permission", permission));
+	}
+	
+	/** Sending message to CONSOLE
+	 * @param message
+	 * @param placehholders {@link Placeholders}
+	 */
 	public static void msgConsole(String message, Placeholders placehholders) {
 		Bukkit.getConsoleSender().sendMessage(ColorUtils.colorize(placeholder(null, message, placehholders)));
 	}
 
 	/** Sending an announcement message to players
-	 * @param message - message that you want to send
-	 * @param targets - receivers
+	 * @param message message that you want to send
+	 * @param targets receivers
 	 */
 	public static void sendAnnouncement(String message, CommandSender... targets) {
 		boolean split = true;
@@ -282,6 +365,18 @@ public class MessageUtils {
 		msg(Bukkit.getConsoleSender(), message, null, split, targets);
 	}
 
+	/*
+	 * SENDING MESSAGE and related methods
+	 */
+	
+	/** Main method for sending message.
+	 * @param player Original message receiver
+	 * @param config File where is your message
+	 * @param path Path to that message in the file
+	 * @param placeholders {@link Placeholders}
+	 * @param split If plugin should search for /n characters to split message into multiple lines
+	 * @param targets More targets <strong>(THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
 	public static void msgConfig(CommandSender player, Config config, String path, Placeholders placeholders, boolean split, CommandSender... targets) {
 		// If the main player is null
 		if (player == null)
@@ -316,6 +411,7 @@ public class MessageUtils {
 		msg(player, line, placeholders, split, targets);
 	}
 
+	//Sending JSON message
 	@SuppressWarnings("unchecked")
 	private static void msgJson(CommandSender s, String original, Placeholders placeholders, CommandSender... targets) {
 		// Weird magic here... :D
@@ -405,11 +501,11 @@ public class MessageUtils {
 	}
 
 	/** Final method in message sending chain. Sending message, replacing colors and placeholders and some special splitting (/n)
-	 * @param s - Original message receiver
-	 * @param original - The message that you want to send 
-	 * @param placeholders - {@link Placeholders}
-	 * @param split - If method should search for /n characters to split message into multiple lines.
-	 * @param targets - More targets <strong>(YES THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 * @param s Original message receiver
+	 * @param original The message that you want to send 
+	 * @param placeholders {@link Placeholders}
+	 * @param split If plugin should search for /n characters to split message into multiple lines.
+	 * @param targets More targets <strong>(YES THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
 	 */
 	private static void msg(CommandSender s, String original, Placeholders placeholders, boolean split, CommandSender... targets) {
 		String text = original;
@@ -453,13 +549,5 @@ public class MessageUtils {
 				else
 					target.sendMessage(coloredText); //or sending message as in the old days (it's console)
 		}
-	}
-
-	/** No permission message...
-	 * @param player - message recipient
-	 * @param permission - what permission is player missing
-	 */
-	public static void noPerm(CommandSender player, String permission) {
-		message(player, "noPerms", Placeholders.c().replace("permission", permission));
 	}
 }
