@@ -261,6 +261,10 @@ public class MessageUtils {
 		Bukkit.getConsoleSender().sendMessage(ColorUtils.colorize(placeholder(null, message, placehholders)));
 	}
 
+	/** Sending an announcement message to players
+	 * @param message - message that you want to send
+	 * @param targets - receivers
+	 */
 	public static void sendAnnouncement(String message, CommandSender... targets) {
 		boolean split = true;
 		if (targets == null)
@@ -350,7 +354,6 @@ public class MessageUtils {
 	}
 
 	//Replacing placeholders from JSON message
-	 
 	@SuppressWarnings("unchecked")
 	private static void replaceJson(CommandSender s, Map<String, Object> map, Placeholders placeholders) {
 		for (Entry<String, Object> entry : map.entrySet()) {
