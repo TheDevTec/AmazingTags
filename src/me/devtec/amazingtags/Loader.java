@@ -54,13 +54,16 @@ public class Loader extends JavaPlugin{
 	}
 	
 	public void onDisable() {
+		//Disabling placeholders
 		if(placeholders!=null)
 			Loader.placeholders.unregister();
+		//Closing SQL connection
 		if(sql!=null)
 			sql.close();
 	}
 	
 	public static void reload(CommandSender ss) {
+		//Reloading configs
 		Loader.config.reload();
 		Loader.gui.reload();
 		Loader.tags.reload();

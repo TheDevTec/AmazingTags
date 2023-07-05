@@ -185,12 +185,13 @@ public class Tags {
 		return item;
 		
 	}
-	/** Returns tag item. Admins can edit items in Tags.yml or the default one in GUI.yml
+	/** Returns tag item. Server admin can edit items in Tags.yml or the default one in GUI.yml
 	 * @param player - The player opening menu
 	 * @param tag - The name used in the file to access the tag data
 	 * @return {@link ItemStack}
 	 */
 	public static ItemStack getTagItem(Player player, String tag) {
+		//Getting item
 		ItemMaker item = getTagItemFromConfig(tag);
 
 		/*
@@ -201,6 +202,9 @@ public class Tags {
 		 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
 		 * status/tag_status - status tagu
 		 */
+		
+		//Replacing placeholders in item lore and name
+		
 		Placeholders placeholders = new Placeholders();
 		placeholders.addPlayer("player", player)
 			.replace("tag", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("tag_format", getTagFormat(tag)!=null?getTagFormat(tag):"" )

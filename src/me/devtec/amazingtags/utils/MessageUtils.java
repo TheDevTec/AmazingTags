@@ -23,8 +23,8 @@ import me.devtec.theapi.bukkit.nms.NmsProvider.ChatType;
 public class MessageUtils {
 	
 	/**
-	 * Utility class used in our MEssageUtils class methods. Add placeholders like %player%, %money% and more and this class will handle the replacing!
-	 * PLACEHOLDERS LOOK LIKE: %your_placeholder%, "%" IS ADDED AUTOMATICALLY!!
+	 * Utility class used in our MessageUtils class methods. </br>Add placeholders like %player%, %money% and this class will handle the replacing!</br>
+	 * In String text placeholders looks like %your_placeholder% but "%" is added automatically when you are adding placeholder!!
 	 */
 	public static class Placeholders {
 		private final Map<String, String> set = new HashMap<>();
@@ -153,23 +153,28 @@ public class MessageUtils {
 		return clone;
 	}
 
-	/**Method used to replace placeholders in message
+	/**Method used to replace placeholders in message.
 	 * @param sender - The player to whom you are sending the message
 	 * @param message - Message where you want to replace placeholders
 	 * @param placeholders 
 	 * @return Returning edited message
+	 * 
+	 * @apiNote This is modified method, default method is in {@link Placeholders} class!!
 	 */
 	@SuppressWarnings("deprecation")
 	public static String placeholder(CommandSender sender, String message, Placeholders placeholders) {
+		//Replacing %prefix% in message
 		if (getPrefix() != null)
 			message = message.replace("%prefix%", getPrefix());
 		
+		//If there even are something to replace
 		if (placeholders != null) {
-
+			//adding default player placeholder if there is none in existing Maps
 			if (sender instanceof Player && !placeholders.set.containsKey("player") && 
 					!placeholders.player_set.containsKey("player"))
 				placeholders.addPlayer("player", sender);
 			
+			//Replacing player placeholder
 			if (!placeholders.player_set.isEmpty())
 				for (Entry<String, Player> players : placeholders.player_set.entrySet()) {
 					/*
@@ -193,13 +198,12 @@ public class MessageUtils {
 					message = message.replace("%" + players.getKey() + "%", players.getValue().getName());
 				}
 			
-			if (sender instanceof Player && !placeholders.set.containsKey("player"))
-				message = message.replace("%player%", sender.getName());
-			
+			//Replacing rest of placeholders
 			for (Entry<String, String> placeholder : placeholders.set.entrySet())
 				message = message.replace("%" + placeholder.getKey() + "%", placeholder.getValue() + "");
+			
 		}
-		
+		//Returning edited String
 		return message;
 	}
 
@@ -257,7 +261,7 @@ public class MessageUtils {
 		Bukkit.getConsoleSender().sendMessage(ColorUtils.colorize(placeholder(null, message, placehholders)));
 	}
 
-	public static void sendAnnoucment(String message, CommandSender... targets) {
+	public static void sendAnnouncement(String message, CommandSender... targets) {
 		boolean split = true;
 		if (targets == null)
 			return;
@@ -275,16 +279,18 @@ public class MessageUtils {
 	}
 
 	public static void msgConfig(CommandSender player, Config config, String path, Placeholders placeholders, boolean split, CommandSender... targets) {
+		// If the main player is null
 		if (player == null)
 			return;
-
+		// Getting Object from config file
 		Object text = config.get(path);
-
+		// If there is something wrong -> Probably missing message in config
 		if (text == null) {
 			Loader.plugin.getLogger().warning("Path " + path + " not found in config " + config.getFile().getName() + ", report this bug to the DevTec discord.");
 			return;
 		}
 
+		// If text is JSON or list of messages
 		if (text instanceof Collection || text instanceof Map) {
 			if (config.isJson(path)) {
 				String line = config.getString(path);
@@ -294,10 +300,12 @@ public class MessageUtils {
 				msgJson(player, line, placeholders, targets);
 				return;
 			}
+			// It is a list!! Sending each line...
 			for (String line : config.getStringList(path))
 				msg(player, line, placeholders, split, targets);
 			return;
 		}
+		// Text is not JSON -> Getting normal String and sending message
 		String line = config.getString(path);
 		if (line.isEmpty())
 			return; // Do not send empty strings
@@ -306,6 +314,7 @@ public class MessageUtils {
 
 	@SuppressWarnings("unchecked")
 	private static void msgJson(CommandSender s, String original, Placeholders placeholders, CommandSender... targets) {
+		// Weird magic here... :D
 		Object json = Json.reader().simpleRead(original);
 		List<Map<String, Object>> jsonList = new ArrayList<>();
 		if (json instanceof Collection) {
@@ -340,6 +349,7 @@ public class MessageUtils {
 				target.sendMessage(ComponentAPI.listToString(jsonList));
 	}
 
+	//Replacing placeholders from JSON message
 	@SuppressWarnings("unchecked")
 	private static void replaceJson(CommandSender s, Map<String, Object> map, Placeholders placeholders) {
 		for (Entry<String, Object> entry : map.entrySet()) {
@@ -390,44 +400,61 @@ public class MessageUtils {
 		}
 	}
 
+	/** Final method in message sending chain. Sending message, replacing colors and placeholders and some special splitting (/n)
+	 * @param s - Original message receiver
+	 * @param original - The message that you want to send 
+	 * @param placeholders - {@link Placeholders}
+	 * @param split - If method should search for /n characters to split message into multiple lines.
+	 * @param targets - More targets <strong>(YES THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
 	private static void msg(CommandSender s, String original, Placeholders placeholders, boolean split, CommandSender... targets) {
 		String text = original;
 		text = ColorUtils.colorize(placeholder(s, text, placeholders));
+		//If if the plugin should search for special characters /n or //n to split message into multiple lines
 		if (split) {
 			String lastcolor = null;
 			for (String line : text.replace("\\n", "\n").split("\n")) {
-				if (lastcolor != null && lastcolor.length() == 1)
+				if (lastcolor != null && lastcolor.length() == 1) // minecraft colors
 					lastcolor = "&" + lastcolor;
-				if (lastcolor != null && lastcolor.length() == 7) { // HEX
+				if (lastcolor != null && lastcolor.length() == 7) { // HEX colors
 					lastcolor = "&" + lastcolor;
 					lastcolor = lastcolor.replace("&x", "#");
 				}
-				if (lastcolor != null && lastcolor.length() > 7) {
+				if (lastcolor != null && lastcolor.length() > 7) { //what? oh yeah... more colors
 					StringBuilder build = new StringBuilder();
 					for (String c : lastcolor.split(""))
 						build.append("&").append(c);
 					lastcolor = build.toString();
 				}
+				// Replacing placeholders and color symbols
 				String coloredText = ColorUtils.colorize(lastcolor == null ? line : lastcolor + "" + line);
+				// Preparing packet
 				Object packet = BukkitLoader.getNmsProvider().packetChat(ChatType.SYSTEM, ComponentAPI.fromString(coloredText));
 				for (CommandSender target : targets)
-					if (target instanceof Player)
+					if (target instanceof Player) // if PLAYER -> sending packet -> sending message
 						BukkitLoader.getPacketHandler().send((Player) target, packet);
 					else
-						target.sendMessage(coloredText);
+						target.sendMessage(coloredText);//or sending message as in the old days (it's console)
+				//fixing new last color
 				lastcolor = ColorUtils.getLastColors(ColorUtils.colorize(line));
 			}
 		} else {
+			// Replacing placeholders and color symbols
 			String coloredText = ColorUtils.colorize(PlaceholderAPI.apply(text, s instanceof Player ? ((Player) s).getUniqueId() : null));
+			// Preparing packet
 			Object packet = BukkitLoader.getNmsProvider().packetChat(ChatType.SYSTEM, ComponentAPI.fromString(coloredText));
 			for (CommandSender target : targets)
-				if (target instanceof Player)
-					BukkitLoader.getPacketHandler().send((Player) target, packet);
+				if (target instanceof Player) // if PLAYER -> sending packet -> sending message
+					BukkitLoader.getPacketHandler().send((Player) target, packet); 
 				else
-					target.sendMessage(coloredText);
+					target.sendMessage(coloredText); //or sending message as in the old days (it's console)
 		}
 	}
 
+	/** No permission message...
+	 * @param player - message recipient
+	 * @param permission - what permission is player missing
+	 */
 	public static void noPerm(CommandSender player, String permission) {
 		message(player, "noPerms", Placeholders.c().replace("permission", permission));
 	}
