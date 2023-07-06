@@ -25,13 +25,13 @@ public class Tags {
 	 *     item:... ItemMaker thingies
 	 */
 	
-	/* Placeholders
+	/* Placeholders (placeholders in command description are without 'amazingtags_')
 	 * %amazingtags_...%
 	 * 
-	 * tag/tag_format - tagformát z Tags.yml
-	 * info/tag_info - informace o tagu
-	 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
-	 * status/tag_status - status tagu
+	 * tag/tag_format - Tag's format from Tags.yml
+	 * info/tag_info - Tag's information text
+	 * name/tag_name - Tag's name, used path name or special 'name' setting
+	 * status/tag_status - Tag's status
 	 */
 	
 	/** If Tag exist
@@ -168,15 +168,15 @@ public class Tags {
 	 * @return {@link ItemMaker}
 	 */
 	private static ItemMaker getTagItemFromConfig(String tag) {
-		//Default item preparation
+		// Default item preparation
 		ItemMaker item = ItemMaker.loadMakerFromConfig(Loader.gui, "gui.items.default");
-		//if there is custom item in Tags.yml -> Then we try and use that item 
+		// If there is custom item in Tags.yml -> Then we try and use that item 
 		if(Loader.tags.exists("tags."+tag+".item"))
 			item = ItemMaker.loadMakerFromConfig(Loader.tags, "tags."+tag+".item");
 		if(item==null) //if there is missing type -> then back to default item (sorry folks :D)
 			item = ItemMaker.loadMakerFromConfig(Loader.gui, "gui.items.default");
 		
-		//displayName and lore check
+		// displayName and lore check
 		if(item.getDisplayName() == null || item.getDisplayName().isEmpty())
 			item.displayName(Loader.gui.getString("gui.items.default.displayName"));
 		if(item.getLore()==null)
@@ -191,20 +191,10 @@ public class Tags {
 	 * @return {@link ItemStack}
 	 */
 	public static ItemStack getTagItem(Player player, String tag) {
-		//Getting item
+		// Getting item
 		ItemMaker item = getTagItemFromConfig(tag);
-
-		/*
-		 * %amazingtags_...%
-		 * 
-		 * tag/tag_format - tagformát z Tags.yml
-		 * info/tag_info - informace o tagu
-		 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
-		 * status/tag_status - status tagu
-		 */
 		
-		//Replacing placeholders in item lore and name
-		
+		// Loading placeholders in item lore and name
 		Placeholders placeholders = new Placeholders();
 		placeholders.addPlayer("player", player)
 			.replace("tag", getTagFormat(tag)!=null?getTagFormat(tag):"" ).replace("tag_format", getTagFormat(tag)!=null?getTagFormat(tag):"" )
@@ -212,17 +202,17 @@ public class Tags {
 			.replace("info", getTagInfo(tag)).replace("tag_info", getTagInfo(tag))
 			.replace("status", getStatus(tag, player)).replace("tag_status", getStatus(tag, player))
 			;
-		
+		// If item is head -> Load custom player head if needed
 		if(item instanceof HeadItemMaker /*&&	((HeadItemMaker)item).getHeadOwnerType()==0*/) {
-			//this player head
+			// this player head
 			if(Loader.tags.getString("tags."+tag+".item.head.type").equalsIgnoreCase("PLAYER") &&
 					Loader.tags.getString("tags."+tag+".item.head.owner").equalsIgnoreCase("%player%"))
 				((HeadItemMaker)item).skinName(player.getName());
-			//values - because of some minecraft shenanigans we need to fix values heads like this
+			// values - because of some minecraft shenanigans we need to fix values heads like this
 			if(Loader.tags.getString("tags."+tag+".item.head.type").equalsIgnoreCase("VALUES"))
 				((HeadItemMaker)item).skinValues(Loader.tags.getString("tags."+tag+".item.head.owner"));
 		}
-		
+		// Applying placeholders -> Replacing them
 		return applyPlaceholders(item, placeholders).build();
 	}
 	
@@ -232,15 +222,7 @@ public class Tags {
 	 */
 	public static ItemStack getPreviewItem(Player player) {
 		ItemMaker item = ItemMaker.of(ItemMaker.loadFromConfig(Loader.gui, "gui.items.preview"));
-
-		/*
-		 * %amazingtags_...%
-		 * 
-		 * tag/tag_format - tagformát z Tags.yml
-		 * info/tag_info - informace o tagu
-		 * name/tag_name - jméno tagu, použité buď v path nebo speciální setting
-		 * status/tag_status - status tagu
-		 */
+		// Loading placeholders
 		String tag = API.getSelectedTag(player);
 		Placeholders placeholders = new Placeholders();
 		placeholders.addPlayer("player", player)
@@ -249,17 +231,19 @@ public class Tags {
 			.replace("info", getTagInfo(tag)).replace("tag_info", getTagInfo(tag))
 			.replace("status", getStatus(tag, player)).replace("tag_status", getStatus(tag, player))
 			;
-		
+
+		// If item is head -> Load custom player head if needed
 		if(item instanceof HeadItemMaker /*&&	((HeadItemMaker)item).getHeadOwnerType()==0*/) {
 			//this player head
 			if(Loader.gui.getString("gui.items.preview.head.type").equalsIgnoreCase("PLAYER") &&
 					Loader.gui.getString("gui.items.preview.head.owner").equalsIgnoreCase("%player%"))
 				((HeadItemMaker)item).skinName(player.getName());
-			//values - because of some minecraft shenanigans we need to fix values heads like this
+			// values - because of some minecraft shenanigans we need to fix values heads like this
 			if(Loader.gui.getString("gui.items.preview.head.type").equalsIgnoreCase("VALUES"))
 				((HeadItemMaker)item).skinValues(Loader.tags.getString("gui.items.preview.head.owner"));
 		}
-		
+
+		// Applying placeholders -> Replacing them
 		return applyPlaceholders(item, placeholders).build();
 	}
 	
@@ -272,10 +256,10 @@ public class Tags {
 	private static ItemMaker applyPlaceholders(ItemMaker item, Placeholders placeholders) {
 		
 		if(item==null || placeholders == null) return item;
-		//replacing diplayName
+		// replacing diplayName
 		item.displayName(placeholders.apply(item.getDisplayName()));
 
-		//replacing lore
+		// replacing lore
 		List<String> lore = item.getLore();
 		if(lore!=null && !lore.isEmpty()) {
 			List<String> newLore = new ArrayList<String>();
