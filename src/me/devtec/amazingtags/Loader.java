@@ -82,17 +82,34 @@ public class Loader extends JavaPlugin{
 	}
 	
 	public void loadPlaceholders() {
+		/* Placeholder
+		 * %amazingtags_...%
+		 * 
+		 * tag/tag_format - Tag's format from Tags.yml
+		 * info/tag_info - Tag's information text
+		 * name/tag_name - Tag's name, used path name or special 'name' setting
+		 * status/tag_status - Tag's status
+		 */
+		
 		Loader.placeholders = new PlaceholderExpansion("amazingtags") {
-
 			@Override
 			public String apply(String identifier, UUID player) {
-			       if(player == null || Bukkit.getPlayer(player) == null){
-			           return null;
-			       }
-				   	if(identifier.equalsIgnoreCase("tag")) {
-				   		return Tags.getTagFormat(API.getSelectedTag(Bukkit.getPlayer(player)));
-				   	}
-			       return null;
+				if(player == null || Bukkit.getPlayer(player) == null){
+					return null;
+			    }
+				if(identifier.equalsIgnoreCase("tag") || identifier.equalsIgnoreCase("tag_format")) {
+					return Tags.getTagFormat(API.getSelectedTag(Bukkit.getPlayer(player)));
+				}
+				if(identifier.equalsIgnoreCase("info") || identifier.equalsIgnoreCase("tag_info")) {
+					return Tags.getTagInfo(API.getSelectedTag(Bukkit.getPlayer(player)));
+				}
+				if(identifier.equalsIgnoreCase("name") || identifier.equalsIgnoreCase("tag_name")) {
+					return Tags.getTagInfo(API.getSelectedTag(Bukkit.getPlayer(player)));
+				}
+				if(identifier.equalsIgnoreCase("status") || identifier.equalsIgnoreCase("tag_status")) {
+					return Tags.getTagInfo(API.getSelectedTag(Bukkit.getPlayer(player)));
+				}
+				return null;
 			}
 		};
 		Loader.placeholders.register();
