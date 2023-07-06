@@ -1,4 +1,5 @@
 package me.devtec.amazingtags.utils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,9 +21,7 @@ import me.devtec.shared.utility.ColorUtils;
 import me.devtec.theapi.bukkit.BukkitLoader;
 import me.devtec.theapi.bukkit.nms.NmsProvider.ChatType;
 
-/**
- * 
- */
+
 public class MessageUtils {
 	
 	/**
@@ -37,7 +36,7 @@ public class MessageUtils {
 			return new Placeholders();
 		}
 		
-		/**Method used to add new replaceable placeholder
+		/** Method used to add new replaceable placeholder
 		 * @param placeholder Placeholder in the message (example: %player% as player)
 		 * @param replace What the placeholder should be replaced with
 		 * @return Method returns this instance
@@ -47,7 +46,7 @@ public class MessageUtils {
 			return this;
 		}
 
-		/**Method used to add new replaceable player placeholder.
+		/** Method used to add new replaceable player placeholder.
 		 * Placeholder %player_...% is replaced automatically!
 		 * @param placeholder Placeholder in the message (example: %target% as some other player)
 		 * @param replace Which player the placeholder should be replaced with
@@ -59,7 +58,7 @@ public class MessageUtils {
 			return this;
 		}
 
-		/**Method used to add new replaceable player placeholder.
+		/** Method used to add new replaceable player placeholder.
 		 * Placeholder %player_...% is replaced automatically!
 		 * @param placeholder Placeholder in the message (example: %target% as some other player)
 		 * @param replace Which player the placeholder should be replaced with
@@ -75,7 +74,7 @@ public class MessageUtils {
 			return this;
 		}
 
-		/**Method used to add new replaceable offline player placeholder.
+		/** Method used to add new replaceable offline player placeholder.
 		 * Placeholder %player_...% is replaced automatically!
 		 * @param placeholder Placeholder in the message (example: %target% as some other player)
 		 * @param replace Which player the placeholder should be replaced with
@@ -89,7 +88,7 @@ public class MessageUtils {
 			return this;
 		}
 
-		/**Method used to add new replaceable placeholder
+		/** Method used to add new replaceable placeholder
 		 * @param placeholder Placeholder in the message (example: %player% as player)
 		 * @param replace What the placeholder should be replaced with
 		 * @return Method returns this instance
@@ -98,7 +97,7 @@ public class MessageUtils {
 			return add(placeholder, replace);
 		}
 		
-		/**Method used to apply placeholders in message
+		/** Method used to apply placeholders in message
 		 * @param sender The player to whom you are sending the message
 		 * @param text Message where you want to replace placeholders
 		 * @param placeholders 
@@ -144,7 +143,7 @@ public class MessageUtils {
 		return Loader.config.getString("prefix");
 	}
 	
-	/**Method used to replace placeholders in messages
+	/** Method used to replace placeholders in messages
 	 * @param sender The player to whom you are sending the message
 	 * @param message Message where you want to replace placeholders
 	 * @param placeholders {@link Placeholders}
@@ -156,7 +155,7 @@ public class MessageUtils {
 		return clone;
 	}
 
-	/**Method used to replace placeholders in message.
+	/** Method used to replace placeholders in message.
 	 * @param sender The player to whom you are sending the message
 	 * @param message Message where you want to replace placeholders
 	 * @param placeholders {@link Placeholders}
@@ -327,6 +326,35 @@ public class MessageUtils {
 	/*
 	 * SPECIAL METHODS
 	 */
+	
+	/** Sending the message directly. Usually from plugin, message is usually not in file. 
+	 * 		If you want to send messages from file, maybe use 
+	 * 		<code>message(...)</code> or <code>msgConfig(...)</code>.
+	 * 
+	 * @param player Original message receiver
+	 * @param message Original message you are sending
+	 * @param placehholders {@link Placeholders}
+	 * @param targets More targets <strong>(THIS SHOULD INCLUDE ORIGINAL MESSAGE RECEIVER IF YOU ALSO WANT TO SEND HIM THIS MESSAGE)</strong>
+	 */
+	public static void sendPluginMessage(CommandSender player, String message, Placeholders placehholders, CommandSender... targets) {
+		//If there is no one to send this to or message is null
+		if (targets == null || message == null)
+			return;
+		//JSON message check
+		if (message.startsWith("[") && message.endsWith("]") || message.startsWith("{") && message.endsWith("}")) {
+			String trimmed = message.trim();
+			if (trimmed.equals("[]") || trimmed.equals("{}"))
+				return; // Do not send empty json
+			msgJson(Bukkit.getConsoleSender(), message, null, targets);
+			return;
+		}
+
+		if (message.isEmpty())
+			return; // Do not send empty strings
+		msg(player, message, null, true, targets);
+	}
+	
+	
 	
 	/** No permission message...
 	 * @param player message recipient
