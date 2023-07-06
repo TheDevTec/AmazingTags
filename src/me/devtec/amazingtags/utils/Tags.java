@@ -17,11 +17,11 @@ public class Tags {
 	/* Tags.yml paths
 	 * path:
 	 *   <tag>:
-	 *     Tag - tag formát
-	 *     Info - info o tagu
-	 *     Enabled - jestli je tag zapnutý
-	 *     Permission - speciální permise
-	 *     Name - Speciální jméno tagu (kdyby mělo být jméno jiné od formátu tagu)
+	 *     Tag - Tag's format
+	 *     Info - Tag's info text
+	 *     Enabled - If tag is enabled
+	 *     Permission - Tag's special permission
+	 *     Name - Special tag's name. (if missing, using path name as tag's name)
 	 *     item:... ItemMaker thingies
 	 */
 	
