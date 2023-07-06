@@ -70,15 +70,12 @@ public class Loader extends JavaPlugin{
 		ss.sendMessage(ColorUtils.colorize(MessageUtils.getPrefix()+" Configurations reloaded."));
 	}
 	
+	//If player have permission, if not sending noPerms message
 	public static boolean has(CommandSender s, String permission) {
 		if(s.hasPermission(permission)) return true;
 		MessageUtils.message(s, "translation.noPerms", Placeholders.c().replace("%permission%", permission));
 		//s.sendMessage(ColorUtils.colorize(config.getString("Translation.noPerms").replace("%permission%", permission).replace("%prefix%", Loader.config.getString("Prefix"))));
 		return false;
-	}
-	
-	public static void msg(String msg, CommandSender s) {
-		s.sendMessage(ColorUtils.colorize(msg.replace("%prefix%", Loader.config.getString("prefix"))));
 	}
 	
 	public void loadPlaceholders() {

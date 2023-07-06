@@ -18,15 +18,28 @@ public class AmazingTagsCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender s, Command cmd, String arg2, String[] args) {
 		if(Loader.has(s, Loader.config.getString("command.permission")) ) { //if player can use command
 			if(args.length==0) { // /tag -> opens GUI
-				TagsGUI.open(Bukkit.getPlayer(s.getName()));
-				return true;
+				if(s instanceof Player) {
+					TagsGUI.open(Bukkit.getPlayer(s.getName()));
+					return true;
+				}
+				//CommandSender is CONSOLE -> Sending help messages
+				String[] test = {"help"};
+				args = test; // final command form: /tag help
 			}
 			// /tag help
 			if(args[0].equalsIgnoreCase("help")) {
-				if(s.hasPermission(Loader.config.getString("command.permission"))) Loader.msg("&7/Tags &7&l- &7Open GUI", s);
-				if(s.hasPermission("amazingtags.reload")) Loader.msg("&7/Tags Reload &7&l- &7Reload configs", s);
-				if(s.hasPermission("amazingtags.create")) Loader.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
-				if(s.hasPermission("amazingtags.set")) Loader.msg("&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", s);
+				if(s.hasPermission(Loader.config.getString("command.permission"))) 
+					MessageUtils.sendPluginMessage(s, "&7/Tags &7&l- &7Open GUI", null, s);
+					//Loader.msg("&7/Tags &7&l- &7Open GUI", s);
+				if(s.hasPermission("amazingtags.reload")) 
+					MessageUtils.sendPluginMessage(s, "&7/Tags Reload &7&l- &7Reload configs", null, s);
+				//Loader.msg("&7/Tags Reload &7&l- &7Reload configs", s);
+				if(s.hasPermission("amazingtags.create")) 
+					MessageUtils.sendPluginMessage(s, "&7/Tags Create <name> <format> &7&l- &7Create new tag", null, s);
+				//Loader.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
+				if(s.hasPermission("amazingtags.set")) 
+					MessageUtils.sendPluginMessage(s, "&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", null, s);
+				//Loader.msg("&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", s);
 				return true;
 			}
 			// /tag reload
@@ -38,7 +51,8 @@ public class AmazingTagsCommand implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("set") && Loader.has(s, "amazingtags.set")) {
 				// /tag set <player> <tag_name>
 	            if (args.length != 3) {
-	                Loader.msg("&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", s);
+					MessageUtils.sendPluginMessage(s, "&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", null, s);
+	                //Loader.msg("&7/Tags Set <Player> <tag_name> &7&l- &7Set tag to player", s);
 	                return true;
 	            }
 	            Player p = Bukkit.getPlayer(args[1]);
@@ -67,7 +81,8 @@ public class AmazingTagsCommand implements CommandExecutor {
 							.add("tag", format));
 					return true;
 				}
-				Loader.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
+				MessageUtils.sendPluginMessage(s, "&7/Tags Create <name> <format> &7&l- &7Create new tag", null, s);
+				//Loader.msg("&7/Tags Create <name> <format> &7&l- &7Create new tag", s);
 				return true;
 			}
 			return true;
