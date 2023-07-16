@@ -27,8 +27,8 @@ public class Configs {
 		
 		convertTags();
 		
-		Loader.next = ItemMaker.loadFromConfig(Loader.gui, "gui.items.next");
-		Loader.prev = ItemMaker.loadFromConfig(Loader.gui, "gui.items.previous");
+		TagsGUI.next = ItemMaker.loadFromConfig(Loader.gui, "gui.items.next");
+		TagsGUI.prev = ItemMaker.loadFromConfig(Loader.gui, "gui.items.previous");
 	}
 	
 	/**

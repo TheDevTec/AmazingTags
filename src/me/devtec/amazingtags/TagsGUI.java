@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.Category;
@@ -17,6 +18,11 @@ import me.devtec.theapi.bukkit.gui.ItemGUI;
 
 public class TagsGUI {
 
+	//Next and previous buttons
+	public static ItemStack next,
+							prev;
+	
+	
 	/** Only option to open Tags menu
 	 * @param player - Player that is opening menu
 	 * @apiNote If there are any created categories, this will open categories menu
@@ -64,7 +70,7 @@ public class TagsGUI {
 			}
 			//NEXT AND PREVIOUS PAGE BUTTONS
 			if(pagination.totalPages()>page+1) {
-				a.setItem(51, new ItemGUI(Loader.next) {
+				a.setItem(51, new ItemGUI(next) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						openTags(player, page+1); //page+1 -> next page
@@ -73,7 +79,7 @@ public class TagsGUI {
 				});
 			}
 			if(page>0) { //If this is not first page, then add previous button
-				a.setItem(47, new ItemGUI(Loader.prev) {
+				a.setItem(47, new ItemGUI(prev) {
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						openTags(player, page-1); //page-1 -> previous page
@@ -129,7 +135,7 @@ public class TagsGUI {
 			
 			//NEXT AND PREVIOUS BUTTON
 			if(pagination.totalPages()>page+1) { //If there is next page
-				a.setItem(51, new ItemGUI(Loader.next) { //Adding next page button
+				a.setItem(51, new ItemGUI(next) { //Adding next page button
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						openCategories(player, page+1); //Recursion (calls itself) +1 page
@@ -137,7 +143,7 @@ public class TagsGUI {
 				});
 			}
 			if(page>0) { //If this is not first page
-				a.setItem(47, new ItemGUI(Loader.prev) { //Adding previous page button
+				a.setItem(47, new ItemGUI(prev) { //Adding previous page button
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						openCategories(player, page-1); //Recursion (calls itself) -1 page
@@ -229,7 +235,7 @@ public class TagsGUI {
 
 			//NEXT AND PREVIOUS BUTTON
 			if(pagination.totalPages()>page+1) { //If there is next page available
-				a.setItem(51, new ItemGUI(Loader.next) { //Adding next page button
+				a.setItem(51, new ItemGUI(next) { //Adding next page button
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						openCategory(player, page+1, category);
@@ -237,7 +243,7 @@ public class TagsGUI {
 				});
 			}
 			if(page>0) { //If this is not the first page
-				a.setItem(47, new ItemGUI(Loader.prev) { //Adding previous button
+				a.setItem(47, new ItemGUI(prev) { //Adding previous button
 					@Override
 					public void onClick(Player player, HolderGUI gui, ClickType click) {
 						openCategory(player, page-1, category);	

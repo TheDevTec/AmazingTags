@@ -5,7 +5,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.devtec.amazingtags.utils.API;
@@ -26,8 +25,6 @@ public class Loader extends JavaPlugin{
 							gui, //GUI.yml file
 							tags; // Tags.yml file
 	public static MySQL sql;
-	
-	public static ItemStack next, prev;
 
 	protected static PlaceholderExpansion placeholders;
 	
