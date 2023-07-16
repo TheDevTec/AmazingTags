@@ -1,5 +1,4 @@
 # AmazingTags
-
 ## Description
 
 This plugin allows you to create tags for players. The player can then choose a tag to which he has permission. Tags are selected from menu that will show after executing command `/tag`.
