@@ -278,19 +278,17 @@ public class TagsGUI {
 	 * @return {@link GUI}
 	 */
 	private static GUI prepare(GUI gui) {
+		ItemGUI glass_pane = new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
+			@Override
+			public void onClick(Player player, HolderGUI gui, ClickType click) {
+				//do nothing
+			} };
+			
 		for (int i=0; i<=8; i++) {
-			gui.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
-				@Override
-				public void onClick(Player player, HolderGUI gui, ClickType click) {
-					//do nothing
-				} });
+			gui.setItem(i, glass_pane);
 		}
 		for (int i=45; i<=53; i++) {
-			gui.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
-				@Override
-				public void onClick(Player player, HolderGUI gui, ClickType click) {
-					//do nothing
-				} });
+			gui.setItem(i, glass_pane);
 		}
 		return gui;
 	}
