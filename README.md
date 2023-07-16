@@ -37,3 +37,5 @@ This plugin is very easy to set up and configure. You can easily create a new ta
     </tr>
   </table>
 </details>
+
+[![Spigot Downloads](https://img.shields.io/badge/dynamic/json.svg?url=https://api.spiget.org/v2/resources/94417&label=Spigot-Downloads&query=$.downloads&colorB=ee8a18&style=flat-square&maxAge=3600)](https://www.spigotmc.org/resources/94417/)
