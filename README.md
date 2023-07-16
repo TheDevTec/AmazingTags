@@ -1,20 +1,29 @@
 # AmazingTags
+
 ## Description
-The plugin allows you to select tags depending on which tags you have permission for!
-Players can select tags from GUI (/tags)
-This plugin is very easy to set up and configure. You can easily create a new tag in-game.
+
+This plugin allows you to create tags for players. The player can then choose a tag to which he has permission. Tags are selected from menu that will show after executing command `/tag`.
+This plugin is very easy to set up and offers a lot of configurable options. You can easily create a new tag in-game.
+
+> What is tag?
+
+Tag can be a text that appears, for example, before a players's name. Player can select special tag from menu and in Tags.yml you are setting items (that will appear in menu) and tag formats.
+
+[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/35aa66eb-d20c-4db0-a31d-3ffa217cd10b" alt="Tag showcase" width="250" height="25">](Setting-up-Tags#example-1)
+[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/03138f20-dc7c-414f-943e-ebb31dab1646" alt="Tag showcase" width="250" height="25">](Setting-up-Tags#example-4---custom-head)
+[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/ab1ce4d6-3a79-4cc0-9ddb-048194628703" alt="Tag showcase" width="250" height="25">](Setting-up-Tags#example-3---boring-type-change) <br>
+_(click on a image to see an example)_
 
 ## Features
-<ul>
-  <li>Great colours! You can create a tag with Hex and Gradient colours (Now only for ServerControlReloaded chat)</li>
-  <li>Translatable and fully customizable items in GUI</li>
-  <li>Customizable messages, commands, and sound when you select a tag</li>
-  <li>Customizabĺe tag item in GUI. You can create a custom head or item with a custom name and lore. Or you can just have the default item (Config.yml)</li>
-  <li>Plugin supports HeadDatabase heads!</li>
-  <li>MySQL support for the selected tag</li>
-  <li>Default tag option</li>
-  <li>Active development</li>
-</ul>  
+
+* Great colours! You can create a tag with Hex and Gradient colours (Now only for ServerControlReloaded chat)
+* Translatable and fully customizable items in GUI
+* Customizable messages, commands, and sound when you select a tag
+* Customizabĺe tag item in GUI. You can create a custom head or item with a custom name and lore. Or you can just have the default item (Config.yml)
+* Plugin supports HeadDatabase heads!
+* MySQL support for the selected tag
+* Default tag option
+* Active development
 
 <details>
   <summary>Examples</summary>
