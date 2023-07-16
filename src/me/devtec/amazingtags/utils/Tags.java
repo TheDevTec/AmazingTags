@@ -133,13 +133,15 @@ public class Tags {
 	 */
 	public static boolean hasPermission(Player player, String tag) {
 		if(getTagPermission(tag)!=null && !getTagPermission(tag).isEmpty()) {
-			if(player.hasPermission(getTagPermission(tag)))
+			return player.hasPermission(getTagPermission(tag));
+		/*	if(player.hasPermission(getTagPermission(tag)))
 				return true;
-			else return false;
+			else return false;*/
 		}
-		if(player.hasPermission(getDefaultPermission(tag)))
+		return player.hasPermission(getDefaultPermission(tag));
+		/*if(player.hasPermission(getDefaultPermission(tag)))
 			return true;
-		return false;
+		return false;*/
 	}
 	//Default permission of all tags
 	//Default permission value is amazingtags.tag.%tagname%
