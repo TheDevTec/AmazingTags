@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import me.devtec.amazingtags.utils.API;
@@ -23,11 +24,10 @@ public class AmazingTagsCommand implements CommandExecutor {
 					return true;
 				}
 				//CommandSender is CONSOLE -> Sending help messages
-				String[] test = {"help"};
-				args = test; // final command form: /tag help
 			}
 			// /tag help
-			if(args[0].equalsIgnoreCase("help")) {
+			// if CommandSEnder is CONSOLE -> SEnding help message
+			if(args[0].equalsIgnoreCase("help") || (args.length==0 && s instanceof ConsoleCommandSender)) {
 				if(s.hasPermission(Loader.config.getString("command.permission"))) 
 					MessageUtils.sendPluginMessage(s, "&7/Tags &7&l- &7Open GUI", null, s);
 					//Loader.msg("&7/Tags &7&l- &7Open GUI", s);

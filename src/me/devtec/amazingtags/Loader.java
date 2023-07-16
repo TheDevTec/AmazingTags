@@ -22,7 +22,9 @@ import me.devtec.theapi.bukkit.commands.hooker.BukkitCommandManager;
 public class Loader extends JavaPlugin{
 	
 	public static Loader plugin;
-	public static Config config, gui, tags;
+	public static Config config, //Config.yml file
+							gui, //GUI.yml file
+							tags; // Tags.yml file
 	public static MySQL sql;
 	
 	public static ItemStack next, prev;

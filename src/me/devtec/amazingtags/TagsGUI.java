@@ -39,8 +39,8 @@ public class TagsGUI {
 		Pagination<String> pagination = new Pagination<String>(36);
 		//Loading all available tags (that player can see) into pagination
 		for(String tag: Loader.tags.getKeys("tags")) {
-			if(Tags.isTag(tag))
-				if(Tags.canSee(player, tag))
+			//If tag is tag and if player can see this tag in menu
+			if(Tags.isTag(tag) && Tags.canSee(player, tag))
 					pagination.add(tag);
 		}
 		//If there are some tags available
@@ -185,8 +185,8 @@ public class TagsGUI {
 				if(Tags.isTag(tag) && Tags.isEnabled(tag)) { //if tag is available (enabled and valid)
 					if(special.equalsIgnoreCase("ALL")) //EMPTY+ALL - ALL tags
 						pagination.add(tag);
-					if(special.equalsIgnoreCase("PERM")) //EMPTY+PERM - selecting from ALL tags only which one can use
-						if(Tags.hasPermission(player, tag))
+					//EMPTY+PERM - selecting from ALL tags only which one can use
+					if(special.equalsIgnoreCase("PERM") && Tags.hasPermission(player, tag)) 
 							pagination.add(tag);
 					
 				}
@@ -276,12 +276,14 @@ public class TagsGUI {
 			gui.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
+					//do nothing
 				} });
 		}
 		for (int i=45; i<=53; i++) {
 			gui.setItem(i, new ItemGUI( ItemMaker.of(Material.BLACK_STAINED_GLASS_PANE).amount(1).displayName("&7").build()) {
 				@Override
 				public void onClick(Player player, HolderGUI gui, ClickType click) {
+					//do nothing
 				} });
 		}
 		return gui;
