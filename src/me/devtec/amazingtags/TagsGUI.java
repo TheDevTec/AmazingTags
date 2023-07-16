@@ -204,8 +204,8 @@ public class TagsGUI {
 					if(!special.equalsIgnoreCase("NONE")) { //if there is ALL or PERM setting
 						if(special.equalsIgnoreCase("ALL")) //CONTENT+ALL - Adding ALL tags from list (bypassing perm check)
 							pagination.add(tag);
-						if(special.equalsIgnoreCase("PERM")) //CONTENT+PERN - Adding tags from the list to which the player has the permission
-							if(Tags.hasPermission(player, tag))
+						//CONTENT+PERN - Adding tags from the list to which the player has the permission
+						if(special.equalsIgnoreCase("PERM") && Tags.hasPermission(player, tag))
 								pagination.add(tag);
 						continue;
 					} else //If ther is none special setting

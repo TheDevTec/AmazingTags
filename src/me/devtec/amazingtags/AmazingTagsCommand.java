@@ -18,15 +18,12 @@ public class AmazingTagsCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender s, Command cmd, String arg2, String[] args) {
 		if(Loader.has(s, Loader.config.getString("command.permission")) ) { //if player can use command
-			if(args.length==0) { // /tag -> opens GUI
-				if(s instanceof Player) {
-					TagsGUI.open(Bukkit.getPlayer(s.getName()));
-					return true;
-				}
-				//CommandSender is CONSOLE -> Sending help messages
+			if(args.length==0 && s instanceof Player) { // /tag -> opens GUI
+				TagsGUI.open(Bukkit.getPlayer(s.getName()));
+				return true;
 			}
 			// /tag help
-			// if CommandSEnder is CONSOLE -> SEnding help message
+			// if CommandSender is CONSOLE -> Sending help message
 			if(args[0].equalsIgnoreCase("help") || (args.length==0 && s instanceof ConsoleCommandSender)) {
 				if(s.hasPermission(Loader.config.getString("command.permission"))) 
 					MessageUtils.sendPluginMessage(s, "&7/Tags &7&l- &7Open GUI", null, s);

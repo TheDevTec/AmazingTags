@@ -33,12 +33,12 @@ public class MySQL {
 	
 	private boolean connect() {
 		try {
-			this.connection = Database(getHost(), getDatabase(), getUser(), getPassword(), getPort());
+			this.connection = database(getHost(), getDatabase(), getUser(), getPassword(), getPort());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		this.connection = Database(getHost(),getDatabase(), getUser(), getPassword(), getPort());
+		this.connection = database(getHost(),getDatabase(), getUser(), getPassword(), getPort());
 		return true;
 	}
 	
@@ -56,7 +56,7 @@ public class MySQL {
 		return true;
 	}
 	
-	private DatabaseHandler Database(String host, String db, String usr, String psw, int port){
+	private DatabaseHandler database(String host, String db, String usr, String psw, int port){
 		synchronized (Loader.plugin){
 			try{
 				return DatabaseAPI.openConnection(DatabaseType.MYSQL, new SqlDatabaseSettings(DatabaseType.MYSQL, host, port, db, usr, psw));
