@@ -10,10 +10,9 @@ import me.devtec.shared.database.DatabaseHandler;
 import me.devtec.shared.database.DatabaseHandler.Row;
 
 public class MySQL {
-	
-	public MySQL() {}
-	
+
 	public DatabaseHandler connection;
+	
 	
 	public static String enabled_path = "MySQL.Use";
 	private String hostname_path = "MySQL.hostname";
@@ -22,7 +21,7 @@ public class MySQL {
 	private String password_path = "MySQL.password";
 	private String database_path = "MySQL.database";
 	private String tablePrefix_path = "MySQL.table_prefix";
-	
+
 	/**
 	 * Creates all connections
 	 */
@@ -34,12 +33,12 @@ public class MySQL {
 	
 	private boolean connect() {
 		try {
-			this.connection = Database(getHost(), getPort(), getDatabase(), getUser(), getPassword());
+			this.connection = Database(getHost(), getDatabase(), getUser(), getPassword(), getPort());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		this.connection = Database(getHost(), getPort(), getDatabase(), getUser(), getPassword());
+		this.connection = Database(getHost(),getDatabase(), getUser(), getPassword(), getPort());
 		return true;
 	}
 	
@@ -57,7 +56,7 @@ public class MySQL {
 		return true;
 	}
 	
-	private DatabaseHandler Database(String host, int port, String db, String usr, String psw){
+	private DatabaseHandler Database(String host, String db, String usr, String psw, int port){
 		synchronized (Loader.plugin){
 			try{
 				return DatabaseAPI.openConnection(DatabaseType.MYSQL, new SqlDatabaseSettings(DatabaseType.MYSQL, host, port, db, usr, psw));
