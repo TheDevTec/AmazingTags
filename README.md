@@ -9,10 +9,10 @@ This plugin is very easy to set up and offers a lot of configurable options. You
 
 Tag can be a text that appears, for example, before a players's name. Player can select special tag from menu and in Tags.yml you are setting items (that will appear in menu) and tag formats.
 
-[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/35aa66eb-d20c-4db0-a31d-3ffa217cd10b" alt="Tag showcase" width="250" height="25">](Setting-up-Tags#example-1)
-[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/03138f20-dc7c-414f-943e-ebb31dab1646" alt="Tag showcase" width="250" height="25">](Setting-up-Tags#example-4---custom-head)
-[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/ab1ce4d6-3a79-4cc0-9ddb-048194628703" alt="Tag showcase" width="250" height="25">](Setting-up-Tags#example-3---boring-type-change) <br>
-_(click on a image to see an example)_
+[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/35aa66eb-d20c-4db0-a31d-3ffa217cd10b" alt="Tag showcase" width="250" height="25">](https://github.com/TheDevTec/AmazingTags/wiki/Setting-up-Tags#example-1)
+[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/03138f20-dc7c-414f-943e-ebb31dab1646" alt="Tag showcase" width="250" height="25">](https://github.com/TheDevTec/AmazingTags/wiki/Setting-up-Tags#example-4---custom-head)
+[<img src="https://github.com/TheDevTec/AmazingTags/assets/57571924/ab1ce4d6-3a79-4cc0-9ddb-048194628703" alt="Tag showcase" width="250" height="25">](https://github.com/TheDevTec/AmazingTags/wiki/Setting-up-Tags#example-3---boring-type-change) <br>
+_More on our [wiki](https://github.com/TheDevTec/AmazingTags/wiki) page_
 
 ## Features
 
