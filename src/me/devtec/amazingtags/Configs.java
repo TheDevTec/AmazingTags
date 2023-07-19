@@ -81,6 +81,7 @@ public class Configs {
 			MessageUtils.msgConsole("[AmazinggTags] &4Converted &c&l%c% &4tags to new format!", Placeholders.c().add("c", converted));
 			
 			Loader.config.set("file_version", 2);
+			Loader.config.save();
 		}
 		
 	}
