@@ -1,6 +1,7 @@
 package me.devtec.amazingtags;
 
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -29,6 +30,8 @@ public class Loader extends JavaPlugin{
 
 	protected static PlaceholderExpansion placeholders;
 	
+	protected static Metrics metrics;
+	
 	public void onEnable() {
 		plugin=this;
 		//Loading files and next+prev button
@@ -43,7 +46,8 @@ public class Loader extends JavaPlugin{
 		BukkitCommandManager.registerCommand(cmd);
 
         //Loading bStats
-        new Metrics(this, 19647);
+        metrics = new Metrics(this, 19647);
+		reloadtagCountMetric();
 		
 		//Checking if MyQL options is enabled and loading database connection
 		if(SQL.isEnabled()) {
@@ -70,6 +74,7 @@ public class Loader extends JavaPlugin{
 		Loader.config.reload();
 		Loader.gui.reload();
 		Loader.tags.reload();
+		reloadtagCountMetric();
 		ss.sendMessage(ColorUtils.colorize(MessageUtils.getPrefix()+" Configurations reloaded."));
 	}
 	
@@ -113,5 +118,20 @@ public class Loader extends JavaPlugin{
 			}
 		};
 		Loader.placeholders.register();
+	}
+	
+	private static void reloadtagCountMetric() {
+	    metrics.addCustomChart(new Metrics.SingleLineChart("tag_count", new Callable<Integer>() {
+	        @Override
+	        public Integer call() throws Exception {
+	            // (This is useless as there is already a player chart by default.)
+	        	int i = 0;
+	        	for(String tag: Loader.tags.getKeys("tags")) {
+	        		if(Tags.isEnabled(tag))
+	        			i++;
+	        	}
+	            return i;
+	        }
+	    }));
 	}
 }

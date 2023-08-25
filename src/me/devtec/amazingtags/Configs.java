@@ -73,7 +73,7 @@ public class Configs {
 					Loader.tags.set("tags."+tag+".item.lore", Loader.tags.get("Tags."+tag+".Lore") );
 
 				Loader.tags.save();
-				converted++;	
+				converted++;
 			}
 			Loader.tags.remove("Tags");
 			Loader.tags.save();
