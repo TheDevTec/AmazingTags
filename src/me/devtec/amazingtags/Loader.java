@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.devtec.amazingtags.utils.API;
 import me.devtec.amazingtags.utils.MessageUtils;
 import me.devtec.amazingtags.utils.MessageUtils.Placeholders;
+import me.devtec.amazingtags.utils.Metrics;
 import me.devtec.amazingtags.utils.Tags;
 import me.devtec.amazingtags.utils.sql.MySQL;
 import me.devtec.amazingtags.utils.sql.SQL;
@@ -40,6 +41,9 @@ public class Loader extends JavaPlugin{
 		cmd.setAliases(config.getStringList("command.aliases"));
 		//cmd.setTabCompleter(amf);
 		BukkitCommandManager.registerCommand(cmd);
+
+        //Loading bStats
+        new Metrics(this, 19647);
 		
 		//Checking if MyQL options is enabled and loading database connection
 		if(SQL.isEnabled()) {

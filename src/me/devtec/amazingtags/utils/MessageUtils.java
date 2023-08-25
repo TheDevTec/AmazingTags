@@ -21,7 +21,26 @@ import me.devtec.shared.utility.ColorUtils;
 import me.devtec.theapi.bukkit.BukkitLoader;
 import me.devtec.theapi.bukkit.nms.NmsProvider.ChatType;
 
-
+/*
+ * This class serves as a tool for sending messages. Using this class you can send messages to players or console... wait what?
+ * </br>
+ * <p>
+ * This class is using another plugin to function properly, so you need to change that or use TheAPI plugin (https://www.spigotmc.org/resources/theapi.72679/) as your plugin dependency.
+ * </br>
+ * These methods also can replace placeholders in your messages. See {@link Placeholders} class for more. 
+ * 		In a nutshell: placeholder in the text should look something like '%your_placeholder%' 
+ * 		and these methods will automatically replace it with a value. 
+ *  	Yes, you need to use {@link Placeholders} class for that, but that's easy!
+ *  //TODO - better documentation
+ * 
+ * </p>
+ * 
+ * 
+ * 
+ * @author Houska02
+ * @author Straikerinos
+ * @version 1.0
+ */
 public class MessageUtils {
 	
 	/**
