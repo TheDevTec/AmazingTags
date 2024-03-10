@@ -11,6 +11,7 @@ import me.devtec.amazingtags.Loader;
 import me.devtec.amazingtags.utils.sql.SQL;
 import me.devtec.shared.dataholder.Config;
 import me.devtec.shared.placeholders.PlaceholderAPI;
+import me.devtec.shared.utility.ColorUtils;
 import me.devtec.shared.utility.StringUtils;
 import me.devtec.theapi.bukkit.BukkitLoader;
 
@@ -137,7 +138,7 @@ public class API {
 			});
 		}
 		for(String message: msg) {
-			player.sendMessage(StringUtils.colorize(PlaceholderAPI.apply(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId())));
+			player.sendMessage(ColorUtils.colorize(PlaceholderAPI.apply(message.replace("%player%", player.getName()).replace("%tagname%", tag).replace("%tag%", getTagFormat(tag)), player.getUniqueId())));
 		}
 	}
 }
